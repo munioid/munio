@@ -9,7 +9,7 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use App\Http\Middleware\AdminMiddleware;
 use Filament\Http\Middleware\Authenticate;
-use App\Models\Munio\Organization\Organization;
+use App\Models\Organization\Organization;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;

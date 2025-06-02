@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Munio\Blog\Category;
-use App\Models\Munio\Organization\Organization;
+use App\Models\Organization\Organization;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

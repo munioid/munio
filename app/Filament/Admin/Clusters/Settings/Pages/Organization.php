@@ -14,7 +14,7 @@ use Filament\Notifications\Notification;
 use App\Filament\Admin\Clusters\Settings;
 use Illuminate\Contracts\Support\Htmlable;
 use Filament\Pages\Concerns\InteractsWithFormActions;
-use App\Models\Munio\Organization\Organization as OrganizationModel;
+use App\Models\Organization\Organization as OrganizationModel;
 
 class Organization extends Page
 {

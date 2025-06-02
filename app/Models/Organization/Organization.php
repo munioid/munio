@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Munio\Organization;
+namespace App\Models\Organization;
 
 use Illuminate\Database\Eloquent\Model;
 

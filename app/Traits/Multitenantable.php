@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use Filament\Facades\Filament;
 use Illuminate\Database\Eloquent\Builder;
-use App\Models\Munio\Organization\Organization;
+use App\Models\Organization\Organization;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 trait Multitenantable
