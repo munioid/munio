@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Munio\Membership;
+namespace App\Models\Membership;
 
 use App\Traits\Multitenantable;
 use App\Enums\MemberAttributeTypeEnum;

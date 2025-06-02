@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Munio\Membership;
+namespace App\Filament\Admin\Resources\Membership;
 
 use App\Enums\MemberStatusEnum;
-use App\Filament\Admin\Resources\Munio\Membership\MemberResource\Pages;
-use App\Filament\Admin\Resources\Munio\Membership\MemberResource\RelationManagers;
-use App\Models\Munio\Membership\Member;
+use App\Filament\Admin\Resources\Membership\MemberResource\Pages;
+use App\Filament\Admin\Resources\Membership\MemberResource\RelationManagers;
+use App\Models\Membership\Member;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Munio\Membership;
+namespace App\Filament\Admin\Resources\Membership;
 
 use Filament\Forms;
 use Filament\Tables;
@@ -10,10 +10,10 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use App\Enums\MemberAttributeTypeEnum;
 use Illuminate\Database\Eloquent\Builder;
-use App\Models\Munio\Membership\Attribute;
+use App\Models\Membership\Attribute;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Admin\Resources\Munio\Membership\AttributeResource\Pages;
-use App\Filament\Admin\Resources\Munio\Membership\AttributeResource\RelationManagers;
+use App\Filament\Admin\Resources\Membership\AttributeResource\Pages;
+use App\Filament\Admin\Resources\Membership\AttributeResource\RelationManagers;
 
 class AttributeResource extends Resource
 {

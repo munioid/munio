@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Munio\Membership\MemberResource\RelationManagers;
+namespace App\Filament\Admin\Resources\Membership\MemberResource\RelationManagers;
 
 use App\Enums\MemberAttributeTypeEnum;
 use Filament\Forms;

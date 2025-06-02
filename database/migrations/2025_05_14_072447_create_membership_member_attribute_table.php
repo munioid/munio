@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Munio\Membership\Attribute;
-use App\Models\Munio\Membership\Member;
+use App\Models\Membership\Attribute;
+use App\Models\Membership\Member;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
