@@ -3,7 +3,7 @@
 namespace App\Filament\Admin\Widgets;
 
 use App\Enums\MemberStatusEnum;
-use App\Models\Munio\Blog\Post;
+use App\Models\Blog\Post;
 use App\Models\Membership\Member;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;

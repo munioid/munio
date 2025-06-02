@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Munio\Blog\CategoryResource\Pages;
+namespace App\Filament\Admin\Resources\Blog\CategoryResource\Pages;
 
-use App\Filament\Admin\Resources\Munio\Blog\CategoryResource;
+use App\Filament\Admin\Resources\Blog\CategoryResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 

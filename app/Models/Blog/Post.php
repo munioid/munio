@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Munio\Blog;
+namespace App\Models\Blog;
 
 use App\Traits\Multitenantable;
 use Illuminate\Database\Eloquent\Model;

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Munio\Blog\Category;
+use App\Models\Blog\Category;
 use App\Models\Organization\Organization;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Munio\Blog;
+namespace App\Filament\Admin\Resources\Blog;
 
 use Filament\Forms;
 use Filament\Tables;
@@ -8,12 +8,12 @@ use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
-use App\Models\Munio\Blog\Tag;
+use App\Models\Blog\Tag;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Admin\Resources\Munio\Blog\TagResource\Pages;
-use App\Filament\Admin\Resources\Munio\Blog\TagResource\RelationManagers;
+use App\Filament\Admin\Resources\Blog\TagResource\Pages;
+use App\Filament\Admin\Resources\Blog\TagResource\RelationManagers;
 
 class TagResource extends Resource
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Munio\Blog;
+namespace App\Filament\Admin\Resources\Blog;
 
 use Filament\Forms;
 use Filament\Tables;
@@ -9,12 +9,12 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
-use App\Models\Munio\Blog\Category;
+use App\Models\Blog\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Admin\Resources\Munio\Blog\CategoryResource\Pages;
-use App\Filament\Admin\Resources\Munio\Blog\CategoryResource\RelationManagers;
+use App\Filament\Admin\Resources\Blog\CategoryResource\Pages;
+use App\Filament\Admin\Resources\Blog\CategoryResource\RelationManagers;
 
 class CategoryResource extends Resource
 {

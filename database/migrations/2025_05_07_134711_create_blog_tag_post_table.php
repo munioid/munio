@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Munio\Blog\Post;
-use App\Models\Munio\Blog\Tag;
+use App\Models\Blog\Post;
+use App\Models\Blog\Tag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

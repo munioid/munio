@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Munio\Blog;
+namespace App\Filament\Admin\Resources\Blog;
 
 use Filament\Forms;
 use Filament\Tables;
@@ -9,12 +9,12 @@ use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
-use App\Models\Munio\Blog\Post;
+use App\Models\Blog\Post;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Admin\Resources\Munio\Blog\PostResource\Pages;
-use App\Filament\Admin\Resources\Munio\Blog\PostResource\RelationManagers;
+use App\Filament\Admin\Resources\Blog\PostResource\Pages;
+use App\Filament\Admin\Resources\Blog\PostResource\RelationManagers;
 
 class PostResource extends Resource
 {
