@@ -2,19 +2,19 @@
 
 namespace App\Filament\Admin\Clusters\Settings\Pages;
 
+use App\Filament\Admin\Clusters\Settings;
+use App\Models\Organization\Organization as OrganizationModel;
+use BackedEnum;
 use Exception;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Pages\Page;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
-use Livewire\Attributes\Locked;
-use Filament\Support\Enums\MaxWidth;
+use Filament\Forms;
 use Filament\Notifications\Notification;
-use App\Filament\Admin\Clusters\Settings;
-use Illuminate\Contracts\Support\Htmlable;
 use Filament\Pages\Concerns\InteractsWithFormActions;
-use App\Models\Organization\Organization as OrganizationModel;
+use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Livewire\Attributes\Locked;
 
 class Organization extends Page
 {
@@ -22,9 +22,9 @@ class Organization extends Page
 
     protected static ?string $title = 'Organization';
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament.admin.clusters.settings.pages.organization';
+    protected string $view = 'filament.admin.clusters.settings.pages.organization';
 
     protected static ?string $cluster = Settings::class;
 
@@ -32,11 +32,6 @@ class Organization extends Page
 
     #[Locked]
     public ?OrganizationModel $record = null;
-
-    public function getMaxContentWidth(): MaxWidth
-    {
-        return MaxWidth::ScreenTwoExtraLarge;
-    }
 
     public function mount(): void
     {
@@ -49,13 +44,13 @@ class Organization extends Page
     {
         $data = $this->record->attributesToArray();
 
-        $this->form->fill($data);
+        $this->content->fill($data);
     }
 
     public function save(): void
     {
         try {
-            $data = $this->form->getState();
+            $data = $this->content->getState();
 
             $this->handleRecordUpdate($this->record, $data);
         } catch (Exception $e) {
@@ -72,11 +67,11 @@ class Organization extends Page
             ->title(__('filament-panels::resources/pages/edit-record.notifications.saved.title'));
     }
 
-    public function form(Form $form): Form
+    public function content(Schema $form): Schema
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('General')
+                Section::make('General')
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->required(),

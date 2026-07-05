@@ -1,11 +1,14 @@
-<x-filament-panels::page style="margin-bottom: 500px">
-    <x-filament-panels::form wire:submit="save">
-        {{ $this->form }}
+<x-filament::page style="margin-bottom: 500px">
+    <form wire:submit="save">
+        {{ $this->content }}
 
-        <x-filament-panels::form.actions :actions="$this->getCachedFormActions()"
-            :full-width="$this->hasFullWidthFormActions()" />
-    </x-filament-panels::form>
-</x-filament-panels::page>
+        <div style="padding-top: 1.5rem;">
+            @foreach ($this->getCachedFormActions() as $action)
+            {{ $action }}
+            @endforeach
+        </div>
+    </form>
+</x-filament::page>
 <script>
     document.addEventListener('livewire:init', function() {
         Livewire.on('organizationUpdated', function(param) {

@@ -6,9 +6,9 @@
 
 <p align="center">
     <a href="https://github.com/munio-id/munio-community/actions"><img alt="Tests passing" src="https://img.shields.io/badge/Tests-passing-green?style=for-the-badge&logo=github"></a>
-    <a href="https://laravel.com"><img alt="Laravel v12.x" src="https://img.shields.io/badge/Laravel-v12.x-FF2D20?style=for-the-badge&logo=laravel"></a>
-    <a href="https://filamentphp.com/"><img alt="FilamentPHP v3.x" src="https://img.shields.io/badge/FilamentPHP-v3.x-FDAE4B?style=for-the-badge&logo=filamentphp"></a>
-    <a href="https://php.net"><img alt="PHP 8.2" src="https://img.shields.io/badge/PHP-8.2-777BB4?style=for-the-badge&logo=php"></a>
+    <a href="https://laravel.com"><img alt="Laravel v13.x" src="https://img.shields.io/badge/Laravel-v13.x-FF2D20?style=for-the-badge&logo=laravel"></a>
+    <a href="https://filamentphp.com/"><img alt="FilamentPHP v5.x" src="https://img.shields.io/badge/FilamentPHP-v5.x-FDAE4B?style=for-the-badge&logo=filamentphp"></a>
+    <a href="https://php.net"><img alt="PHP 8.4" src="https://img.shields.io/badge/PHP-8.4-777BB4?style=for-the-badge&logo=php"></a>
 </p>
 
 ## About Munio Community
