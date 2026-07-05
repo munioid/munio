@@ -3,8 +3,11 @@
 namespace App\Filament\Admin\Resources\Membership\MemberResource\Schemas;
 
 use App\Enums\MemberStatusEnum;
+use App\Filament\Admin\Resources\Membership\MemberResource\RelationManagers\AttributesRelationManager;
 use Filament\Forms;
+use Filament\Schemas\Components\Livewire;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Schema;
 
 class MemberForm
@@ -41,7 +44,18 @@ class MemberForm
                             ->optionsLimit(10)
                     ])
                     ->columnSpanFull()
-                    ->columns(2)
+                    ->columns(2),
+                Tabs::make()
+                    ->schema([
+                        Tabs\Tab::make('Attribute')
+                            ->schema([
+                                Livewire::make(AttributesRelationManager::class, fn($record) => [
+                                    'ownerRecord' => $record,
+                                    'pageClass' => static::class
+                                ])
+                            ])
+                    ])
+                    ->columnSpanFull()
             ]);
     }
 }

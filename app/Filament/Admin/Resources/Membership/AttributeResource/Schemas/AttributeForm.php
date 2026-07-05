@@ -41,7 +41,7 @@ class AttributeForm
                             ])
                             ->columns(2)
                             ->columnSpanFull()
-                            ->visible(fn(Get $get) => $get('type') == MemberAttributeTypeEnum::Dropdown->value),
+                            ->visible(fn(Get $get) => $get('type') == MemberAttributeTypeEnum::Dropdown),
                     ])
                     ->columnSpanFull()
                     ->columns(2)
