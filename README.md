@@ -22,8 +22,8 @@
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Laravel 12+
-- **Admin Panel**: Filament PHP 3
+- **Framework**: Laravel 13+
+- **Admin Panel**: Filament PHP 5.x
 
 ## 🚀 Getting Started
 
