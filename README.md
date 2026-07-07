@@ -58,11 +58,11 @@ Here are some of the upcoming features and improvements planned for Munio Commun
 
 ### 🎯 Short-Term Goals
 
-- [*] Member management with attributes
+- [x] Member management with attributes
 - [ ] Community dashboard with member and post statistics
 - [ ] Event management (CRUD)
-- [*] User management (CRUD)
-- [*] Organization Setting Page
+- [x] User management (CRUD)
+- [x] Organization Setting Page
 
 ### 🚀 Mid-Term Goals
 
