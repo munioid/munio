@@ -17,6 +17,7 @@ use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
+use Livewire\Attributes\Locked;
 
 class Onboarding extends Page
 {
