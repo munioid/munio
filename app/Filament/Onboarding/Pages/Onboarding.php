@@ -7,17 +7,17 @@ use App\Models\User;
 use BackedEnum;
 use Closure;
 use Exception;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Callout;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
-use Livewire\Attributes\Locked;
 
 class Onboarding extends Page
 {
@@ -42,87 +42,80 @@ class Onboarding extends Page
         'user_email' => 'admin@example.com'
     ];
 
-    public function form(Schema $form): Schema
+    public function content(Schema $schema): Schema
     {
-        return $form
+        return $schema
+            ->statePath('data')
             ->schema([
-                Placeholder::make('Welcome')
-                    ->content('Mollitia aut veritatis similique hic ullam.'),
-                Wizard::make([
-                    Wizard\Step::make('Organization')
-                        ->schema([
-                            TextInput::make('name')
-                                ->required(),
-                            TextInput::make('code')
-                                ->required()
-                                ->unique(table: 'organizations', column: 'code'),
-                            TextInput::make('domain')
-                                ->required()
-                                ->unique(table: 'organizations', column: 'domain'),
-                        ])
-                        ->inlineLabel(),
-                    Wizard\Step::make('User')
-                        ->schema([
-                            TextInput::make('user_name')
-                                ->label('Name')
-                                ->required(),
-                            TextInput::make('user_email')
-                                ->label('Email')
-                                ->required()
-                                ->unique(table: 'users', column: 'email'),
-                            TextInput::make('user_password')
-                                ->password()
-                                ->required()
-                                ->reactive()
-                                ->revealable(),
-                            TextInput::make('user_password_confirmation')
-                                ->password()
-                                ->required()
-                                ->disabled(fn(Get $get) => !$get('user_password'))
-                                ->revealable()
-                                ->rule(fn(Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
-                                    if ($get('user_password') != $value) {
-                                        $fail("Passwords do not match. Please make sure both fields are identical.");
-                                    }
-                                }),
-                        ])
-                        ->inlineLabel(),
-                    Wizard\Step::make('Finish')
-                        ->schema([
-                            Placeholder::make('finish')
-                                ->label('The platform is ready to use. Please feel free to explore the available features and make the most of our services.')
-                        ])
+                Section::make()
+                    ->extraAttributes([
+                        'style' => 'padding: 5rem;',
+                    ])
+                    ->schema([
+                        Callout::make('Welcome')
+                            ->description('Mollitia aut veritatis similique hic ullam.'),
+                        Wizard::make([
+                            Wizard\Step::make('Organization')
+                                ->schema([
+                                    TextInput::make('name')
+                                        ->required(),
+                                    TextInput::make('code')
+                                        ->required()
+                                        ->unique(table: 'organizations', column: 'code'),
+                                    TextInput::make('domain')
+                                        ->required()
+                                        ->unique(table: 'organizations', column: 'domain'),
+                                ])
+                                ->inlineLabel(),
+                            Wizard\Step::make('User')
+                                ->schema([
+                                    TextInput::make('user_name')
+                                        ->label('Name')
+                                        ->required(),
+                                    TextInput::make('user_email')
+                                        ->label('Email')
+                                        ->required()
+                                        ->unique(table: 'users', column: 'email'),
+                                    TextInput::make('user_password')
+                                        ->password()
+                                        ->required()
+                                        ->reactive()
+                                        ->revealable(),
+                                    TextInput::make('user_password_confirmation')
+                                        ->password()
+                                        ->required()
+                                        ->disabled(fn(Get $get) => !$get('user_password'))
+                                        ->revealable()
+                                        ->rule(fn(Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
+                                            if ($get('user_password') != $value) {
+                                                $fail("Passwords do not match. Please make sure both fields are identical.");
+                                            }
+                                        }),
+                                ])
+                                ->inlineLabel(),
+                            Wizard\Step::make('Finish')
+                                ->schema([
+                                    Callout::make('finish')
+                                        ->description('The platform is ready to use. Please feel free to explore the available features and make the most of our services.')
+                                ])
 
-                ])
-                    ->submitAction(
-                        new HtmlString(
-                            Blade::render(
-                                <<<BLADE
-                                    <x-filament::button
-                                        type="submit"
-                                        size="sm"
-                                    >
-                                        Submit
-                                    </x-filament::button>
-                                BLADE
+                        ])
+                            ->submitAction(
+                                new HtmlString(
+                                    Blade::render(
+                                        <<<BLADE
+                                            <x-filament::button
+                                                type="submit"
+                                                size="sm"
+                                            >
+                                                Submit
+                                            </x-filament::button>
+                                        BLADE
+                                    )
+                                )
                             )
-                        )
-                    )
+                    ])
             ]);
-    }
-
-    /**
-     * @return array<int | string, string | Form>
-     */
-    protected function getForms(): array
-    {
-        return [
-            'form' => $this->form(
-                $this->makeForm()
-                    ->operation('create')
-                    ->statePath('data'),
-            ),
-        ];
     }
 
     public function save()
@@ -143,8 +136,7 @@ class Onboarding extends Page
                 'name' => data_get($data, 'user_name'),
                 'email' => data_get($data, 'user_email'),
                 'password' => bcrypt(data_get($data, 'user_password')),
-                'is_admin' => true,
-                'is_superuser' => true,
+                'is_admin' => true
             ]);
 
             $user->organizations()->attach($org->id);

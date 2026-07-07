@@ -1,7 +1,6 @@
 <x-filament::page>
-
     <form id="form" wire:submit="save">
-        {{ $this->form }}
+        {{ $this->content }}
 
         <div style="padding-top: 1.5rem;">
             @foreach ($this->getCachedFormActions() as $action)
@@ -9,5 +8,4 @@
             @endforeach
         </div>
     </form>
-
 </x-filament::page>
