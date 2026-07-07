@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->string('status')->nullable();
-            $table->dateTime('status_updated_at')->nullable();
+            $table->timestamp('status_updated_at')->nullable();
             $table->timestamps();
         });
     }

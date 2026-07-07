@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('membership_member_attribute', function (Blueprint $table) {
+        Schema::create('membership_members_attributes_pivot', function (Blueprint $table) {
             $table->foreignIdFor(Member::class);
             $table->foreignIdFor(Attribute::class);
             $table->text('value')->nullable();
+            $table->timestamps();
         });
     }
 

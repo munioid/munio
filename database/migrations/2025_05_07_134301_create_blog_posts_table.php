@@ -2,6 +2,7 @@
 
 use App\Models\Blog\Category;
 use App\Models\Organization\Organization;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,7 +24,8 @@ return new class extends Migration
             $table->string('source')->nullable();
             $table->foreignIdFor(Category::class)->nullable();
             $table->boolean('is_published')->default(false);
-            $table->dateTime('published_at')->nullable();
+            $table->foreignIdFor(User::class, 'published_by')->nullable();
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

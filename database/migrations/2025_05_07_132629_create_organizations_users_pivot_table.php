@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('organization_user', function (Blueprint $table) {
+        Schema::create('organizations_users_pivot', function (Blueprint $table) {
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Organization::class);
         });
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('organization_user');
+        Schema::dropIfExists('organizations_users_pivot');
     }
 };

@@ -26,6 +26,7 @@ class Post extends Model
         'excerpt',
         'source',
         'is_published',
+        'published_by',
         'published_at'
     ];
 
@@ -39,6 +40,6 @@ class Post extends Model
 
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, table: 'blog_tag_post');
+        return $this->belongsToMany(Tag::class, table: 'blog_tags_posts_pivot');
     }
 }

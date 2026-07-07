@@ -48,7 +48,7 @@ class Member extends Model
      */
     public function attributes(): BelongsToMany
     {
-        return $this->belongsToMany(Attribute::class, table: 'membership_member_attribute')
+        return $this->belongsToMany(Attribute::class, table: 'membership_members_attributes_pivot')
             ->withPivot('value');
     }
 

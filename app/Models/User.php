@@ -97,6 +97,6 @@ class User extends Authenticatable implements FilamentUser, HasTenants
 
     public function organizations(): BelongsToMany
     {
-        return $this->belongsToMany(Organization::class);
+        return $this->belongsToMany(Organization::class, table: 'organizations_users_pivot');
     }
 }

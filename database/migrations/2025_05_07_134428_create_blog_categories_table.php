@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->foreignIdFor(Category::class)->nullable();
+            $table->foreignIdFor(Category::class, 'parent_id')->nullable();
             $table->timestamps();
         });
     }

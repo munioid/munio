@@ -49,7 +49,7 @@ class Attribute extends Model
      */
     public function members(): BelongsToMany
     {
-        return $this->belongsToMany(Member::class, table: 'membership_member_attribute')
+        return $this->belongsToMany(Member::class, table: 'membership_members_attributes_pivot')
             ->withPivot('value');
     }
 

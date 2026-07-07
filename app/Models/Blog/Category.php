@@ -23,7 +23,7 @@ class Category extends Model
         'name',
         'slug',
         'description',
-        'category_id'
+        'parent_id'
     ];
 
     /**
@@ -31,6 +31,6 @@ class Category extends Model
      */
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(self::class, 'category_id');
+        return $this->belongsTo(self::class, 'parent_id');
     }
 }
