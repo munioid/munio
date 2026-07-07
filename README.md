@@ -68,7 +68,7 @@ Here are some of the upcoming features and improvements planned for Munio Commun
 
 - [ ] Event reservations and attendance tracking
 - [ ] RESTAPI for get posts, members, and events
-- [*] User admin permissions
+- [x] User admin permissions
 
 ### 🌍 Long-Term Goals
 
