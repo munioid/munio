@@ -6,9 +6,11 @@ namespace App\Models;
 
 use App\Models\Organization\Organization;
 use App\Traits\Multitenantable;
+use Filament\Facades\Filament;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +22,7 @@ use Illuminate\Support\Collection;
 class User extends Authenticatable implements FilamentUser, HasTenants
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasUuids, Multitenantable;
+    use HasFactory, Notifiable, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -71,6 +73,15 @@ class User extends Authenticatable implements FilamentUser, HasTenants
                 $model->status_updated_at = now();
             }
         });
+
+        static::addGlobalScope('organization', function (Builder $query) {
+            $tenant = Filament::getTenant();
+            if ($tenant) {
+                $query->whereHas('organizations', function (Builder $query) use ($tenant) {
+                    $query->where('organization_id', $tenant->getKey());
+                });
+            }
+        });
     }
 
     public function canAccessPanel(Panel $panel): bool
@@ -95,7 +106,6 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     /**
      * Relationships
      */
-
     public function organizations(): BelongsToMany
     {
         return $this->belongsToMany(Organization::class, table: 'organizations_users_pivot');
