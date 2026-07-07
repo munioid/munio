@@ -4,13 +4,14 @@ namespace App\Models\Membership;
 
 use App\Models\User;
 use App\Traits\Multitenantable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Member extends Model
 {
-    use Multitenantable;
+    use Multitenantable, HasUuids;
 
     protected $table = 'membership_members';
 

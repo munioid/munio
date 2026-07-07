@@ -3,13 +3,14 @@
 namespace App\Models\Blog;
 
 use App\Traits\Multitenantable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Post extends Model
 {
-    use Multitenantable;
+    use Multitenantable, HasUuids;
 
     protected $table = 'blog_posts';
 

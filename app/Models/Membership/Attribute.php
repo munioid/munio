@@ -2,14 +2,15 @@
 
 namespace App\Models\Membership;
 
-use App\Traits\Multitenantable;
 use App\Enums\MemberAttributeTypeEnum;
+use App\Traits\Multitenantable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Attribute extends Model
 {
-    use Multitenantable;
+    use Multitenantable, HasUuids;
 
     protected $table = 'membership_attributes';
 

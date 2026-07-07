@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('membership_attributes', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary()->index();
             $table->foreignIdFor(Organization::class);
             $table->string('fieldname');
             $table->string('label');

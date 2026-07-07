@@ -15,7 +15,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('blog_tags', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary()->index();
             $table->foreignIdFor(Organization::class)->nullable();
             $table->string('name');
             $table->string('slug')->unique();

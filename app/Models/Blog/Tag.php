@@ -3,11 +3,12 @@
 namespace App\Models\Blog;
 
 use App\Traits\Multitenantable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    use Multitenantable;
+    use Multitenantable, HasUuids;
 
     protected $table = 'blog_tags';
 
