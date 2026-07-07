@@ -61,6 +61,7 @@ Here are some of the upcoming features and improvements planned for Munio Commun
 - [ ] Community dashboard with member and post statistics
 - [ ] Event management (CRUD)
 - [ ] Posts API (Read Only)
+- [ ] Authentication API
 
 ### 🚀 Mid-Term Goals
 
