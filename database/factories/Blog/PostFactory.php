@@ -26,7 +26,7 @@ class PostFactory extends Factory
             'excerpt' => fake()->paragraph(),
             'source' => fake()->url(),
             'is_published' => fake()->boolean(),
-            'published_at' => now()
+            'published_at' => fake()->dateTimeBetween('-10 months', 'now'),
         ];
     }
 
