@@ -6,7 +6,6 @@ use App\Models\Blog\Category;
 use App\Models\Blog\Post;
 use App\Models\Blog\Tag;
 use App\Models\Organization\Organization;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PostSeeder extends Seeder
