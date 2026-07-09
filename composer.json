@@ -37,8 +37,10 @@
   "prefer-stable": true,
   "require": {
     "php": "^8.3",
+    "darkaonline/l5-swagger": "^11.1",
     "filament/filament": "^5.3",
     "laravel/framework": "^13.0",
+    "laravel/passport": "^13.0",
     "laravel/tinker": "^3.0"
   },
   "require-dev": {
