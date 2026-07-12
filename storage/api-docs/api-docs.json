@@ -149,6 +149,95 @@
                     }
                 ]
             }
+        },
+        "/api/blog/posts": {
+            "get": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "List Posts",
+                "operationId": "e97343bf3f13d0c59544ba9e8bb03397",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/SearchParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/BasePaginationResponse"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/PostResponse"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/blog/posts/{id}": {
+            "get": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Detail Post",
+                "operationId": "c14438247a13aa90f96e94302d14eb58",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/IdParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/BaseItemResponse"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/PostResponse"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -245,6 +334,49 @@
                 },
                 "type": "object"
             },
+            "BasePaginationResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {}
+                    },
+                    "meta": {
+                        "properties": {
+                            "pagination": {
+                                "properties": {
+                                    "total": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "count": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "per_page": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "current_page": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "total_pages": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
             "BaseSuccessResponse": {
                 "properties": {
                     "success": {
@@ -256,6 +388,143 @@
                     }
                 },
                 "type": "object"
+            },
+            "PostResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Voluptatum sint quas dicta qui qui ad"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "voluptatum-sint-quas-dicta-qui-qui-ad"
+                    },
+                    "excerpt": {
+                        "type": "string",
+                        "example": "Deserunt assumenda vero occaecati quia nam rerum iure est"
+                    },
+                    "content": {
+                        "type": "string",
+                        "example": "<p>Qui qui sed libero a et. Labore impedit consequuntur voluptates autem. Corrupti doloremque dolorem nostrum ut.</p>"
+                    },
+                    "source": {
+                        "type": "string",
+                        "format": "uri",
+                        "example": "http://www.ruecker.biz/facere-eaque-delectus-eum-et-sequi"
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/CategoryResponse"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TagResponse"
+                        }
+                    },
+                    "published_by": {
+                        "type": "string",
+                        "example": "Admin"
+                    },
+                    "published_at": {
+                        "type": "string",
+                        "example": "2026-06-11 10:24:15"
+                    },
+                    "covers": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FileResponse"
+                        }
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2026-06-11 10:24:15"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "example": "2026-06-11 10:24:15"
+                    }
+                },
+                "type": "object"
+            },
+            "FileResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "file_name": {
+                        "type": "string"
+                    },
+                    "file_path": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "CategoryResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Aperiam"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "aperiam"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Molestiae consequatur dolorem sed quae autem."
+                    }
+                },
+                "type": "object"
+            },
+            "TagResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Ipsam"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "ipsam"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Rerum quis architecto sit itaque."
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "parameters": {
+            "IdParameter": {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "schema": {
+                    "format": "uuid"
+                }
+            },
+            "SearchParameter": {
+                "name": "search",
+                "in": "query",
+                "description": "Search keyword",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
             }
         },
         "securitySchemes": {
@@ -273,6 +542,10 @@
         {
             "name": "Authentication",
             "description": "Authentication"
+        },
+        {
+            "name": "Blog",
+            "description": "Blog"
         }
     ]
 }
