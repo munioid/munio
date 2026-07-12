@@ -10,13 +10,14 @@ use Illuminate\Validation\ValidationException;
 class ValidationExceptionHandler extends Exception
 {
     public function render(
-        Request $request,
         ValidationException $exception
     ): JsonResponse {
         return response()->json([
             'success' => false,
-            'message' => 'Validation failed.',
-            'errors' => $exception->errors(),
+            'http_code' => 422,
+            'message' => collect($exception->errors())
+                ->flatten()
+                ->first()
         ], 422);
     }
 }

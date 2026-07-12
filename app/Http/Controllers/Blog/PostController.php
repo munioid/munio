@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Blog\PostIndexRequest;
 use App\Http\Resources\Blog\PostResource;
 use App\Models\Blog\Post;
+use Exception;
+use Throwable;
 
 class PostController extends Controller
 {
@@ -22,5 +24,22 @@ class PostController extends Controller
             ->paginate(10);
 
         return $this->respondWithPagination($posts, PostResource::class);
+    }
+
+    public function detail(string $id)
+    {
+        try {
+            $post = Post::query()
+                ->with(['category', 'tags', 'covers'])
+                ->find($id);
+
+            if (!$post) {
+                throw new Exception('Post tidak ditemukan.', 404);
+            }
+
+            return $this->respondWithItem(PostResource::make($post));
+        } catch (Throwable $th) {
+            return $this->respondWithError($th->getMessage(), $th->getCode());
+        }
     }
 }

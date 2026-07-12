@@ -20,6 +20,7 @@ Route::middleware('customAuth')->group(function () {
     Route::prefix('blog')->group(function () {
         Route::prefix('posts')->group(function () {
             Route::get('/', [PostController::class, 'index']);
+            Route::get('{id}', [PostController::class, 'detail']);
         });
     });
 });

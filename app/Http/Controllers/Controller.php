@@ -13,17 +13,15 @@ abstract class Controller
     protected function respondWithError(string $message, int $statusCode)
     {
         $this->statusCode = $statusCode != 0 ? $statusCode : 500;
-        $data = [
+        return response()->json([
             'success' => false,
-            'error' => [
-                'http_code' => $this->statusCode,
-                'message' => $message
-            ]
-        ];
-        return $this->respondWithArray($data);
+            'http_code' => $this->statusCode,
+            'message' => $message
+        ], $this->statusCode);
     }
 
-    protected function respondWithPagination(LengthAwarePaginator $paginated, string $resourceClass, array $additionalMeta = []): JsonResponse {
+    protected function respondWithPagination(LengthAwarePaginator $paginated, string $resourceClass, array $additionalMeta = []): JsonResponse
+    {
         return $this->respondWithArray(
             data: $resourceClass::collection($paginated->items())->resolve(),
             meta: array_merge([
