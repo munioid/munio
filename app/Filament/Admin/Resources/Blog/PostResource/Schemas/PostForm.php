@@ -5,7 +5,6 @@ namespace App\Filament\Admin\Resources\Blog\PostResource\Schemas;
 use App\Filament\Forms\Components\MunioFileUpload;
 use App\Models\Blog\Post;
 use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Flex;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
