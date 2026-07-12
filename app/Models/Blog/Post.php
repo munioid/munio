@@ -4,6 +4,7 @@ namespace App\Models\Blog;
 
 use App\Models\File;
 use App\Traits\Multitenantable;
+use App\Traits\Searchable;
 use Database\Factories\Blog\PostFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -16,14 +17,12 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 #[UseFactory(PostFactory::class)]
 class Post extends Model
 {
-    use Multitenantable, HasUuids, HasFactory;
+    use Multitenantable, HasUuids, HasFactory, Searchable;
 
     protected $table = 'blog_posts';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var list<string>
      */
     protected $fillable = [
         'organization_id',
@@ -35,6 +34,15 @@ class Post extends Model
         'is_published',
         'published_by',
         'published_at'
+    ];
+
+    /**
+     * The attrubutes that are searchable.
+     */
+    protected array $searchable = [
+        'title',
+        'category.name',
+        'tags.name'
     ];
 
     /**

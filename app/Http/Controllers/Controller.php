@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 abstract class Controller
 {
@@ -22,6 +23,21 @@ abstract class Controller
         return $this->respondWithArray($data);
     }
 
+    protected function respondWithPagination(LengthAwarePaginator $paginated, string $resourceClass, array $additionalMeta = []): JsonResponse {
+        return $this->respondWithArray(
+            data: $resourceClass::collection($paginated->items())->resolve(),
+            meta: array_merge([
+                'pagination' => [
+                    'total' => $paginated->total(),
+                    'count' => $paginated->count(),
+                    'per_page' => $paginated->perPage(),
+                    'current_page' => $paginated->currentPage(),
+                    'total_pages' => $paginated->lastPage()
+                ]
+            ], $additionalMeta)
+        );
+    }
+
     protected function respondWithItem(JsonResource $item, array $headers = []): JsonResponse
     {
         return $this->respondWithArray($item->resolve(), $headers);
@@ -35,11 +51,12 @@ abstract class Controller
         ]);
     }
 
-    protected function respondWithArray(array $data, array $headers = []): JsonResponse
+    protected function respondWithArray(array $data, array $meta = [],  array $headers = []): JsonResponse
     {
         return response()->json([
             'success' => $this->statusCode == 200 ? true : false,
-            'data' => $data
+            'data' => $data,
+            ...(! empty($meta) ? ['meta' => $meta] : []),
         ], $this->statusCode, $headers);
     }
 
