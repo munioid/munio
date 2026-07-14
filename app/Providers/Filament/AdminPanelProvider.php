@@ -66,7 +66,10 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-user-group'),
                 NavigationGroup::make()
                     ->label("Blog")
-                    ->icon('heroicon-o-newspaper')
+                    ->icon('heroicon-o-newspaper'),
+                NavigationGroup::make()
+                    ->label("Event")
+                    ->icon('heroicon-o-calendar-days')
             ]);
     }
 }
