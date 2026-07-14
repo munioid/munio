@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 abstract class Controller
 {
@@ -33,6 +34,13 @@ abstract class Controller
                     'total_pages' => $paginated->lastPage()
                 ]
             ], $additionalMeta)
+        );
+    }
+
+    protected function respondWithCollection(Collection $data, string $resourceClass): JsonResponse
+    {
+        return $this->respondWithArray(
+            data: $resourceClass::collection($data)->resolve(),
         );
     }
 

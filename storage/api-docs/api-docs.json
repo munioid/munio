@@ -150,6 +150,52 @@
                 ]
             }
         },
+        "/api/blog/categories": {
+            "get": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "List Categories",
+                "operationId": "bd989f984c3588b9d9923847fe104d6c",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/SearchParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/BaseCollectionResponse"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/CategoryResponse"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/blog/posts": {
             "get": {
                 "tags": [
@@ -318,6 +364,19 @@
                     "message": {
                         "type": "string",
                         "example": "Profile berhasil dirubah."
+                    }
+                },
+                "type": "object"
+            },
+            "BaseCollectionResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {}
                     }
                 },
                 "type": "object"

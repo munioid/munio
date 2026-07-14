@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Authentication\AuthController;
 use App\Http\Controllers\Authentication\ProfileController;
+use App\Http\Controllers\Blog\CategoryController;
 use App\Http\Controllers\Blog\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +19,13 @@ Route::middleware('auth:api')->group(function () {
 Route::middleware('customAuth')->group(function () {
     // Blog
     Route::prefix('blog')->group(function () {
+        // Posts
         Route::prefix('posts')->group(function () {
             Route::get('/', [PostController::class, 'index']);
             Route::get('{id}', [PostController::class, 'detail']);
         });
+
+        // Categories
+        Route::get('categories', [CategoryController::class, 'index']);
     });
 });
