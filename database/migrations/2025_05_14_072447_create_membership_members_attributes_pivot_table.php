@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('membership_member_attribute');
+        Schema::dropIfExists('membership_members_attributes_pivot');
     }
 };

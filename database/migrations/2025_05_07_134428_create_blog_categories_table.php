@@ -17,10 +17,12 @@ return new class extends Migration
             $table->uuid('id')->primary()->index();
             $table->foreignIdFor(Organization::class)->nullable();
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->text('description')->nullable();
             $table->foreignIdFor(Category::class, 'parent_id')->nullable();
             $table->timestamps();
+
+            $table->unique(['organization_id', 'slug']);
         });
     }
 
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('blog_categories');
     }
 };
