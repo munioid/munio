@@ -284,6 +284,52 @@
                     }
                 ]
             }
+        },
+        "/api/blog/tags": {
+            "get": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "List Tags",
+                "operationId": "915d4f7b705db185f8474b1942408062",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/SearchParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/BasePaginationResponse"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/TagResponse"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {

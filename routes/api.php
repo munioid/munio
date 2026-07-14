@@ -4,6 +4,7 @@ use App\Http\Controllers\Authentication\AuthController;
 use App\Http\Controllers\Authentication\ProfileController;
 use App\Http\Controllers\Blog\CategoryController;
 use App\Http\Controllers\Blog\PostController;
+use App\Http\Controllers\Blog\TagController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -27,5 +28,8 @@ Route::middleware('customAuth')->group(function () {
 
         // Categories
         Route::get('categories', [CategoryController::class, 'index']);
+
+        // Tags
+        Route::get('tags', [TagController::class, 'index']);
     });
 });
