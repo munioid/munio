@@ -19,6 +19,8 @@ class CategoryResource extends Resource
 
     protected static UnitEnum|string|null $navigationGroup = 'Event';
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Schema $schema): Schema
     {
         return CategoryForm::configure($schema);
