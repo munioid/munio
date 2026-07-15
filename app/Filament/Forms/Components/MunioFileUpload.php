@@ -50,7 +50,7 @@ class MunioFileUpload extends FileUpload
             }
 
             $component->state(
-                $record->{$this->relationship}
+                $record->{$this->relationship}()
                     ->pluck('file_path')
                     ->toArray()
             );
