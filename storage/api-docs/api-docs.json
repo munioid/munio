@@ -330,6 +330,144 @@
                     }
                 ]
             }
+        },
+        "/api/events/categories": {
+            "get": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "List Categories",
+                "operationId": "d7435c002477229197bd8ed930e1e412",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/SearchParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/BaseCollectionResponse"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/CategoryResponse"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/events": {
+            "get": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "List Event",
+                "operationId": "8a7f496c4ee75c245b4039b9efa9ee06",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/SearchParameter"
+                    },
+                    {
+                        "$ref": "#/components/parameters/PageParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/BasePaginationResponse"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/EventResponse"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/events/{id}": {
+            "get": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "Detail Event",
+                "operationId": "91ce6b8973c33e3cdc03ac3f798c9678",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/IdParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/BaseItemResponse"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/EventResponse"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -555,6 +693,100 @@
                 },
                 "type": "object"
             },
+            "EventPackageResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Package 1"
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "P1"
+                    },
+                    "price": {
+                        "type": "decimal",
+                        "example": 100000
+                    },
+                    "stocks": {
+                        "type": "integer",
+                        "example": 100
+                    }
+                },
+                "type": "object"
+            },
+            "EventResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Qui numquam inventore sunt aut sunt assumenda"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "qui-numquam-inventore-sunt-aut-sunt-assumenda"
+                    },
+                    "excerpt": {
+                        "type": "string",
+                        "example": "Quasi asperiores officia ducimus rerum"
+                    },
+                    "content": {
+                        "type": "string",
+                        "example": "<p>Ipsa nihil repellat cupiditate eligendi.</p>"
+                    },
+                    "start_at": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "end_at": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "cover": {
+                        "$ref": "#/components/schemas/FileResponse"
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/CategoryResponse"
+                    },
+                    "published": {
+                        "type": "boolean"
+                    },
+                    "published_at": {
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2026-06-12 10:24:15"
+                    },
+                    "pricing_type": {
+                        "type": "string",
+                        "example": "package"
+                    },
+                    "price": {
+                        "type": "decimal",
+                        "example": 100000
+                    },
+                    "stocks": {
+                        "type": "integer",
+                        "example": 100
+                    },
+                    "external_url": {
+                        "type": "string",
+                        "example": "http://www.ruecker.biz/facere-eaque-delectus-eum-et-sequi"
+                    },
+                    "packages": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EventPackageResponse"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "FileResponse": {
                 "properties": {
                     "id": {
@@ -622,6 +854,15 @@
                     "format": "uuid"
                 }
             },
+            "PageParameter": {
+                "name": "page",
+                "in": "query",
+                "description": "Page of pagination",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
             "SearchParameter": {
                 "name": "search",
                 "in": "query",
@@ -651,6 +892,10 @@
         {
             "name": "Blog",
             "description": "Blog"
+        },
+        {
+            "name": "Event",
+            "description": "Event"
         }
     ]
 }
