@@ -2,10 +2,14 @@
 
 namespace App\Filament\Admin\Resources\Event\Events\Schemas;
 
+use App\Enums\PricingTypeEnum;
 use App\Filament\Forms\Components\MunioFileUpload;
 use App\Models\Event\Event;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
@@ -56,7 +60,30 @@ class EventForm
                                 ->native(false)
                                 ->visible(fn(Get $get) => $get('is_published')),
                         ])
-                        ->columnSpan(2)
+                        ->columnSpan(2),
+                    Tabs::make()
+                        ->schema([
+                            Tabs\Tab::make('Pricing')
+                                ->schema([
+                                    ToggleButtons::make('pricing_type')
+                                        ->label('Type')
+                                        ->options(PricingTypeEnum::class)
+                                        ->inline()
+                                        ->live()
+                                        ->default(PricingTypeEnum::SINGLE)
+                                        ->columnSpanFull(),
+                                    TextInput::make('price')
+                                        ->numeric()
+                                        ->hidden(fn(Get $get) => $get('pricing_type') == PricingTypeEnum::PACKAGE),
+                                    TextInput::make('stocks')
+                                        ->numeric()
+                                        ->visible(fn(Get $get) => $get('pricing_type') == PricingTypeEnum::SINGLE),
+                                    TextInput::make('external_link')
+                                        ->visible(fn(Get $get) => $get('pricing_type') == PricingTypeEnum::EXTERNAL)
+                                ])
+                        ])
+                        ->columns(2)
+                        ->columnSpan(4)
                 ])
                     ->contained(false)
                     ->columns(6)

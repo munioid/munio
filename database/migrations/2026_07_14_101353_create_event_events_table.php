@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PricingTypeEnum;
 use App\Models\Event\Category;
 use App\Models\Organization\Organization;
 use Illuminate\Database\Migrations\Migration;
@@ -25,6 +26,10 @@ return new class extends Migration
             $table->foreignIdFor(Category::class)->nullable();
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();
+            $table->string('pricing_type')->default(PricingTypeEnum::SINGLE->value);
+            $table->decimal('price', 15, 2)->nullable();
+            $table->unsignedInteger('stocks')->nullable();
+            $table->string('external_link')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
