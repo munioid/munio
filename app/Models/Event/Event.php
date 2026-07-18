@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 #[Fillable(
@@ -24,7 +25,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
     'pricing_type',
     'price',
     'stocks',
-    'external_link',
+    'external_link'
 )]
 class Event extends Model
 {
@@ -54,5 +55,10 @@ class Event extends Model
     {
         return $this->morphMany(File::class, 'attachment')
             ->where('module', 'covers');
+    }
+
+    public function packages(): HasMany
+    {
+        return $this->hasMany(Package::class);
     }
 }

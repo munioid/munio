@@ -5,7 +5,9 @@ namespace App\Filament\Admin\Resources\Event\Events\Schemas;
 use App\Enums\PricingTypeEnum;
 use App\Filament\Forms\Components\MunioFileUpload;
 use App\Models\Event\Event;
+use Filament\Facades\Filament;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Section;
@@ -14,6 +16,7 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Unique;
 
 class EventForm
 {
@@ -35,7 +38,10 @@ class EventForm
                                 }),
                             Forms\Components\TextInput::make('slug')
                                 ->required()
-                                ->maxLength(255),
+                                ->maxLength(255)
+                                ->unique(
+                                    ignoreRecord: true,
+                                    modifyRuleUsing: fn(Unique $rule) => $rule->where('organization_id', Filament::getTenant()->id)),
                             Forms\Components\RichEditor::make('content')
                                 ->columnSpanFull(),
                             Forms\Components\Textarea::make('excerpt')
@@ -79,7 +85,27 @@ class EventForm
                                         ->numeric()
                                         ->visible(fn(Get $get) => $get('pricing_type') == PricingTypeEnum::SINGLE),
                                     TextInput::make('external_link')
-                                        ->visible(fn(Get $get) => $get('pricing_type') == PricingTypeEnum::EXTERNAL)
+                                        ->visible(fn(Get $get) => $get('pricing_type') == PricingTypeEnum::EXTERNAL),
+                                    Repeater::make('packages')
+                                        ->hiddenLabel()
+                                        ->relationship()
+                                        ->schema([
+                                            TextInput::make('name')
+                                                ->required(),
+                                            TextInput::make('code')
+                                                ->required()
+                                                ->distinct(),
+                                            TextInput::make('price')
+                                                ->numeric(),
+                                            TextInput::make('stocks')
+                                                ->minValue(0)
+                                                ->default(0)
+                                                ->required()
+                                        ])
+                                        ->addActionLabel('Add Package')
+                                        ->columnSpanFull()
+                                        ->columns(2)
+                                        ->visible(fn(Get $get) => $get('pricing_type') == PricingTypeEnum::PACKAGE),
                                 ])
                         ])
                         ->columns(2)
