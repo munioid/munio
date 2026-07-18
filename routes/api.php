@@ -5,6 +5,8 @@ use App\Http\Controllers\Authentication\ProfileController;
 use App\Http\Controllers\Blog\CategoryController;
 use App\Http\Controllers\Blog\PostController;
 use App\Http\Controllers\Blog\TagController;
+use App\Http\Controllers\Event\CategoryController as EventCategoryController;
+use App\Http\Controllers\Event\EventController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -31,5 +33,15 @@ Route::middleware('customAuth')->group(function () {
 
         // Tags
         Route::get('tags', [TagController::class, 'index']);
+    });
+
+    // Event
+    Route::prefix('events')->group(function() {
+        // Categories
+        Route::get('categories', [EventCategoryController::class, 'index']);
+
+        // Events
+        Route::get('/', [EventController::class, 'index']);
+        Route::get('{id}', [EventController::class, 'detail']);
     });
 });
