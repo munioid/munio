@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 #[Fillable(
     'organization_id',
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
     'excerpt',
     'start_at',
     'end_at',
-    'is_published',
+    'published',
     'published_at',
     'pricing_type',
     'price',
@@ -42,6 +42,10 @@ class Event extends Model
     {
         return [
             'pricing_type' => PricingTypeEnum::class,
+            'start_at' => 'date',
+            'end_at' => 'date',
+            'published' => 'boolean',
+            'published_at' => 'datetime'
         ];
     }
 
@@ -51,10 +55,10 @@ class Event extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function covers(): MorphMany
+    public function cover(): MorphOne
     {
-        return $this->morphMany(File::class, 'attachment')
-            ->where('module', 'covers');
+        return $this->morphOne(File::class, 'attachment')
+            ->where('module', 'cover');
     }
 
     public function packages(): HasMany

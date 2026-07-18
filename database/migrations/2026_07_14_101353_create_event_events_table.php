@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('start_at')->nullable();
             $table->string('end_at')->nullable();
             $table->foreignIdFor(Category::class)->nullable();
-            $table->boolean('is_published')->default(false);
+            $table->boolean('published')->default(false);
             $table->timestamp('published_at')->nullable();
             $table->string('pricing_type')->default(PricingTypeEnum::SINGLE->value);
             $table->decimal('price', 15, 2)->nullable();

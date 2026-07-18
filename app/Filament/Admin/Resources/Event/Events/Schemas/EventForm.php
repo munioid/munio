@@ -53,18 +53,17 @@ class EventForm
                         ->columnSpan(4),
                     Section::make()
                         ->schema([
-                            MunioFileUpload::make('covers')
-                                ->multiple()
+                            MunioFileUpload::make('cover')
                                 ->image(),
                             Forms\Components\Select::make('category_id')
                                 ->relationship('category', 'name')
                                 ->preload()
                                 ->searchable(),
-                            Forms\Components\Toggle::make('is_published')
+                            Forms\Components\Toggle::make('published')
                                 ->reactive(),
                             Forms\Components\DateTimePicker::make('published_at')
                                 ->native(false)
-                                ->visible(fn(Get $get) => $get('is_published')),
+                                ->visible(fn(Get $get) => $get('published')),
                         ])
                         ->columnSpan(2),
                     Tabs::make()
