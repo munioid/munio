@@ -20,28 +20,36 @@ class ReservationForm
                 Section::make()
                     ->schema([
                         Select::make('event_id')
+                            ->required()
                             ->relationship(name: 'event', titleAttribute: 'title')
                             ->searchable()
                             ->preload()
                             ->live()
                             ->columnSpanFull()
-                            ->disabled(fn (string $operation) => $operation === 'edit'),
+                            ->disabled(fn(string $operation) => $operation === 'edit'),
                         TextInput::make('name')
                             ->required(),
                         TextInput::make('email')
                             ->email()
                             ->required(),
                         TextInput::make('quantity')
+                            ->required()
                             ->numeric()
                             ->default(1)
-                            ->disabled(fn (string $operation) => $operation === 'edit'),
+                            ->disabled(fn(string $operation) => $operation === 'edit'),
                         Select::make('package_id')
-                            ->relationship(name: 'package', titleAttribute: 'name')
+                            ->relationship(
+                                name: 'package',
+                                titleAttribute: 'name',
+                                modifyQueryUsing: function ($query, Get $get) {
+                                    $query->where('event_id', $get('event_id'));
+                                }
+                            )
                             ->searchable()
                             ->preload()
                             ->required()
                             ->visible(fn(Get $get) => Event::find($get('event_id'))?->pricing_type == PricingTypeEnum::PACKAGE)
-                            ->disabled(fn (string $operation) => $operation === 'edit'),
+                            ->disabled(fn(string $operation) => $operation === 'edit'),
                         Select::make('user_id')
                             ->relationship(name: 'user', titleAttribute: 'name')
                             ->searchable()

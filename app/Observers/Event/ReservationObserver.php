@@ -40,6 +40,6 @@ class ReservationObserver
             ? ((int) substr($lastCode, -4)) + 1
             : 1;
 
-        return sprintf('RSV%s%04d', $date, $sequence);
+        return sprintf('RSVP%s%04d', $date, $sequence);
     }
 }
