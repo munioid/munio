@@ -55,6 +55,7 @@ class MemberForm
                                 ])
                             ])
                     ])
+                    ->visible(fn(string $operation) => $operation === 'edit')
                     ->columnSpanFull()
             ]);
     }
