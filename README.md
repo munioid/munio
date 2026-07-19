@@ -59,14 +59,14 @@ Here are some of the upcoming features and improvements planned for Munio Commun
 ### 🎯 Short-Term Goals
 
 - [x] Community dashboard with member and post statistics
-- [ ] Event management (CRUD)
+- [x] Event management (CRUD)
 - [x] Posts API (Read Only)
-- [ ] Authentication API
+- [x] Authentication API
 
 ### 🚀 Mid-Term Goals
 
-- [ ] Event reservations and attendance tracking
-- [ ] RESTAPI for get posts, members, and events
+- [x] Event reservations
+- [x] RESTAPI for get posts, members, and events
 - [x] User admin permissions
 
 ### 🌍 Long-Term Goals
