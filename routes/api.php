@@ -7,6 +7,7 @@ use App\Http\Controllers\Blog\PostController;
 use App\Http\Controllers\Blog\TagController;
 use App\Http\Controllers\Event\CategoryController as EventCategoryController;
 use App\Http\Controllers\Event\EventController;
+use App\Http\Controllers\Event\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -40,6 +41,11 @@ Route::middleware('customAuth')->group(function () {
         // Categories
         Route::get('categories', [EventCategoryController::class, 'index']);
 
+        // Reservations
+        Route::prefix('reservations')->group(function() {
+            Route::post('/', [ReservationController::class, 'store']);
+        });
+        
         // Events
         Route::get('/', [EventController::class, 'index']);
         Route::get('{id}', [EventController::class, 'detail']);

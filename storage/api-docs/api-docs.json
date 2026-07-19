@@ -468,6 +468,55 @@
                     }
                 ]
             }
+        },
+        "/api/events/reservations": {
+            "post": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "Create Reservation",
+                "operationId": "066a32c5135f40826fd756d8e687208e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReservationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/BaseSuccessResponse"
+                                        },
+                                        {
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Reservation submitted."
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -498,6 +547,37 @@
                     "email": {
                         "type": "string",
                         "format": "email"
+                    }
+                },
+                "type": "object"
+            },
+            "ReservationRequest": {
+                "required": [
+                    "event_id",
+                    "name",
+                    "email",
+                    "quantity"
+                ],
+                "properties": {
+                    "event_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "package_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Test"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "test@example.com"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "example": 1
                     }
                 },
                 "type": "object"
