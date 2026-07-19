@@ -60,14 +60,15 @@ Here are some of the upcoming features and improvements planned for Munio Commun
 
 - [x] Community dashboard with member and post statistics
 - [x] Event management (CRUD)
-- [x] Posts API (Read Only)
 - [x] Authentication API
+- [ ] Export and Import
 
 ### 🚀 Mid-Term Goals
 
 - [x] Event reservations
 - [x] RESTAPI for get posts, members, and events
 - [x] User admin permissions
+- [ ] Payment Gateway
 
 ### 🌍 Long-Term Goals
 
