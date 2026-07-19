@@ -3,11 +3,12 @@
 namespace App\Filament\Admin\Resources\Membership\MemberResource\Schemas;
 
 use App\Enums\MemberStatusEnum;
-use App\Filament\Admin\Resources\Membership\MemberResource\RelationManagers\AttributesRelationManager;
-use Filament\Forms;
-use Filament\Schemas\Components\Livewire;
+use App\Filament\Forms\Components\MemberAttribute;
+use App\Models\Membership\Package;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
 class MemberForm
@@ -18,45 +19,35 @@ class MemberForm
             ->schema([
                 Section::make()
                     ->schema([
-                        Forms\Components\TextInput::make('number')
-                            ->required()
+                        Select::make('package_id')
+                            ->relationship('package', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            ->columnSpanFull(),
+                        TextInput::make('number')
                             ->maxLength(255)
-                            ->unique(table: 'membership_members', column: 'number', ignoreRecord: true),
-                        Forms\Components\TextInput::make('name')
+                            ->unique(table: 'membership_members', column: 'number', ignoreRecord: true)
+                            ->disabled(fn(Get $get) => Package::find($get('package_id'))?->is_auto_numbering ?: false),
+                        TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
+                        TextInput::make('email')
                             ->email()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('phone')
-                            ->tel()
-                            ->telRegex('/^\+?[1-9]\d{8,14}$/'),
-                        Forms\Components\Textarea::make('address')
-                            ->columnSpanFull(),
-                        Forms\Components\Select::make('status')
+                        Select::make('status')
                             ->options(MemberStatusEnum::class)
                             ->default(MemberStatusEnum::PENDING->value)
                             ->native(false),
-                        Forms\Components\Select::make('user_id')
+                        Select::make('user_id')
                             ->relationship('user', 'name')
                             ->preload()
                             ->searchable()
-                            ->optionsLimit(10)
+                            ->optionsLimit(10),
+                        MemberAttribute::make('Attributes')
                     ])
                     ->columnSpanFull()
-                    ->columns(2),
-                Tabs::make()
-                    ->schema([
-                        Tabs\Tab::make('Attribute')
-                            ->schema([
-                                Livewire::make(AttributesRelationManager::class, fn($record) => [
-                                    'ownerRecord' => $record,
-                                    'pageClass' => static::class
-                                ])
-                            ])
-                    ])
-                    ->visible(fn(string $operation) => $operation === 'edit')
-                    ->columnSpanFull()
+                    ->columns(2)
             ]);
     }
 }

@@ -4,6 +4,10 @@ namespace App\Models\Membership;
 
 use App\Enums\MemberAttributeTypeEnum;
 use App\Traits\Multitenantable;
+use Filament\Forms\Components\Field;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -64,5 +68,36 @@ class Attribute extends Model
         } else {
             return $this->value;
         }
+    }
+
+    ### Scopes ###
+    public function scopeNotPrivate(Builder $query)
+    {
+        $query->where('is_private', false);
+    }
+
+    ### Components ###
+    public function toFormComponent(): Field
+    {
+        $field = match ($this->type) {
+            MemberAttributeTypeEnum::Dropdown => Select::make("attributes.{$this->fieldname}")
+                ->options(collect($this->options)->pluck('value', 'code')->toArray())
+                ->native(false),
+            default => TextInput::make("attributes.{$this->fieldname}")
+        };
+        $field->label($this->label)
+            ->required($this->is_required)
+            ->afterStateHydrated(function ($component, $record) {
+                if (! $record) {
+                    return;
+                }
+
+                $attribute = $record->attributes()
+                    ->firstWhere('fieldname', $this->fieldname);
+
+                $component->state($attribute?->pivot?->value);
+            });
+
+        return $field;
     }
 }

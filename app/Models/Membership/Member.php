@@ -22,13 +22,13 @@ class Member extends Model
      */
     protected $fillable = [
         'organization_id',
+        'package_id',
         'number',
         'name',
         'email',
-        'phone',
-        'address',
         'status',
-        'status_updated_at'
+        'status_updated_at',
+        'user_id'
     ];
 
     /**
@@ -51,6 +51,11 @@ class Member extends Model
     {
         return $this->belongsToMany(Attribute::class, table: 'membership_members_attributes_pivot')
             ->withPivot('value');
+    }
+
+    public function package(): BelongsTo
+    {
+        return $this->belongsTo(Package::class);
     }
 
     public function user(): BelongsTo
