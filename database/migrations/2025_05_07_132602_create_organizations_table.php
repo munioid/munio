@@ -15,7 +15,8 @@ return new class extends Migration
             $table->uuid('id')->primary()->index();
             $table->string('name');
             $table->string('code')->unique();
-            $table->string('domain')->unique();
+            $table->string('subdomain')->unique();
+            $table->string('domain')->unique()->nullable();
             $table->timestamps();
         });
     }

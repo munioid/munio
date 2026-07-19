@@ -36,8 +36,8 @@ class Onboarding extends Page
      */
     public ?array $data = [
         'name' => 'Default Community',
-        'code' => '_',
-        'domain' => 'community.example.com',
+        'code' => 'default',
+        'subdomain' => 'default',
         'user_name' => 'Admin',
         'user_email' => 'admin@example.com'
     ];
@@ -61,10 +61,10 @@ class Onboarding extends Page
                                         ->required(),
                                     TextInput::make('code')
                                         ->required()
-                                        ->unique(table: 'organizations', column: 'code'),
-                                    TextInput::make('domain')
+                                        ->unique(),
+                                    TextInput::make('subdomain')
                                         ->required()
-                                        ->unique(table: 'organizations', column: 'domain'),
+                                        ->unique(),
                                 ])
                                 ->inlineLabel(),
                             Wizard\Step::make('User')
@@ -128,7 +128,7 @@ class Onboarding extends Page
             $org = Organization::create([
                 'name' => data_get($data, 'name'),
                 'code' => data_get($data, 'code'),
-                'domain' => data_get($data, 'domain')
+                'subdomain' => data_get($data, 'subdomain')
             ]);
 
             # Create Superadmin
