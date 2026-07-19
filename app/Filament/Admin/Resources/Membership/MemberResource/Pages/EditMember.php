@@ -23,5 +23,8 @@ class EditMember extends EditRecord
     protected function afterSave(): void
     {
         $this->syncAttributes();
+
+        $this->record->refresh();
+        $this->fillForm();
     }
 }

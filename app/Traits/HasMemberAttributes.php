@@ -34,5 +34,7 @@ trait HasMemberAttributes
         }
 
         $this->record->attributes()->sync($sync);
+
+        $this->record->generateNumber();
     }
 }

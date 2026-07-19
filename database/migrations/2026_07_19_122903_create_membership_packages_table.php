@@ -28,6 +28,8 @@ return new class extends Migration
             $table->boolean('is_auto_numbering');
             $table->string('format')->nullable();
             $table->timestamps();
+
+            $table->unique(['organization_id', 'code']);
         });
     }
 

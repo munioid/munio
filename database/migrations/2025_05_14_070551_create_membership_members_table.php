@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Membership\Package;
 use App\Models\Organization\Organization;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -14,10 +15,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('membership_members', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary()->index();
             $table->foreignIdFor(Organization::class);
+            $table->foreignIdFor(Package::class);
             $table->foreignIdFor(User::class)->nullable();
-            $table->string('number')->unique();
+            $table->string('number')->nullable()->unique();
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
