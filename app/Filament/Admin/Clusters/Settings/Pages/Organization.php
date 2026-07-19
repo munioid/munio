@@ -3,12 +3,13 @@
 namespace App\Filament\Admin\Clusters\Settings\Pages;
 
 use App\Filament\Admin\Clusters\Settings;
+use App\Filament\Forms\Components\MunioFileUpload;
 use App\Models\Organization\Organization as OrganizationModel;
 use BackedEnum;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
-use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\Page;
@@ -71,17 +72,25 @@ class Organization extends Page
     {
         return $form
             ->schema([
-                Section::make('General')
+                Section::make('Basic Information')
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->required(),
-                        Forms\Components\TextInput::make('code')
+                        TextInput::make('code')
                             ->required()
-                            ->unique(table: 'organizations', column: 'code', ignoreRecord: true),
-                        Forms\Components\TextInput::make('domain')
+                            ->unique(ignoreRecord: true),
+                        TextInput::make('subdomain')
                             ->required()
-                            ->unique(table: 'organizations', column: 'domain', ignoreRecord: true)
+                            ->unique(ignoreRecord: true),
+                        TextInput::make('domain')
+                            ->unique(ignoreRecord: true),
+                        MunioFileUpload::make('icon')
+                            ->image(),
+                        MunioFileUpload::make('favicon')
+                            ->image(),
+
                     ])
+                    ->collapsible()
                     ->columns(2)
             ])
             ->model($this->record)
@@ -93,15 +102,7 @@ class Organization extends Page
     {
         $record->fill($data);
 
-        $keysToWatch = [
-            'name',
-            'code',
-            'domain'
-        ];
-
-        if ($record->isDirty($keysToWatch)) {
-            $this->dispatch('organizationUpdated', code: data_get($data, 'code'));
-        }
+        $this->dispatch('organizationUpdated', code: data_get($data, 'code'));
 
         $record->save();
 

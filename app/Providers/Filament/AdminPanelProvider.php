@@ -10,6 +10,7 @@ use Filament\Support\Colors\Color;
 use App\Http\Middleware\AdminMiddleware;
 use Filament\Http\Middleware\Authenticate;
 use App\Models\Organization\Organization;
+use Filament\Facades\Filament;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -28,11 +29,28 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->brandLogo(function () {
+                $tenant = Filament::getTenant();
+
+                if ($tenant?->icon) {
+                    return $tenant->icon->getPath();
+                }
+
+                return env('BRAND_ICON') ?: '/images/icon.png';
+            })
+            ->favicon(function () {
+                $tenant = Filament::getTenant();
+
+                if ($tenant?->favicon) {
+                    return $tenant->favicon->getPath();
+                }
+
+                return env('BRAND_FAVICON') ?: '/images/favicon.png';
+            })
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->discoverClusters(in: app_path('Filament/Admin/Clusters'), for: 'App\\Filament\\Admin\\Clusters')
