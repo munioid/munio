@@ -2,6 +2,7 @@
 
 namespace App\Filament\Forms\Components;
 
+use Filament\Facades\Filament;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -22,10 +23,11 @@ class MunioFileUpload extends FileUpload
             TemporaryUploadedFile $file,
             ?object $record
         ) {
+            $tenant = Filament::getTenant();
             $contentType = $file->getMimeType();
             $size = $file->getSize();
             $disk = $this->getDiskName();
-            $directory = $this->getDirectory() . '/posts';
+            $directory = $this->getDirectory() . '/' . $tenant->code;
             $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
             $diskStorage = Storage::disk($disk);
 

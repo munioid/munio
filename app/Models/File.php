@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\Storage;
 
 #[Fillable([
     'field',
@@ -42,5 +43,15 @@ class File extends Model
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    ### Functions ###
+    public function getPath()
+    {
+        // $fileName = $this->disk_name;
+
+        $path = Storage::url($this->file_path);
+
+        return $path;
     }
 }
