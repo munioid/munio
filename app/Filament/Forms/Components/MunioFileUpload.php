@@ -33,7 +33,7 @@ class MunioFileUpload extends FileUpload
 
             $user = Auth::user();
             $record->{$this->relationship}()->create([
-                'module' => $this->getName(),
+                'field' => $this->getName(),
                 'file_name' => $file->getClientOriginalName(),
                 'file_path' => $path,
                 'file_size' => $size,

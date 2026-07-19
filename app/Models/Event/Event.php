@@ -58,7 +58,7 @@ class Event extends Model
     public function cover(): MorphOne
     {
         return $this->morphOne(File::class, 'attachment')
-            ->where('module', 'cover');
+            ->where('field', 'cover');
     }
 
     public function packages(): HasMany

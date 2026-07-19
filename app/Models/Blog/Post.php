@@ -61,6 +61,6 @@ class Post extends Model
     public function covers(): MorphMany
     {
         return $this->morphMany(File::class, 'attachment')
-            ->where('module', 'covers');
+            ->where('field', 'covers');
     }
 }
