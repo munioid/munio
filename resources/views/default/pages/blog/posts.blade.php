@@ -8,6 +8,6 @@
 
 @section('content')
 <div class="min-h-screen bg-gray-50 pb-3">
-    <livewire:blog.post-list :categories=$categories :tags=$tags />
+    <livewire:blog.posts :categories=$categories :tags=$tags />
 </div>
 @endsection
