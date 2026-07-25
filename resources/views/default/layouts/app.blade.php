@@ -7,13 +7,7 @@
 
     <style>
         :root {
-            --primary-color: {
-                    {
-                    $organization?->colors['primary'] ?? '#ff5c54'
-                }
-            }
-
-            ;
+            --primary-color: {{$organization?->colors['primary'] ?? '#ff5c54' }};
         }
 
         ::-webkit-scrollbar {

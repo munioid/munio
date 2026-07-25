@@ -13,6 +13,7 @@ Route::middleware([
     // Blog posts page
     Route::prefix('posts')->group(function () {
         Route::get('/', [PostController::class, 'index']);
+        Route::get('{id}', [PostController::class, 'detail']);
     });
 });
 
