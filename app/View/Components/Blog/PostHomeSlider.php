@@ -1,0 +1,34 @@
+<?php
+
+namespace App\View\Components\Blog;
+
+use App\Models\Blog\Post;
+use Closure;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\View\Component;
+
+class PostHomeSlider extends Component
+{
+    public Collection $posts;
+
+    /**
+     * Create a new component instance.
+     */
+    public function __construct()
+    {
+        $this->posts = Post::query()
+            ->published()
+            ->orderBy('published_at', 'desc')
+            ->take(6)
+            ->get();
+    }
+
+    /**
+     * Get the view / contents that represent the component.
+     */
+    public function render(): View|Closure|string
+    {
+        return view('components.blog.post-home-slider', [$this->posts]);
+    }
+}

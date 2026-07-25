@@ -4,8 +4,11 @@ namespace App\Models\Event;
 
 use App\Enums\PricingTypeEnum;
 use App\Models\File;
+use App\Traits\HasAttachments;
 use App\Traits\Multitenantable;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,7 +33,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 )]
 class Event extends Model
 {
-    use HasUuids, Multitenantable, HasFactory;
+    use HasUuids, Multitenantable, HasFactory, HasAttachments;
 
     protected $table = 'event_events';
 
@@ -50,20 +53,64 @@ class Event extends Model
         ];
     }
 
+    ### Attachments ###
+    protected static $attachOne = [
+        'cover'
+    ];
+
     ### Relationships ###
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function cover(): MorphOne
-    {
-        return $this->morphOne(File::class, 'attachment')
-            ->where('field', 'cover');
-    }
-
     public function packages(): HasMany
     {
         return $this->hasMany(Package::class);
+    }
+
+    ### Scopes ###
+    public function scopePublished(Builder $query)
+    {
+        $query->where('published', true);
+    }
+
+    ### Attributes ###
+    protected function eventDate(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                if (! $this->start_at || ! $this->end_at) {
+                    return null;
+                }
+
+                if ($this->start_at->isSameDay($this->end_at)) {
+                    return $this->start_at->format('l, d F Y');
+                }
+
+                if ($this->start_at->format('F Y') === $this->end_at->format('F Y')) {
+                    return sprintf(
+                        '%s–%s %s',
+                        $this->start_at->format('d'),
+                        $this->end_at->format('d'),
+                        $this->start_at->format('F Y'),
+                    );
+                }
+
+                if ($this->start_at->year === $this->end_at->year) {
+                    return sprintf(
+                        '%s – %s',
+                        $this->start_at->format('d M'),
+                        $this->end_at->format('d M Y'),
+                    );
+                }
+
+                return sprintf(
+                    '%s – %s',
+                    $this->start_at->format('d M Y'),
+                    $this->end_at->format('d M Y'),
+                );
+            },
+        );
     }
 }

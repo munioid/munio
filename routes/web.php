@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Web\HomeController;
 use App\Models\Membership\Member;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-
-    return redirect()->to('/onboarding');
+Route::middleware([
+    'hasTenant'
+])->group(function () {
+    Route::get('/', [HomeController::class, 'index']);
 });
 
 
