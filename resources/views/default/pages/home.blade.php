@@ -1,5 +1,5 @@
 @extends('default.layouts.app')
-@section('title', 'Home - '.$organization->name)
+@section('title', 'Home')
 
 @section('header')
 <x-header :organization="$organization" />

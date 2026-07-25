@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Blog\PostController;
 use App\Http\Controllers\Web\HomeController;
 use App\Models\Membership\Member;
 use Illuminate\Support\Facades\Route;
@@ -8,6 +9,11 @@ Route::middleware([
     'hasTenant'
 ])->group(function () {
     Route::get('/', [HomeController::class, 'index']);
+
+    // Blog posts page
+    Route::prefix('posts')->group(function () {
+        Route::get('/', [PostController::class, 'index']);
+    });
 });
 
 
