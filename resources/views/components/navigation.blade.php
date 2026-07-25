@@ -7,7 +7,7 @@
                 <span class="mt-1 text-[11px] font-medium">Home</span>
             </a>
 
-            <a href="/posts" class="flex-1 flex flex-col items-center text-gray-400">
+            <a href="/posts" class="flex-1 flex flex-col items-center {{ request()->is('posts') ? 'text-primary' : 'text-gray-400' }}">
                 <x-heroicon-o-newspaper class="w-6 h-6" />
                 <span class="mt-1 text-[11px]">Berita</span>
             </a>

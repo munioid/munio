@@ -21,7 +21,7 @@
 
     @vite('resources/css/app.css')
 
-    <title>@yield('title')</title>
+    <title>@yield('title') - {{$organization->name}}</title>
     <link rel="icon" href="{{ $organization->favicon?->getPath() ?? asset('images/favicon.png') }}">
 </head>
 
