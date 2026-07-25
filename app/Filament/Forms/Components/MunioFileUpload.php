@@ -12,6 +12,7 @@ use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 class MunioFileUpload extends FileUpload
 {
     protected string $relationship;
+    protected array $uploadedFiles = [];
 
     protected function setUp(): void
     {
@@ -34,16 +35,30 @@ class MunioFileUpload extends FileUpload
             $path = $diskStorage->putFileAs($directory, $file, $filename);
 
             $user = Auth::user();
-            $record->{$this->relationship}()->create([
+            $this->uploadedFiles[$path] = [
                 'field' => $this->getName(),
                 'file_name' => $file->getClientOriginalName(),
                 'file_path' => $path,
                 'file_size' => $size,
                 'content_type' => $contentType,
                 'created_by' => $user?->id
-            ]);
+            ];
 
             return $path;
+        });
+
+        $this->saveRelationshipsUsing(function ($record, $state) {
+            foreach ((array) $state as $filepath) {
+                $meta = $this->uploadedFiles[$filepath] ?? null;
+
+                if (! $meta) {
+                    continue;
+                }
+
+                $record->{$this->relationship}()->create([
+                    ...$meta,
+                ]);
+            }
         });
 
         $this->afterStateHydrated(function (FileUpload $component, $record) {
@@ -58,12 +73,12 @@ class MunioFileUpload extends FileUpload
             );
         });
 
-        $this->deleteUploadedFileUsing(function (string|TemporaryUploadedFile $file, object $record) {
+        $this->deleteUploadedFileUsing(function (string|TemporaryUploadedFile $file, $record) {
             $path = $file;
             $disk = Storage::disk($this->getDiskName());
 
             $attachment = $record
-                ?->{$this->relationship}()
+                ->{$this->relationship}
                 ->where('file_path', $path)
                 ->first();
 

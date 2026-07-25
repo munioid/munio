@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources\Membership\Packages\Schemas;
 
 use App\Enums\Membership\PackageValidityTypeEnum;
+use App\Filament\Forms\Components\MunioFileUpload;
 use App\Models\Membership\Attribute;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
@@ -25,45 +26,39 @@ class PackageForm
             ->components([
                 Section::make()
                     ->schema([
-                        TextInput::make('name')
-                            ->required(),
-                        TextInput::make('code')
-                            ->required()
-                            ->unique(ignoreRecord: true),
-                        TextInput::make('price')
-                            ->numeric(),
-                        Select::make('validity_type')
-                            ->required()
-                            ->options(PackageValidityTypeEnum::class)
-                            ->default(PackageValidityTypeEnum::LIFETIME)
-                            ->native(false)
-                            ->live(),
-                        TextInput::make('validity_amount')
-                            ->required()
-                            ->numeric()
-                            ->visible(fn(Get $get) => in_array($get('validity_type'), [PackageValidityTypeEnum::MONTHLY, PackageValidityTypeEnum::YEARLY])),
-                        DatePicker::make('validity_end_at')
-                            ->label('End at')
-                            ->required()
-                            ->visible(fn(Get $get) => $get('validity_type') === PackageValidityTypeEnum::CUSTOMDATE),
-                        Toggle::make('is_active')
-                            ->columnSpanFull(),
-                    ])
-                    ->columns(2)
-                    ->columnSpanFull(),
-                Tabs::make()
-                    ->tabs([
-                        Tabs\Tab::make('Information')
+                        Section::make()
                             ->schema([
-                                Textarea::make('description'),
-                                RichEditor::make('information'),
-                            ]),
-                        Tabs\Tab::make('Numbering')
-                            ->schema([
-                                Toggle::make('is_auto_numbering')
+                                TextInput::make('name')
+                                    ->required(),
+                                TextInput::make('code')
+                                    ->required()
+                                    ->unique(ignoreRecord: true),
+                                TextInput::make('price')
+                                    ->numeric(),
+                                Select::make('validity_type')
+                                    ->required()
+                                    ->options(PackageValidityTypeEnum::class)
+                                    ->default(PackageValidityTypeEnum::LIFETIME)
+                                    ->native(false)
                                     ->live(),
+                                TextInput::make('validity_amount')
+                                    ->required()
+                                    ->numeric()
+                                    ->visible(fn(Get $get) => in_array($get('validity_type'), [PackageValidityTypeEnum::MONTHLY, PackageValidityTypeEnum::YEARLY])),
+                                DatePicker::make('validity_end_at')
+                                    ->label('End at')
+                                    ->required()
+                                    ->visible(fn(Get $get) => $get('validity_type') === PackageValidityTypeEnum::CUSTOMDATE),
+                                Textarea::make('description')
+                                    ->columnSpanFull(),
+                                RichEditor::make('information')
+                                    ->columnSpanFull(),
+                                Toggle::make('is_auto_numbering')
+                                    ->live()
+                                    ->columnSpanFull(),
                                 TextInput::make('format')
-                                    ->visible(fn(Get $get) => $get('is_auto_numbering')),
+                                    ->visible(fn(Get $get) => $get('is_auto_numbering'))
+                                    ->columnSpanFull(),
                                 Callout::make('Data Variables')
                                     ->icon(\Filament\Support\Icons\Heroicon::OutlinedLightBulb)
                                     ->visible(fn(Get $get) => $get('is_auto_numbering'))
@@ -75,9 +70,23 @@ class PackageForm
                                                 'attributes' => Attribute::query()->notPrivate()->get()
                                             ])
                                     )
+                                    ->visible(fn(Get $get) => $get('is_auto_numbering'))
+                                    ->columnSpanFull()
                             ])
+                            ->columns(2)
+                            ->columnSpan(4),
+                        Section::make()
+                            ->schema([
+                                MunioFileUpload::make('cover'),
+                                MunioFileUpload::make('vcard_background')
+                                    ->label('Virtual Card Background'),
+                                Toggle::make('is_active'),
+                            ])
+                            ->columnSpan(2)
                     ])
+                    ->columns(6)
                     ->columnSpanFull()
+                    ->contained(false)
             ]);
     }
 }
