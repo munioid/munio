@@ -45,7 +45,7 @@ new class extends Component
     public function selectCategory(?string $category): void
     {
         $this->selectedCategory = $category;
-        $this->perPage = 3;
+        $this->perPage = 10;
     }
 
     public function selectTag(string $slug): void
@@ -61,17 +61,17 @@ new class extends Component
             $this->selectedTags[] = $slug;
         }
 
-        $this->perPage = 3;
+        $this->perPage = 10;
     }
     
     public function updatedSearch(): void
     {
-        $this->perPage = 3;
+        $this->perPage = 10;
     }
 
     public function loadMore(): void
     {
-        $this->perPage += 3;
+        $this->perPage += 10;
     }
 };
 ?>
