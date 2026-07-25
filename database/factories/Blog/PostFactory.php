@@ -28,7 +28,7 @@ class PostFactory extends Factory
             'excerpt' => fake()->paragraph(),
             'source' => fake()->url(),
             'category_id' => Category::query()->inRandomOrder()->first()?->id,
-            'is_published' => fake()->boolean(),
+            'published' => fake()->boolean(),
             'published_at' => $published ? fake()->dateTimeBetween('-10 months', 'now') : null
         ];
     }

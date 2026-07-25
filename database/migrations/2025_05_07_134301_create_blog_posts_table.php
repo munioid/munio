@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('excerpt')->nullable();
             $table->string('source')->nullable();
             $table->foreignIdFor(Category::class)->nullable();
-            $table->boolean('is_published')->default(false);
+            $table->boolean('published')->default(false);
             $table->foreignIdFor(User::class, 'published_by')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->timestamps();

@@ -32,11 +32,11 @@ class StatsOverview extends BaseWidget
 
         # Posts Stats
         $postTotal = Post::query()
-            ->where('is_published', true)
+            ->published()
             ->count();
         $postCharts = Post::query()
             ->selectRaw('COUNT(*) as count, DATE_FORMAT(published_at, "%Y-%m") as month')
-            ->where('is_published', true)
+            ->published()
             ->where('published_at', '>=', now()->subMonths(12)->startOfMonth())
             ->groupBy('month')
             ->orderBy('month', 'asc')

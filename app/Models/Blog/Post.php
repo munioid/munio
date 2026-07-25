@@ -7,6 +7,7 @@ use App\Traits\Multitenantable;
 use App\Traits\Searchable;
 use Database\Factories\Blog\PostFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,7 +31,7 @@ class Post extends Model
         'content',
         'excerpt',
         'source',
-        'is_published',
+        'published',
         'published_by',
         'published_at'
     ];
@@ -52,6 +53,7 @@ class Post extends Model
     protected function casts(): array
     {
         return [
+            'published' => 'boolean',
             'published_at' => 'datetime',
             'created_at' => 'datetime:Y-m-d H:i:s',
             'updated_at' => 'datetime:Y-m-d H:i:s',
@@ -63,9 +65,7 @@ class Post extends Model
         'cover'
     ];
 
-    /**
-     * Relationships
-     */
+    ### Relationships ###
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -74,5 +74,11 @@ class Post extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, table: 'blog_tags_posts_pivot');
+    }
+
+    ### Scopes ###
+    public function scopePublished(Builder $query)
+    {
+        $query->where('published', true);
     }
 }

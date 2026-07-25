@@ -20,7 +20,7 @@ class EventsTable
                     ->searchable(),
                 Tables\Columns\TextColumn::make('category.name')
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_published')
+                Tables\Columns\IconColumn::make('published')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('published_at')
                     ->dateTime()

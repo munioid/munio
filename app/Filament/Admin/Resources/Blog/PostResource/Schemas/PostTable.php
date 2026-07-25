@@ -21,7 +21,7 @@ class PostTable
                 Tables\Columns\TextColumn::make('category.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tags.name'),
-                Tables\Columns\IconColumn::make('is_published')
+                Tables\Columns\IconColumn::make('published')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('published_at')
                     ->dateTime()

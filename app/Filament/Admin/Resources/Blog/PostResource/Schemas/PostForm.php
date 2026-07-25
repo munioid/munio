@@ -55,11 +55,11 @@ class PostForm
                                     ->preload()
                                     ->multiple()
                                     ->searchable(),
-                                Forms\Components\Toggle::make('is_published')
+                                Forms\Components\Toggle::make('published')
                                     ->reactive(),
                                 Forms\Components\DateTimePicker::make('published_at')
                                     ->native(false)
-                                    ->visible(fn(Get $get) => $get('is_published')),
+                                    ->visible(fn(Get $get) => $get('published')),
                             ])
                             ->columnSpan(2)
                     ])

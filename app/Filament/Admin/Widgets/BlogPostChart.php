@@ -18,11 +18,11 @@ class BlogPostChart extends ChartWidget
         });
 
         $postCharts = Post::query()
-            ->selectRaw('COUNT(*) as count, DATE_FORMAT(published_at, "%Y-%m") as month')
-            ->where('is_published', true)
+            ->published()
             ->where('published_at', '>=', now()->subMonths(11)->startOfMonth())
             ->groupBy('month')
             ->orderBy('month')
+            ->selectRaw('COUNT(*) as count, DATE_FORMAT(published_at, "%Y-%m") as month')
             ->pluck('count', 'month');
 
         $data = $months->map(function ($month) use ($postCharts) {
