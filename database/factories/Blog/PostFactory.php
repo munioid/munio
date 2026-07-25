@@ -19,7 +19,7 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->sentence();
+        $title = fake()->unique()->sentence();
         $published = fake()->boolean();
         return [
             'title' => $title,
@@ -28,7 +28,7 @@ class PostFactory extends Factory
             'excerpt' => fake()->paragraph(),
             'source' => fake()->url(),
             'category_id' => Category::query()->inRandomOrder()->first()?->id,
-            'published' => fake()->boolean(),
+            'published' => $published,
             'published_at' => $published ? fake()->dateTimeBetween('-10 months', 'now') : null
         ];
     }
