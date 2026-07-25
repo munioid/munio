@@ -7,7 +7,13 @@
 
     <style>
         :root {
-            --primary-color: {{$organization?->colors['primary'] ?? '#ff5c54'}};
+            --primary-color: {
+                    {
+                    $organization?->colors['primary'] ?? '#ff5c54'
+                }
+            }
+
+            ;
         }
 
         ::-webkit-scrollbar {
@@ -33,7 +39,7 @@
             md:max-w-[480px] pb-12">
 
         <!-- HEADER -->
-        @yield('header')
+        <x-header :organization="$organization" />
 
         <!-- CONTENT -->
         @yield('content')
