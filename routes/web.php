@@ -15,3 +15,7 @@ Route::get('/membership/vcard/{id}', function ($id) {
 
     return view('vcard.vcard', compact('member', 'organization'));
 });
+
+Route::get('/home', function () {
+    return view('welcome');
+});
