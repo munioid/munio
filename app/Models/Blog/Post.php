@@ -2,7 +2,6 @@
 
 namespace App\Models\Blog;
 
-use App\Models\File;
 use App\Traits\HasAttachments;
 use App\Traits\Multitenantable;
 use App\Traits\Searchable;
