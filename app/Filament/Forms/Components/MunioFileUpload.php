@@ -21,8 +21,7 @@ class MunioFileUpload extends FileUpload
         $this->relationship = $this->getName();
 
         $this->saveUploadedFileUsing(function (
-            TemporaryUploadedFile $file,
-            ?object $record
+            TemporaryUploadedFile $file
         ) {
             $tenant = Filament::getTenant();
             $contentType = $file->getMimeType();
@@ -55,9 +54,7 @@ class MunioFileUpload extends FileUpload
                     continue;
                 }
 
-                $record->{$this->relationship}()->create([
-                    ...$meta,
-                ]);
+                $record->{$this->relationship}()->create($meta);
             }
         });
 
@@ -66,11 +63,15 @@ class MunioFileUpload extends FileUpload
                 return;
             }
 
-            $component->state(
-                $record->{$this->relationship}()
-                    ->pluck('file_path')
-                    ->toArray()
-            );
+            $record->{$this->relationship}()->get()->each(function ($file) use (&$paths) {
+                if (Storage::exists($file->file_path)) {
+                    $paths[] = $file->file_path;
+                } else {
+                    $file->delete();
+                }
+            });
+
+            $component->state($paths);
         });
 
         $this->deleteUploadedFileUsing(function (string|TemporaryUploadedFile $file, $record) {
