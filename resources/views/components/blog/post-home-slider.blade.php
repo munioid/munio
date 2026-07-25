@@ -6,7 +6,7 @@
             Berita Terkini
         </h2>
 
-        <a href="/posts" class="text-green-500 font-medium">
+        <a href="/posts" class="text-primary font-medium">
             Selengkapnya →
         </a>
 
@@ -22,7 +22,7 @@
                 class="h-45 w-full object-cover">
 
             <div class="p-5">
-                <div class="text-green-600 uppercase text-xs font-semibold">
+                <div class="text-primary uppercase text-xs font-semibold">
                     {{$post->category?->name}}
                 </div>
                 <h3 class="mt-2 text-2xl font-semibold leading-tight line-clamp-2">

@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    @vite('resources/css/app.css')
-
-    <title>Community App</title>
-
     <style>
+        :root {
+            --primary-color: {{$organization?->colors['primary'] ?? '#ff5c54'}};
+        }
+
         ::-webkit-scrollbar {
             display: none;
         }
@@ -18,6 +18,11 @@
             background: #f3f4f6;
         }
     </style>
+
+    @vite('resources/css/app.css')
+
+    <title>@yield('title')</title>
+    <link rel="icon" href="{{ $organization->favicon?->getPath() ?? asset('images/favicon.png') }}">
 </head>
 
 <body>
@@ -38,7 +43,7 @@
             <div
                 class="grid grid-cols-4 rounded-full bg-white/95 backdrop-blur-lg shadow-2xl border border-gray-100 py-2">
 
-                <a href="#" class="flex flex-col items-center text-green-600">
+                <a href="#" class="flex flex-col items-center text-primary">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M3 10.5L12 3l9 7.5M5 9.5V21h14V9.5" />

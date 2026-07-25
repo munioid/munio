@@ -5,7 +5,7 @@
             Acara Terdekat
         </h2>
 
-        <a href="#" class="text-green-500 font-medium">
+        <a href="#" class="text-primary font-medium">
             Selengkapnya →
         </a>
 
@@ -25,11 +25,11 @@
                 </p>
                 <div class="mt-3">
                     @if($event->price)
-                    <span class="text-lg font-bold text-green-600">
+                    <span class="text-lg font-bold text-primary">
                         Rp {{ number_format($event->price, 0, ',', '.') }}
                     </span>
                     @else
-                    <span class="text-lg font-bold text-green-600">
+                    <span class="text-lg font-bold text-primary">
                         FREE
                     </span>
                     @endif
@@ -37,11 +37,11 @@
                 <div class="mt-5 flex gap-3">
                     <a
                         href="{{ url('/events/' . $event->slug) }}"
-                        class="flex-1 rounded-xl border border-green-600 text-green-600 py-3 font-medium hover:bg-green-50 transition text-center">
+                        class="flex-1 rounded-xl border border-primary text-primary py-3 font-medium hover:bg-primary transition text-center">
                         Detail
                     </a>
                     <button
-                        class="flex-1 rounded-xl bg-green-600 text-white py-3 font-medium hover:bg-green-700 transition">
+                        class="flex-1 rounded-xl bg-primary text-white py-3 font-medium hover:bg-primary transition">
                         Join
                     </button>
                 </div>

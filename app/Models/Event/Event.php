@@ -3,7 +3,6 @@
 namespace App\Models\Event;
 
 use App\Enums\PricingTypeEnum;
-use App\Models\File;
 use App\Traits\HasAttachments;
 use App\Traits\Multitenantable;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -14,7 +13,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 #[Fillable(
     'organization_id',

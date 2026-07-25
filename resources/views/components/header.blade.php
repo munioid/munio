@@ -8,7 +8,7 @@
                 alt="{{ $organization->name }}"
                 class="h-12 rounded-xl object-cover">
             @else
-            <div class="w-12 h-12 rounded-xl bg-green-600 flex items-center justify-center text-white font-bold text-xl">
+            <div class="w-12 h-12 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-xl">
                 M
             </div>
 
