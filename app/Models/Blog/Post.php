@@ -3,6 +3,7 @@
 namespace App\Models\Blog;
 
 use App\Models\File;
+use App\Traits\HasAttachments;
 use App\Traits\Multitenantable;
 use App\Traits\Searchable;
 use Database\Factories\Blog\PostFactory;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 #[UseFactory(PostFactory::class)]
 class Post extends Model
 {
-    use Multitenantable, HasUuids, HasFactory, Searchable;
+    use Multitenantable, HasUuids, HasFactory, Searchable, HasAttachments;
 
     protected $table = 'blog_posts';
 
@@ -46,6 +47,25 @@ class Post extends Model
     ];
 
     /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'published_at' => 'datetime',
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
+        ];
+    }
+
+    ### Attachments ###
+    protected static $attachOne = [
+        'cover'
+    ];
+
+    /**
      * Relationships
      */
     public function category(): BelongsTo
@@ -56,11 +76,5 @@ class Post extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, table: 'blog_tags_posts_pivot');
-    }
-
-    public function covers(): MorphMany
-    {
-        return $this->morphMany(File::class, 'attachment')
-            ->where('field', 'covers');
     }
 }
