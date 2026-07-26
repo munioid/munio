@@ -34,9 +34,10 @@ class EventController extends Controller
         return view('pages.event.detail', compact('theme', 'organization', 'event'));
     }
 
-    public function reservation(string $slug)
+    public function reservation(string $slug, Request $request)
     {
         $organization = Filament::getTenant();
+        $theme = $request->theme;
         $event = Event::query()
             ->whereSlug($slug)
             ->first();
@@ -45,6 +46,6 @@ class EventController extends Controller
             abort(404, 'Not found.');
         }
         
-        return view('default.pages.event.reservation', compact('organization', 'event'));
+        return view('pages.event.reservation', compact('theme', 'organization', 'event'));
     }
 }
