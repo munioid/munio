@@ -13,15 +13,16 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $organization = Filament::getTenant();
-        $categories = Category::all();
         $theme = $request->theme;
+        $categories = Category::all();
 
         return view('pages.event.events', compact('theme', 'organization', 'categories'));
     }
 
-    public function detail(string $slug)
+    public function detail(string $slug, Request $request)
     {
         $organization = Filament::getTenant();
+        $theme = $request->theme;
         $event = Event::query()
             ->whereSlug($slug)
             ->first();
@@ -30,7 +31,7 @@ class EventController extends Controller
             abort(404, 'Not found.');
         }
         
-        return view('default.pages.event.detail', compact('organization', 'event'));
+        return view('pages.event.detail', compact('theme', 'organization', 'event'));
     }
 
     public function reservation(string $slug)
