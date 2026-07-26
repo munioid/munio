@@ -14,12 +14,13 @@ Route::middleware([
     // Blog posts page
     Route::prefix('posts')->group(function () {
         Route::get('/', [PostController::class, 'index']);
-        Route::get('{id}', [PostController::class, 'detail']);
+        Route::get('{slug}', [PostController::class, 'detail']);
     });
 
     // Events page
     Route::prefix('events')->group(function () {
         Route::get('/', [EventController::class, 'index']);
+        Route::get('{slug}', [EventController::class, 'detail']);
     });
 });
 
