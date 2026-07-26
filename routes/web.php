@@ -13,7 +13,8 @@ Route::middleware([
     Route::get('/', [HomeController::class, 'index']);
 
     // Authentication page
-    Route::get('login', [LoginController::class, 'login']);
+    Route::get('login', [LoginController::class, 'login'])->name('login');
+    Route::get('profile', [LoginController::class, 'profile']);
 
     // Blog posts page
     Route::prefix('posts')->group(function () {
