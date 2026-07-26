@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Authentication\LoginController;
+use App\Http\Controllers\Web\Authentication\ProfileController;
 use App\Http\Controllers\Web\Blog\PostController;
 use App\Http\Controllers\Web\Event\EventController;
 use App\Http\Controllers\Web\HomeController;
@@ -8,13 +9,21 @@ use App\Models\Membership\Member;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
-    'hasTenant'
+    'hasTenant',
+    'customAuth'
 ])->group(function () {
     Route::get('/', [HomeController::class, 'index']);
 
-    // Authentication page
+    // Login page
     Route::get('login', [LoginController::class, 'login'])->name('login');
-    Route::get('profile', [LoginController::class, 'profile']);
+
+    // Profile page
+    Route::prefix('profile')
+        ->middleware('auth:web')
+        ->group(function () {
+            Route::get('/', [ProfileController::class, 'profile']);
+            Route::get('edit', [ProfileController::class, 'editProfile']);
+        });
 
     // Blog posts page
     Route::prefix('posts')->group(function () {
