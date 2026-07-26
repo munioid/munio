@@ -122,4 +122,24 @@ class Event extends Model
             },
         );
     }
+
+    protected function registerUrl(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $url = '';
+
+                switch ($this->pricing_type) {
+                    case PricingTypeEnum::EXTERNAL:
+                        $url = $this->external_url;
+                        break;
+                    default:
+                        $url = "/events/{$this->slug}/reservation";
+                        break;
+                }
+
+                return $url;
+            }
+        );
+    }
 }

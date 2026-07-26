@@ -16,7 +16,7 @@ new class extends Component
     public ?string $name = 'Andy';
     public ?string $email = 'andyeka07@gmail.com';
     public int $quantity = 1;
-    public int|float $price;
+    public int|float|null $price;
 
     public function mount(Event $event)
     {

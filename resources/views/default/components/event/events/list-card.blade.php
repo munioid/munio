@@ -38,10 +38,12 @@
                  class="flex-1 rounded-xl border border-primary text-primary py-3 font-medium hover:bg-primary hover:text-white transition text-center">
                  Detail
              </a>
-             <button
-                 class="flex-1 rounded-xl bg-primary py-3 font-medium text-white">
-                 Join
-             </button>
+             @if($event->register_url)
+             <a href="{{ $event->register_url }}"
+                 class="flex-1 rounded-xl bg-primary py-3 font-medium text-white py-3 font-medium hover:bg-primary hover:text-white transition text-center">
+                 Daftar
+             </a>
+             @endif
          </div>
      </div>
  </a>

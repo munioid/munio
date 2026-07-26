@@ -47,7 +47,7 @@ new class extends Component
 };
 ?>
 
-<div class="min-h-screen bg-gray-50 pb-2">
+<div class="min-h-screen bg-gray-50 pb-28">
 
     {{-- Filter --}}
     <x-event.events.filter :categories=$categories :selectedCategory=$selectedCategory />
