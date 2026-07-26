@@ -2,6 +2,8 @@
 @section('title', $event->title)
 @php
 use App\Enums\PricingTypeEnum;
+
+$pricingExternal = $event->pricing_type === PricingTypeEnum::EXTERNAL;
 @endphp
 
 @section('content')
@@ -106,7 +108,7 @@ use App\Enums\PricingTypeEnum;
                 </a>
                 @else
                 <a
-                    href="{{ $event->pricing_type === PricingTypeEnum::EXTERNAL ? $event->external_link : '/events/'.$event->slug }}"
+                    href="{{ $pricingExternal ? $event->external_link : '/events/'.$event->slug.'/reservation' }}"
                     class="rounded-xl bg-primary px-6 py-3 font-medium text-white">
                     Join Event
                 </a>

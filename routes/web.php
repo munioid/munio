@@ -21,6 +21,7 @@ Route::middleware([
     Route::prefix('events')->group(function () {
         Route::get('/', [EventController::class, 'index']);
         Route::get('{slug}', [EventController::class, 'detail']);
+        Route::get('{slug}/reservation', [EventController::class, 'reservation']);
     });
 });
 

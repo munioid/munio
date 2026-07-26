@@ -7,7 +7,7 @@
 
     <style>
         :root {
-            --primary-color: {{$organization?->colors['primary'] ?? '#ff5c54' }};
+            --primary-color: {{$organization?->colors['primary'] ?? '#ff5c54'}};
         }
 
         ::-webkit-scrollbar {
@@ -18,8 +18,8 @@
             background: #f3f4f6;
         }
     </style>
-
     @vite('resources/css/app.css')
+    @filamentStyles
 
     <title>@yield('title') - {{$organization->name}}</title>
     <link rel="icon" href="{{ $organization->favicon?->getPath() ?? asset('images/favicon.png') }}">
@@ -37,9 +37,19 @@
 
         <!-- CONTENT -->
         @yield('content')
+
+        @livewireScripts
+        @filamentScripts
+        <div>
+            @livewire('notifications', [
+                'alignment' => 'right',
+                'verticalAlignment' => 'start',
+            ])
+        </div>
     </div>
 
     <x-navigation />
+
 </body>
 
 </html>
