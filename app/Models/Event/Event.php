@@ -131,7 +131,7 @@ class Event extends Model
 
                 switch ($this->pricing_type) {
                     case PricingTypeEnum::EXTERNAL:
-                        $url = $this->external_url;
+                        $url = $this->external_link;
                         break;
                     default:
                         $url = "/events/{$this->slug}/reservation";
