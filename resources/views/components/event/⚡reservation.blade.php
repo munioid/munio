@@ -6,6 +6,7 @@ use App\Services\Event\ReservationService;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 new class extends Component
@@ -14,8 +15,8 @@ new class extends Component
     public string $theme;
     public Event $event;
 
-    public ?string $name = 'Andy';
-    public ?string $email = 'andyeka07@gmail.com';
+    public ?string $name;
+    public ?string $email;
     public int $quantity = 1;
     public int|float|null $price;
 
@@ -23,6 +24,12 @@ new class extends Component
     {
         $this->event = $event;
         $this->price = $event->price;
+
+        $user = Auth::guard('web')->user();
+        if ($user) {
+            $this->name = $user->name;
+            $this->email = $user->email;
+        }
     }
 
     public function incrementQuantity(): void
@@ -48,12 +55,14 @@ new class extends Component
     {
         try {
             Filament::setTenant($this->organization, true);
+            $user = Auth::guard('web')->user();
 
             ReservationService::createReservation([
                 'event_id' => $this->event->id,
                 'name' => $this->name,
                 'email' => $this->email,
                 'quantity' => $this->quantity,
+                'user_id' => $user?->id
             ]);
 
             Notification::make()

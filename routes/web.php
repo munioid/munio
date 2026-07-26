@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Authentication\LoginController;
 use App\Http\Controllers\Web\Blog\PostController;
 use App\Http\Controllers\Web\Event\EventController;
 use App\Http\Controllers\Web\HomeController;
@@ -10,6 +11,9 @@ Route::middleware([
     'hasTenant'
 ])->group(function () {
     Route::get('/', [HomeController::class, 'index']);
+
+    // Authentication page
+    Route::get('login', [LoginController::class, 'login']);
 
     // Blog posts page
     Route::prefix('posts')->group(function () {

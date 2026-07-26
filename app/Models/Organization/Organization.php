@@ -41,7 +41,8 @@ class Organization extends Model implements HasAvatar
     ### Attachments ###
     protected static $attachOne = [
         'icon',
-        'favicon'
+        'favicon',
+        'login_banner'
     ];
 
     ### Filament Tenancy ###

@@ -5,6 +5,7 @@ namespace App\Services\Event;
 use App\Enums\PricingTypeEnum;
 use App\Models\Event\Event;
 use App\Models\Event\Reservation;
+use App\Models\User;
 use Exception;
 
 class ReservationService
@@ -33,6 +34,14 @@ class ReservationService
             $reservation->package_id = $package->id;
         }
 
+        if (data_get($data, 'user_id')) {
+            $user = User::find(data_get($data, 'user_id'));
+            if (!$user) {
+                throw new Exception('Pengguna tidak ditemukan.', 404);
+            }
+            $reservation->user_id = $user->id;
+        }
+        
         $reservation->save();
 
         return $reservation;

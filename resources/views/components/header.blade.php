@@ -21,9 +21,30 @@
         </div>
 
         <div class="flex gap-3">
-            <button class="w-12 h-12 rounded-full border flex items-center justify-center">
-                👤
-            </button>
+
+            @auth('web')
+            <a
+                href="/profile"
+                class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-gray-200 bg-primary text-lg font-semibold text-white">
+
+                @if(auth('web')->user()->avatar)
+                <img
+                    src="{{ auth('web')->user()->avatar->getPath() }}"
+                    alt="{{ auth('web')->user()->name }}"
+                    class="h-full w-full object-cover">
+                @else
+                {{ strtoupper(mb_substr(auth('web')->user()->name, 0, 1)) }}
+                @endif
+
+            </a>
+            @else
+            <a
+                href="/login"
+                class="flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white">
+                <x-heroicon-o-user class="h-6 w-6 text-gray-600" />
+            </a>
+            @endauth
+
         </div>
     </div>
 </header>

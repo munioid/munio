@@ -89,6 +89,9 @@ class Organization extends Page
                             ->image(),
                         MunioFileUpload::make('favicon')
                             ->image(),
+                        MunioFileUpload::make('login_banner')
+                            ->image()
+                            ->columnSpanFull(),
 
                     ])
                     ->collapsed()
