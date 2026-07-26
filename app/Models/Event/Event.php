@@ -5,6 +5,7 @@ namespace App\Models\Event;
 use App\Enums\PricingTypeEnum;
 use App\Traits\HasAttachments;
 use App\Traits\Multitenantable;
+use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -31,9 +32,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 )]
 class Event extends Model
 {
-    use HasUuids, Multitenantable, HasFactory, HasAttachments;
+    use HasUuids, Multitenantable, HasFactory, HasAttachments, Searchable;
 
     protected $table = 'event_events';
+
+    /**
+     * The attrubutes that are searchable.
+     */
+    protected array $searchable = [
+        'title',
+        'excerpt',
+        'category.name',
+    ];
+
 
     /**
      * Get the attributes that should be cast.

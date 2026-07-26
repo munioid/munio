@@ -12,7 +12,7 @@
                 <span class="mt-1 text-[11px]">Berita</span>
             </a>
 
-            <a href="/events" class="flex-1 flex flex-col items-center text-gray-400">
+            <a href="/events" class="flex-1 flex flex-col items-center {{ request()->is('events*') ? 'text-primary' : 'text-gray-400' }}"">
                 <x-heroicon-o-calendar-days class="w-6 h-6" />
                 <span class="mt-1 text-[11px]">Acara</span>
             </a>

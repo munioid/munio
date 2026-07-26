@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Blog\PostController;
+use App\Http\Controllers\Web\Event\EventController;
 use App\Http\Controllers\Web\HomeController;
 use App\Models\Membership\Member;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,11 @@ Route::middleware([
     Route::prefix('posts')->group(function () {
         Route::get('/', [PostController::class, 'index']);
         Route::get('{id}', [PostController::class, 'detail']);
+    });
+
+    // Events page
+    Route::prefix('events')->group(function () {
+        Route::get('/', [EventController::class, 'index']);
     });
 });
 

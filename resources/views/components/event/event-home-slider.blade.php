@@ -5,7 +5,7 @@
             Acara Terdekat
         </h2>
 
-        <a href="#" class="text-primary font-medium">
+        <a href="/events" class="text-primary font-medium">
             Selengkapnya →
         </a>
 
