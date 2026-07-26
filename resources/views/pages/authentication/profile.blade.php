@@ -4,6 +4,6 @@
 
 @section('content')
 
-<livewire:authentication.profile />
+<livewire:authentication.profile :theme=$theme />
 
 @endsection
