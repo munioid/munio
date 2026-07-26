@@ -2,5 +2,5 @@
 @section('title', $post->title)
 
 @section('content')
-<x-blog.posts.detail :post=$post />
+<livewire:blog.post-detail :post=$post />
 @endsection

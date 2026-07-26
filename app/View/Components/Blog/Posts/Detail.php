@@ -9,18 +9,22 @@ use Illuminate\View\Component;
 
 class Detail extends Component
 {
+    public string $theme;
+
     /**
      * Create a new component instance.
      */
     public function __construct(
         public Post $post
-    ) {}
+    ) {
+        $this->theme = 'default';
+    }
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('default.components.blog.posts.detail');
+        return view($this->theme.'.components.blog.posts.detail');
     }
 }

@@ -9,6 +9,8 @@ use Illuminate\View\Component;
 
 class Filter extends Component
 {
+    public string $theme;
+
     /**
      * Create a new component instance.
      */
@@ -17,13 +19,15 @@ class Filter extends Component
         public ?string $selectedCategory,
         public Collection $tags,
         public array $selectedTags
-    ) {}
+    ) {
+        $this->theme = 'default';
+    }
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('default.components.blog.posts.filter');
+        return view($this->theme.'.components.blog.posts.filter');
     }
 }

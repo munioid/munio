@@ -15,7 +15,8 @@ class PostController extends Controller
         $organization = Filament::getTenant();
         $categories = Category::all();
         $tags = Tag::all();
-        return view('default.pages.blog.posts', compact('organization', 'categories', 'tags'));
+        $theme = 'default';
+        return view('pages.blog.posts', compact('theme','organization', 'categories', 'tags'));
     }
 
     public function detail(string $slug)
@@ -29,6 +30,6 @@ class PostController extends Controller
             abort(404, 'Not found.');
         }
         
-        return view('default.pages.blog.post-detail', compact('organization', 'post'));
+        return view('pages.blog.post-detail', compact('organization', 'post'));
     }
 }
