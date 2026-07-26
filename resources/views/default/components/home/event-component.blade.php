@@ -37,13 +37,15 @@
                 <div class="mt-5 flex gap-3">
                     <a
                         href="{{ url('/events/' . $event->slug) }}"
-                        class="flex-1 rounded-xl border border-primary text-primary py-3 font-medium hover:bg-primary transition text-center">
+                        class="flex-1 rounded-xl border border-primary text-primary py-3 font-medium hover:bg-primary hover:text-white transition text-center">
                         Detail
                     </a>
-                    <button
-                        class="flex-1 rounded-xl bg-primary text-white py-3 font-medium hover:bg-primary transition">
+                    @if($event->register_url)
+                    <a href="{{ $event->register_url }}"
+                        class="flex-1 rounded-xl bg-primary py-3 font-medium text-white py-3 font-medium hover:bg-primary hover:text-white transition text-center">
                         Join
-                    </button>
+                    </a>
+                    @endif
                 </div>
             </div>
         </div>
