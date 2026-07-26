@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use Filament\Facades\Filament;
 use Illuminate\Http\Request;
 
-class LoginController extends Controller
+class ProfileController extends Controller
 {
-    public function login(Request $request)
+    public function profile(Request $request)
     {
         $organization = Filament::getTenant();
         $theme = $request->theme;
 
-        return view('pages.authentication.login', compact('theme', 'organization'));
+        return view('pages.authentication.profile', compact('theme', 'organization'));
     }
 }
