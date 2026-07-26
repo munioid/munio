@@ -6,14 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Event\Category;
 use App\Models\Event\Event;
 use Filament\Facades\Filament;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $organization = Filament::getTenant();
         $categories = Category::all();
-        return view('default.pages.event.events', compact('organization', 'categories'));
+        $theme = $request->theme;
+
+        return view('pages.event.events', compact('theme', 'organization', 'categories'));
     }
 
     public function detail(string $slug)

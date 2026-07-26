@@ -13,6 +13,7 @@ class ListItems extends Component
      * Create a new component instance.
      */
     public function __construct(
+        public string $theme,
         public LengthAwarePaginator $events
     ) {}
 
@@ -21,6 +22,6 @@ class ListItems extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('default.components.event.events.list-items');
+        return view($this->theme.'.components.event.events.list-items');
     }
 }

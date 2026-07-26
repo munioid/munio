@@ -2,20 +2,16 @@
 
 namespace App\View\Components\Event\Events;
 
-use App\Models\Event\Event;
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\Component;
 
-class Filter extends Component
+class Container extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public Collection $categories,
-        public ?string $selectedCategory,
         public string $theme
     ) {}
 
@@ -24,6 +20,6 @@ class Filter extends Component
      */
     public function render(): View|Closure|string
     {
-        return view($this->theme.'.components.event.events.filter');
+        return view($this->theme.'.components.event.events.container');
     }
 }

@@ -30,6 +30,8 @@ class HasTenantMiddleware
             abort(404, 'Not found.');
         }
 
+        $request->merge(['theme' => 'default']);
+
         Filament::setTenant($organization, true);
 
         return $next($request);

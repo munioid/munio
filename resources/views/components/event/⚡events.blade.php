@@ -6,6 +6,8 @@ use Livewire\Component;
 
 new class extends Component
 {
+    public string $theme;
+
     public Collection $categories;
     public int $perPage = 10;
 
@@ -46,12 +48,14 @@ new class extends Component
     }
 };
 ?>
-
-<div class="min-h-screen bg-gray-50 pb-28">
-
+<x-event.events.container :theme=$theme>
     {{-- Filter --}}
-    <x-event.events.filter :categories=$categories :selectedCategory=$selectedCategory />
+    <x-slot:filter>
+        <x-event.events.filter :theme=$theme :categories=$categories :selectedCategory=$selectedCategory />
+    </x-slot:filter>
 
     {{-- Events --}}
-    <x-event.events.list-items :events="$this->events" />
-</div>
+    <x-slot:content>
+        <x-event.events.list-items :theme=$theme :events="$this->events" />
+    </x-slot:content>
+</x-event.events.container>
