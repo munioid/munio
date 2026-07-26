@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Event;
 
+use App\Models\Event\Category;
 use App\Models\Event\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -34,6 +35,7 @@ class EventFactory extends Factory
             'excerpt' => fake()->paragraph(),
             'start_at' => $startAt,
             'end_at' => $endAt,
+            'category_id' => Category::query()->inRandomOrder()->first()?->id,
             'published' => $published,
             'published_at' => $published ? fake()->dateTimeBetween('-10 days', 'now') : null,
             'pricing_type' => $pricingType,
