@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Organization\Organization;
+use App\Traits\HasAttachments;
 use Filament\Facades\Filament;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
@@ -22,7 +23,7 @@ use Laravel\Passport\HasApiTokens;
 class User extends Authenticatable implements FilamentUser, HasTenants
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasUuids, HasApiTokens;
+    use HasFactory, Notifiable, HasUuids, HasApiTokens, HasAttachments;
 
     /**
      * The attributes that are mass assignable.
@@ -60,6 +61,11 @@ class User extends Authenticatable implements FilamentUser, HasTenants
             'password' => 'hashed',
         ];
     }
+
+    ### Attachments ###
+    protected static $attachOne = [
+        'avatar'
+    ];
 
     /**
      * Boot

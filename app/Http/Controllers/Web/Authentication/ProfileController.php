@@ -15,4 +15,11 @@ class ProfileController extends Controller
 
         return view('pages.authentication.profile', compact('theme', 'organization'));
     }
+
+    public function edit(Request $request) {
+        $organization = Filament::getTenant();
+        $theme = $request->theme;
+
+        return view('pages.authentication.edit-profile', compact('theme', 'organization'));
+    }
 }

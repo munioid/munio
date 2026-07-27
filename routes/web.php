@@ -22,7 +22,8 @@ Route::middleware([
         ->middleware('auth:web')
         ->group(function () {
             Route::get('/', [ProfileController::class, 'profile']);
-            Route::get('edit', [ProfileController::class, 'editProfile']);
+            Route::get('edit', [ProfileController::class, 'edit']);
+            Route::post('update', [ProfileController::class, 'update'])->name('profile.update');
         });
 
     // Blog posts page
