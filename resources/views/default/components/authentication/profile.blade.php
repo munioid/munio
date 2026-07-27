@@ -55,7 +55,7 @@
         </a>
 
         <a
-            href="/profile/password"
+            href="/profile/change-password"
             class="flex items-center justify-between rounded-2xl bg-white p-4 shadow-sm">
 
             <div class="flex items-center gap-3">

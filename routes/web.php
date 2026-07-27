@@ -23,7 +23,7 @@ Route::middleware([
         ->group(function () {
             Route::get('/', [ProfileController::class, 'profile']);
             Route::get('edit', [ProfileController::class, 'edit']);
-            Route::post('update', [ProfileController::class, 'update'])->name('profile.update');
+            Route::get('change-password', [ProfileController::class, 'changePassword']);
         });
 
     // Blog posts page
