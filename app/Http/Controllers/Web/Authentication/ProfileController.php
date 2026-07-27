@@ -29,4 +29,11 @@ class ProfileController extends Controller
 
         return view('pages.authentication.change-password', compact('theme', 'organization'));
     }
+
+    public function myReservations(Request $request) {
+        $organization = Filament::getTenant();
+        $theme = $request->theme;
+
+        return view('pages.authentication.my-reservation', compact('theme', 'organization'));
+    }
 }

@@ -67,7 +67,7 @@
         </a>
 
         <a
-            href="/my-events"
+            href="/profile/my-reservations"
             class="flex items-center justify-between rounded-2xl bg-white p-4 shadow-sm">
 
             <div class="flex items-center gap-3">

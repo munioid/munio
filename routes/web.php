@@ -24,6 +24,7 @@ Route::middleware([
             Route::get('/', [ProfileController::class, 'profile']);
             Route::get('edit', [ProfileController::class, 'edit']);
             Route::get('change-password', [ProfileController::class, 'changePassword']);
+            Route::get('my-reservations', [ProfileController::class, 'myReservations']);
         });
 
     // Blog posts page
