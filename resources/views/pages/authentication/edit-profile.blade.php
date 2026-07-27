@@ -2,5 +2,5 @@
 @section('title', 'Ubah Profil')
 
 @section('content')
-<livewire:authentication.edit-profile :theme=$theme />
+<livewire:authentication.edit-profile :theme=$theme :organization=$organization />
 @endsection

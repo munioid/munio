@@ -2,19 +2,25 @@
 
 use App\Filament\Support\Notify;
 use App\Models\File;
+use App\Models\Organization\Organization;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Livewire\WithFileUploads;
 
 new class extends Component
 {
+    use WithFileUploads;
     public User $user;
+    public Organization $organization;
     public string $initial;
 
     public string $name;
     public string $email;
+    public ?TemporaryUploadedFile $avatar = null;
 
     public function mount()
     {
@@ -63,6 +69,8 @@ new class extends Component
 
     public function updatedAvatar(TemporaryUploadedFile $avatar): void
     {
+        Filament::setTenant($this->organization, true);
+
         $this->validate([
             'avatar' => 'image|max:2048', // 2 MB
         ]);
@@ -76,9 +84,9 @@ new class extends Component
                 }
 
                 // Simpan avatar baru
-                $media = File::upload($avatar); // sesuaikan dengan class Media Anda
+                $media = File::upload($avatar, 'avatar', 'users'); // sesuaikan dengan class Media Anda
 
-                $this->user->avatar()->associate($media);
+                $this->user->avatar()->save($media);
                 $this->user->save();
             });
 
@@ -90,7 +98,7 @@ new class extends Component
 
             Notify::danger(
                 'Foto profil gagal diperbarui',
-                'Terjadi kesalahan saat mengunggah foto.'
+                $th->getMessage()
             );
         }
     }
