@@ -48,14 +48,5 @@ new class extends Component
     }
 };
 ?>
-<x-event.events.container :theme=$theme>
-    {{-- Filter --}}
-    <x-slot:filter>
-        <x-event.events.filter :theme=$theme :categories=$categories :selectedCategory=$selectedCategory />
-    </x-slot:filter>
 
-    {{-- Events --}}
-    <x-slot:content>
-        <x-event.events.list-items :theme=$theme :events="$this->events" />
-    </x-slot:content>
-</x-event.events.container>
+<x-event.events :theme=$theme :categories=$categories :selectedCategory=$selectedCategory :events="$this->events" />

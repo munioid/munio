@@ -1,5 +1,4 @@
 <div class="sticky top-0 z-10 border-b bg-white px-5 py-4">
-
     <div class="mt-4">
         <input
             type="search"

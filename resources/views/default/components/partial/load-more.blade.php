@@ -1,4 +1,4 @@
-<div class="px-5 pb-6">
+<div class="px-5">
     <button
         wire:click="loadMore"
         wire:loading.attr="disabled"

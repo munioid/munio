@@ -1,13 +1,13 @@
 <?php
 
-namespace App\View\Components\Event\Events;
+namespace App\View\Components\Event;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\Component;
 
-class ListItems extends Component
+class EventList extends Component
 {
     /**
      * Create a new component instance.
@@ -22,6 +22,6 @@ class ListItems extends Component
      */
     public function render(): View|Closure|string
     {
-        return view($this->theme.'.components.event.events.list-items');
+        return view($this->theme.'.components.event.event-list');
     }
 }
