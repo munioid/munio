@@ -57,7 +57,7 @@ new class extends Component
             Filament::setTenant($this->organization, true);
             $user = Auth::guard('web')->user();
 
-            ReservationService::createReservation([
+            $reservation = ReservationService::createReservation([
                 'event_id' => $this->event->id,
                 'name' => $this->name,
                 'email' => $this->email,
@@ -78,7 +78,7 @@ new class extends Component
                 ])
                 ->send();
 
-            return redirect('/events/' . $this->event->slug);
+            return redirect('/events/reservations/' . $reservation->code);
         } catch (\Throwable $e) {
 
             Notification::make()
@@ -98,4 +98,4 @@ new class extends Component
 };
 ?>
 
-<x-event.events.reservation :theme=$theme :event=$event :quantity=$quantity :price=$price />
+<x-event.reservation :theme=$theme :event=$event :quantity=$quantity :price=$price />
