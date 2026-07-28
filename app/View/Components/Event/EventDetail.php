@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Event\Events;
+namespace App\View\Components\Event;
 
 use App\Enums\PricingTypeEnum;
 use App\Models\Event\Event;
@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Detail extends Component
+class EventDetail extends Component
 {
     public int|float|null $price;
     public bool $pricingExternal;
@@ -29,6 +29,6 @@ class Detail extends Component
      */
     public function render(): View|Closure|string
     {
-        return view($this->theme.'.components.event.events.detail');
+        return view($this->theme.'.components.event.event-detail');
     }
 }

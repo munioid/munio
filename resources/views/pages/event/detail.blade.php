@@ -2,5 +2,5 @@
 @section('title', $event->title)
 
 @section('content')
-<livewire:event.detail :theme=$theme :event=$event />
+<x-event.event-detail :theme=$theme :event=$event />
 @endsection
