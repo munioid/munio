@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Event;
 use App\Http\Controllers\Controller;
 use App\Models\Event\Category;
 use App\Models\Event\Event;
+use App\Models\Event\Reservation;
 use Filament\Facades\Filament;
 use Illuminate\Http\Request;
 
@@ -47,5 +48,20 @@ class EventController extends Controller
         }
         
         return view('pages.event.reservation', compact('theme', 'organization', 'event'));
+    }
+
+    public function reservationDetail(string $code, Request $request)
+    {
+        $organization = Filament::getTenant();
+        $theme = $request->theme;
+        $reservation = Reservation::query()
+            ->where('code', $code)
+            ->first();
+
+        if (!$reservation) {
+            abort(404, 'Not Found.');
+        }
+
+        return view('pages.event.reservation-detail', compact('theme', 'organization', 'reservation'));
     }
 }

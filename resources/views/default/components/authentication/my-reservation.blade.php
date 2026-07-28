@@ -22,7 +22,7 @@
         @forelse($reservations as $reservation)
 
         <a
-            href="#"
+            href="/events/reservations/{{ $reservation->code }}"
             class="block rounded-2xl bg-white p-5 shadow-sm transition hover:shadow-md">
 
             <div class="flex items-start justify-between">

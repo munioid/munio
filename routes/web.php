@@ -36,6 +36,7 @@ Route::middleware([
     // Events page
     Route::prefix('events')->group(function () {
         Route::get('/', [EventController::class, 'index']);
+        Route::get('reservations/{code}', [EventController::class, 'reservationDetail']);
         Route::get('{slug}', [EventController::class, 'detail']);
         Route::get('{slug}/reservation', [EventController::class, 'reservation']);
     });
