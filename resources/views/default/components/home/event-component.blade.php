@@ -43,7 +43,7 @@
                     @if($event->register_url)
                     <a href="{{ $event->register_url }}"
                         class="flex-1 rounded-xl bg-primary py-3 font-medium text-white py-3 font-medium hover:bg-primary hover:text-white transition text-center">
-                        Join
+                        Daftar
                     </a>
                     @endif
                 </div>
