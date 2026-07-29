@@ -76,7 +76,7 @@ new class extends Component
 };
 ?>
 
-<div class="min-h-screen bg-gray-50 pb-3">
+<div class="min-h-screen bg-gray-50 pb-4">
     {{-- Filters --}}
     <x-blog.posts.filter :categories=$categories :selectedCategory=$selectedCategory :tags=$tags :selectedTags=$selectedTags />
     {{-- Posts --}}

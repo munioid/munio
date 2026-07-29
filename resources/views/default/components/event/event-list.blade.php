@@ -1,4 +1,4 @@
-<div class="space-y-5 py-4 ">
+<div class="space-y-5 py-4">
     @foreach($events as $event)
     <div class="overflow-hidden rounded-2xl bg-white shadow-sm">
         <img
