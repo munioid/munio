@@ -1,40 +1,32 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Blog\Posts\Schemas;
+namespace App\Filament\Admin\Resources\Membership\Attributes\Tables;
 
 use Filament\Actions;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class PostTable
+class AttributesTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                Tables\Columns\TextColumn::make('fieldname')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
+                Tables\Columns\TextColumn::make('type')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('source')
+                Tables\Columns\TextColumn::make('label')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('category.name')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('tags.name'),
-                Tables\Columns\IconColumn::make('published')
+                Tables\Columns\IconColumn::make('is_private')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('published_at')
-                    ->dateTime()
-                    ->sortable(),
+                Tables\Columns\IconColumn::make('is_required')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

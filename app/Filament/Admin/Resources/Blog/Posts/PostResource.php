@@ -4,7 +4,7 @@ namespace App\Filament\Admin\Resources\Blog\Posts;
 
 use App\Filament\Admin\Resources\Blog\Posts\Pages;
 use App\Filament\Admin\Resources\Blog\Posts\Schemas\PostForm;
-use App\Filament\Admin\Resources\Blog\Posts\Schemas\PostTable;
+use App\Filament\Admin\Resources\Blog\Posts\Tables\PostsTable;
 use App\Models\Blog\Post;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -26,7 +26,7 @@ class PostResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return PostTable::configure($table);
+        return PostsTable::configure($table);
     }
 
     public static function getRelations(): array

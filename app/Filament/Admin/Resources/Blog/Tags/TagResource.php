@@ -2,7 +2,7 @@
 
 namespace App\Filament\Admin\Resources\Blog\Tags;
 
-use App\Filament\Admin\Resources\Blog\Tags\Schemas\TagTable;
+use App\Filament\Admin\Resources\Blog\Tags\Tables\TagsTable;
 use App\Filament\Admin\Resources\Blog\Tags\Pages;
 use App\Filament\Admin\Resources\Blog\Tags\Schemas\TagForm;
 use App\Models\Blog\Tag;
@@ -25,7 +25,7 @@ class TagResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return TagTable::configure($table);
+        return TagsTable::configure($table);
     }
 
     public static function getRelations(): array

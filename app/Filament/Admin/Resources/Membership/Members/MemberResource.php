@@ -5,7 +5,7 @@ namespace App\Filament\Admin\Resources\Membership\Members;
 use App\Filament\Admin\Resources\Membership\Members\Pages;
 use App\Filament\Admin\Resources\Membership\Members\RelationManagers;
 use App\Filament\Admin\Resources\Membership\Members\Schemas\MemberForm;
-use App\Filament\Admin\Resources\Membership\Members\Schemas\MemberTable;
+use App\Filament\Admin\Resources\Membership\Members\Tables\MembersTable;
 use App\Models\Membership\Member;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -26,7 +26,7 @@ class MemberResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return MemberTable::configure($table);
+        return MembersTable::configure($table);
     }
 
     public static function getRelations(): array

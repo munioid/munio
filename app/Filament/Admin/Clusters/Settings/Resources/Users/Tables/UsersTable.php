@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Admin\Clusters\Settings\Resources\Users\Schemas;
+namespace App\Filament\Admin\Clusters\Settings\Resources\Users\Tables;
 
 use Filament\Actions;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class UserTable
+class UsersTable
 {
     public static function configure(Table $table): Table
     {

@@ -1,29 +1,35 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Blog\Tags\Schemas;
+namespace App\Filament\Admin\Resources\Membership\Members\Tables;
 
 use Filament\Actions;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Tables;
 use Filament\Tables\Table;
 
-class TagTable
+class MembersTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                Tables\Columns\TextColumn::make('number')
                     ->searchable(),
-                TextColumn::make('slug')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('category_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('phone')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('status_updated_at')
+                    ->dateTime()
                     ->sortable(),
-                TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
+                Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -4,7 +4,7 @@ namespace App\Filament\Admin\Resources\Blog\Categories;
 
 use App\Filament\Admin\Resources\Blog\Categories\Pages;
 use App\Filament\Admin\Resources\Blog\Categories\Schemas\CategoryForm;
-use App\Filament\Admin\Resources\Blog\Categories\Schemas\CategoryTable;
+use App\Filament\Admin\Resources\Blog\Categories\Tables\CategoriesTable;
 use App\Models\Blog\Category;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -26,7 +26,7 @@ class CategoryResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return CategoryTable::configure($table);
+        return CategoriesTable::configure($table);
     }
 
     public static function getRelations(): array

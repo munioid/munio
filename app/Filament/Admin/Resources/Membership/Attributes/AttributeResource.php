@@ -4,7 +4,7 @@ namespace App\Filament\Admin\Resources\Membership\Attributes;
 
 use App\Filament\Admin\Resources\Membership\Attributes\Pages;
 use App\Filament\Admin\Resources\Membership\Attributes\Schemas\AttributeForm;
-use App\Filament\Admin\Resources\Membership\Attributes\Schemas\AttributeTable;
+use App\Filament\Admin\Resources\Membership\Attributes\Tables\AttributesTable;
 use App\Models\Membership\Attribute;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -25,7 +25,7 @@ class AttributeResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return AttributeTable::configure($table);
+        return AttributesTable::configure($table);
     }
 
     public static function getRelations(): array

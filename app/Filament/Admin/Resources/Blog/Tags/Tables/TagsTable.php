@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Blog\Categories\Schemas;
+namespace App\Filament\Admin\Resources\Blog\Tags\Tables;
 
 use Filament\Actions;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class CategoryTable
+class TagsTable
 {
     public static function configure(Table $table): Table
     {
@@ -16,8 +16,7 @@ class CategoryTable
                     ->searchable(),
                 TextColumn::make('slug')
                     ->searchable(),
-                TextColumn::make('parent.name')
-                    ->label('Parent Category')
+                TextColumn::make('category_id')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
