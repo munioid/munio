@@ -2,9 +2,10 @@
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
-enum MemberStatusEnum: string implements HasLabel
+enum MemberStatusEnum: string implements HasColor, HasLabel
 {
     case PENDING = 'pending';
     case ACTIVE = 'active';
@@ -18,6 +19,16 @@ enum MemberStatusEnum: string implements HasLabel
             self::ACTIVE => 'Active',
             self::INACTIVE => 'Inactive',
             self::SUSPENDED => 'Suspended'
+        };
+    }
+
+    public function getColor(): ?string
+    {
+        return match ($this) {
+            self::PENDING => 'warning',
+            self::ACTIVE => 'success',
+            self::INACTIVE => 'gray',
+            self::SUSPENDED => 'danger'
         };
     }
 }

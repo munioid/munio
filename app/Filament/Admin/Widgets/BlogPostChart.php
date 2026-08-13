@@ -9,7 +9,9 @@ class BlogPostChart extends ChartWidget
 {
     protected ?string $heading = 'Posts';
 
-    protected static ?int $sort = 3;
+    protected static ?int $sort = 4;
+
+    protected int|string|array $columnSpan = 'full';
 
     protected function getData(): array
     {
