@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Widgets;
 
 use App\Enums\MemberStatusEnum;
 use App\Models\Membership\Member;
+use Filament\Support\Facades\FilamentColor;
 use Filament\Widgets\ChartWidget;
 
 class MembershipMemberChart extends ChartWidget
@@ -18,13 +19,6 @@ class MembershipMemberChart extends ChartWidget
             return [$i => now()->subMonths(11 - $i)->format('Y-m')];
         });
 
-        $colors = [
-            MemberStatusEnum::ACTIVE->value => '#22c55e',
-            MemberStatusEnum::PENDING->value => '#f59e0b',
-            MemberStatusEnum::INACTIVE->value => '#6b7280',
-            MemberStatusEnum::SUSPENDED->value => '#ef4444',
-        ];
-
         $countsByStatus = Member::query()
             ->selectRaw('status, DATE_FORMAT(status_updated_at, "%Y-%m") as month, COUNT(*) as count')
             ->where('status_updated_at', '>=', now()->subMonths(12)->startOfMonth())
@@ -32,16 +26,18 @@ class MembershipMemberChart extends ChartWidget
             ->get()
             ->groupBy('status');
 
-        $datasets = collect(MemberStatusEnum::cases())->map(function (MemberStatusEnum $status) use ($months, $countsByStatus, $colors) {
+        $datasets = collect(MemberStatusEnum::cases())->map(function (MemberStatusEnum $status) use ($months, $countsByStatus) {
             $counts = $countsByStatus->get($status->value, collect())->pluck('count', 'month');
 
             $data = $months->map(fn ($month) => $counts[$month] ?? 0);
 
+            $color = FilamentColor::getColor($status->getColor())[500];
+
             return [
                 'label' => $status->getLabel(),
                 'data' => $data,
-                'borderColor' => $colors[$status->value],
-                'backgroundColor' => $colors[$status->value],
+                'borderColor' => $color,
+                'backgroundColor' => $color,
             ];
         })->values();
 

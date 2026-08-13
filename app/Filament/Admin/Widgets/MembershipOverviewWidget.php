@@ -20,17 +20,15 @@ class MembershipOverviewWidget extends BaseWidget
             ->groupBy('status')
             ->pluck('count', 'status');
 
+        $statusStats = collect(MemberStatusEnum::cases())->map(
+            fn (MemberStatusEnum $status) => Stat::make($status->getLabel(), $counts[$status->value] ?? 0)
+                ->color($status->getColor())
+        );
+
         return [
             Stat::make('Total Member', $counts->sum())
                 ->color('primary'),
-            Stat::make(MemberStatusEnum::ACTIVE->getLabel(), $counts[MemberStatusEnum::ACTIVE->value] ?? 0)
-                ->color('success'),
-            Stat::make(MemberStatusEnum::PENDING->getLabel(), $counts[MemberStatusEnum::PENDING->value] ?? 0)
-                ->color('warning'),
-            Stat::make(MemberStatusEnum::INACTIVE->getLabel(), $counts[MemberStatusEnum::INACTIVE->value] ?? 0)
-                ->color('gray'),
-            Stat::make(MemberStatusEnum::SUSPENDED->getLabel(), $counts[MemberStatusEnum::SUSPENDED->value] ?? 0)
-                ->color('danger'),
+            ...$statusStats,
         ];
     }
 }
