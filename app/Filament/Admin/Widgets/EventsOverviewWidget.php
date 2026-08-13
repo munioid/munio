@@ -8,6 +8,8 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class EventsOverviewWidget extends BaseWidget
 {
+    protected ?string $heading = 'Events';
+
     protected static ?int $sort = 10;
 
     protected function getStats(): array
