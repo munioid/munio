@@ -13,6 +13,8 @@ class MembershipMemberChart extends ChartWidget
 
     protected static ?int $sort = 2;
 
+    protected int|string|array $columnSpan = 'full';
+
     protected function getData(): array
     {
         $months = collect(range(0, 11))->mapWithKeys(function ($i) {
