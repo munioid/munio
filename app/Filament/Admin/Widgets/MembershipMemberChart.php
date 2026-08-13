@@ -18,25 +18,35 @@ class MembershipMemberChart extends ChartWidget
             return [$i => now()->subMonths(11 - $i)->format('Y-m')];
         });
 
-        $activeCharts = Member::query()
-            ->selectRaw('COUNT(*) as count, DATE_FORMAT(status_updated_at, "%Y-%m") as month')
-            ->where('status', MemberStatusEnum::ACTIVE->value)
-            ->where('status_updated_at', '>=', now()->subMonths(12)->startOfMonth())
-            ->groupBy('month')
-            ->orderBy('month', 'asc')
-            ->pluck('count', 'month');
+        $colors = [
+            MemberStatusEnum::ACTIVE->value => '#22c55e',
+            MemberStatusEnum::PENDING->value => '#f59e0b',
+            MemberStatusEnum::INACTIVE->value => '#6b7280',
+            MemberStatusEnum::SUSPENDED->value => '#ef4444',
+        ];
 
-        $data = $months->map(function ($month) use ($activeCharts) {
-            return $activeCharts[$month] ?? 0;
-        });
+        $countsByStatus = Member::query()
+            ->selectRaw('status, DATE_FORMAT(status_updated_at, "%Y-%m") as month, COUNT(*) as count')
+            ->where('status_updated_at', '>=', now()->subMonths(12)->startOfMonth())
+            ->groupBy('status', 'month')
+            ->get()
+            ->groupBy('status');
+
+        $datasets = collect(MemberStatusEnum::cases())->map(function (MemberStatusEnum $status) use ($months, $countsByStatus, $colors) {
+            $counts = $countsByStatus->get($status->value, collect())->pluck('count', 'month');
+
+            $data = $months->map(fn ($month) => $counts[$month] ?? 0);
+
+            return [
+                'label' => $status->getLabel(),
+                'data' => $data,
+                'borderColor' => $colors[$status->value],
+                'backgroundColor' => $colors[$status->value],
+            ];
+        })->values();
 
         return [
-            'datasets' => [
-                [
-                    'label' => 'New Active Member',
-                    'data' => $data,
-                ],
-            ],
+            'datasets' => $datasets,
             'labels' => $months,
         ];
     }
