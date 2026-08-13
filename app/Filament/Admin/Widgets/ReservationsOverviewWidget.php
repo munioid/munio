@@ -4,14 +4,22 @@ namespace App\Filament\Admin\Widgets;
 
 use App\Enums\ReservationStatusEnum;
 use App\Models\Event\Reservation;
+use Filament\Schemas\Components\Component;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\HtmlString;
 
 class ReservationsOverviewWidget extends BaseWidget
 {
     protected ?string $heading = 'Reservations';
 
     protected static ?int $sort = 12;
+
+    public function getSectionContentComponent(): Component
+    {
+        return parent::getSectionContentComponent()
+            ->heading(new HtmlString('<span class="text-xl">'.e($this->getHeading()).'</span>'));
+    }
 
     protected function getStats(): array
     {

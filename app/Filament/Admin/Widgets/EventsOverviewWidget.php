@@ -3,14 +3,22 @@
 namespace App\Filament\Admin\Widgets;
 
 use App\Models\Event\Event;
+use Filament\Schemas\Components\Component;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\HtmlString;
 
 class EventsOverviewWidget extends BaseWidget
 {
     protected ?string $heading = 'Events';
 
     protected static ?int $sort = 10;
+
+    public function getSectionContentComponent(): Component
+    {
+        return parent::getSectionContentComponent()
+            ->heading(new HtmlString('<span class="text-xl">'.e($this->getHeading()).'</span>'));
+    }
 
     protected function getStats(): array
     {
