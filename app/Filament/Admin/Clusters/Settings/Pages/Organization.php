@@ -9,6 +9,7 @@ use BackedEnum;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
@@ -88,10 +89,19 @@ class Organization extends Page
                             ->image(),
                         MunioFileUpload::make('favicon')
                             ->image(),
+                        MunioFileUpload::make('login_banner')
+                            ->image()
+                            ->columnSpanFull(),
 
                     ])
-                    ->collapsible()
+                    ->collapsed()
+                    ->columns(2),
+                Section::make('Colors')
+                    ->schema([
+                        ColorPicker::make('colors.primary')
+                    ])
                     ->columns(2)
+                    ->collapsed()
             ])
             ->model($this->record)
             ->statePath('data')

@@ -17,7 +17,11 @@ class CustomAuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->bearerToken()) {
-            Auth::user();
+            Auth::shouldUse('api');
+        }
+
+        if (! $request->is('api/*')) {
+            Auth::shouldUse('web');
         }
 
         return $next($request);

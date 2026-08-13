@@ -3,15 +3,15 @@
 namespace App\Models\Organization;
 
 use App\Models\File;
+use App\Traits\HasAttachments;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Support\Facades\Storage;
 
 class Organization extends Model implements HasAvatar
 {
-    use HasUuids;
+    use HasUuids, HasAttachments;
 
     /**
      * The attributes that are mass assignable.
@@ -22,21 +22,28 @@ class Organization extends Model implements HasAvatar
         'name',
         'code',
         'subdomain',
-        'domain'
+        'domain',
+        'colors'
     ];
 
-    ### Relationships ###
-    public function icon(): MorphOne
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
     {
-        return $this->morphOne(File::class, 'attachment')
-            ->where('field', 'icon');
+        return [
+            'colors' => 'json'
+        ];
     }
 
-    public function favicon(): MorphOne
-    {
-        return $this->morphOne(File::class, 'attachment')
-            ->where('field', 'favicon');
-    }
+    ### Attachments ###
+    protected static $attachOne = [
+        'icon',
+        'favicon',
+        'login_banner'
+    ];
 
     ### Filament Tenancy ###
     public function getFilamentAvatarUrl(): ?string

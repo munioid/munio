@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Blog;
 
+use App\Models\Blog\Category;
 use App\Models\Blog\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -18,15 +19,17 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->sentence();
+        $title = fake()->unique()->sentence();
+        $published = fake()->boolean();
         return [
             'title' => $title,
             'slug' => Str::slug($title),
             'content' => $this->fakeContent(),
             'excerpt' => fake()->paragraph(),
             'source' => fake()->url(),
-            'is_published' => fake()->boolean(),
-            'published_at' => fake()->dateTimeBetween('-10 months', 'now'),
+            'category_id' => Category::query()->inRandomOrder()->first()?->id,
+            'published' => $published,
+            'published_at' => $published ? fake()->dateTimeBetween('-10 months', 'now') : null
         ];
     }
 

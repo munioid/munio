@@ -4,7 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Event\Reservation;
 use App\Models\Organization\Organization;
+use App\Traits\HasAttachments;
 use Filament\Facades\Filament;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
@@ -14,6 +16,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
@@ -22,7 +25,7 @@ use Laravel\Passport\HasApiTokens;
 class User extends Authenticatable implements FilamentUser, HasTenants
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasUuids, HasApiTokens;
+    use HasFactory, Notifiable, HasUuids, HasApiTokens, HasAttachments;
 
     /**
      * The attributes that are mass assignable.
@@ -60,6 +63,11 @@ class User extends Authenticatable implements FilamentUser, HasTenants
             'password' => 'hashed',
         ];
     }
+
+    ### Attachments ###
+    protected static $attachOne = [
+        'avatar'
+    ];
 
     /**
      * Boot
@@ -109,5 +117,10 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     public function organizations(): BelongsToMany
     {
         return $this->belongsToMany(Organization::class, table: 'organizations_users_pivot');
+    }
+
+    public function reservations(): HasMany
+    {
+        return $this->hasMany(Reservation::class);
     }
 }

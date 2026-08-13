@@ -62,6 +62,7 @@ Here are some of the upcoming features and improvements planned for Munio Commun
 - [x] Event management (CRUD)
 - [x] Authentication API
 - [ ] Export and Import
+- [ ] Default Community Theme
 
 ### 🚀 Mid-Term Goals
 
@@ -72,8 +73,7 @@ Here are some of the upcoming features and improvements planned for Munio Commun
 
 ### 🌍 Long-Term Goals
 
-- [ ] Modular plugin system for custom extensions
-- [ ] Plugin and theme management via Admin
+- [ ] Modular theme system for custom community pages
 - [ ] Internationalization (i18n) and multi-language support
 
 ## 🤝 Contributing

@@ -18,12 +18,16 @@ class ReservationObserver
         switch ($event->pricing_type) {
             case PricingTypeEnum::SINGLE:
                 $reservation->price = $event->price;
+                break;
             case PricingTypeEnum::PACKAGE:
                 $package = $reservation->package;
                 $reservation->price = $package->price;
+                break;
             default:
-                $reservation->total = $reservation->quantity * $reservation->price;
+                break;
         }
+        
+        $reservation->total = $reservation->quantity * $reservation->price;
     }
 
     private function generateCode()

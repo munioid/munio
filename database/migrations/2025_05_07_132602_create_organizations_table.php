@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('subdomain')->unique();
             $table->string('domain')->unique()->nullable();
+            $table->json('colors')->nullable();
             $table->timestamps();
         });
     }

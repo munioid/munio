@@ -2,22 +2,22 @@
 
 namespace App\Models\Blog;
 
-use App\Models\File;
+use App\Traits\HasAttachments;
 use App\Traits\Multitenantable;
 use App\Traits\Searchable;
 use Database\Factories\Blog\PostFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 #[UseFactory(PostFactory::class)]
 class Post extends Model
 {
-    use Multitenantable, HasUuids, HasFactory, Searchable;
+    use Multitenantable, HasUuids, HasFactory, Searchable, HasAttachments;
 
     protected $table = 'blog_posts';
 
@@ -31,7 +31,7 @@ class Post extends Model
         'content',
         'excerpt',
         'source',
-        'is_published',
+        'published',
         'published_by',
         'published_at'
     ];
@@ -46,8 +46,26 @@ class Post extends Model
     ];
 
     /**
-     * Relationships
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
      */
+    protected function casts(): array
+    {
+        return [
+            'published' => 'boolean',
+            'published_at' => 'datetime',
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
+        ];
+    }
+
+    ### Attachments ###
+    protected static $attachOne = [
+        'cover'
+    ];
+
+    ### Relationships ###
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -58,9 +76,9 @@ class Post extends Model
         return $this->belongsToMany(Tag::class, table: 'blog_tags_posts_pivot');
     }
 
-    public function covers(): MorphMany
+    ### Scopes ###
+    public function scopePublished(Builder $query)
     {
-        return $this->morphMany(File::class, 'attachment')
-            ->where('field', 'covers');
+        $query->where('published', true);
     }
 }
