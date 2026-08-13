@@ -27,7 +27,7 @@ class BlogOverviewWidget extends BaseWidget
             ->where('published_at', '>=', now()->subMonths(12)->startOfMonth())
             ->groupBy('month')
             ->orderBy('month', 'asc')
-            ->pluck('count')
+            ->pluck('count', 'month')
             ->toArray();
         $postCharts = $months->merge($postCharts)->values()->toArray();
 

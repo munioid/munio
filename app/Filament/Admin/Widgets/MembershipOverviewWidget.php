@@ -28,7 +28,7 @@ class MembershipOverviewWidget extends BaseWidget
             ->where('status_updated_at', '>=', now()->subMonths(12)->startOfMonth())
             ->groupBy('month')
             ->orderBy('month', 'asc')
-            ->pluck('count')
+            ->pluck('count', 'month')
             ->toArray();
         $memberCharts = $months->merge($memberCharts)->values()->toArray();
 
