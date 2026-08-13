@@ -21,3 +21,8 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+/.claude
+/.agent_context
+/.multica
+CLAUDE.md
+reply.md
