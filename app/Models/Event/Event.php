@@ -65,4 +65,9 @@ class Event extends Model
     {
         return $this->hasMany(Package::class);
     }
+
+    public function reservations(): HasMany
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }
