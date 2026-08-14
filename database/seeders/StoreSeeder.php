@@ -9,7 +9,6 @@ use App\Models\Store\StoreProduct;
 use App\Models\Store\StoreTag;
 use Filament\Facades\Filament;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class StoreSeeder extends Seeder
 {
@@ -18,16 +17,9 @@ class StoreSeeder extends Seeder
      */
     public function run(): void
     {
-        $organization = Organization::query()->firstOrCreate(
-            [
-                'code' => 'store-demo',
-            ],
-            [
-                'name' => 'Store Demo',
-                'subdomain' => 'store-demo',
-                'domain' => null,
-            ]
-        );
+        $this->call(OrganizationSeeder::class);
+
+        $organization = Organization::query()->where('code', 'default')->firstOrFail();
 
         Filament::setTenant($organization, true);
 
