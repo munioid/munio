@@ -3,6 +3,7 @@
 namespace App\Models\Store;
 
 use App\Enums\StoreProductStockStatusEnum;
+use App\Traits\HasAttachments;
 use App\Traits\Multitenantable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StoreProduct extends Model
 {
-    use HasUuids, Multitenantable, SoftDeletes;
+    use HasUuids, HasAttachments, Multitenantable, SoftDeletes;
 
     protected $table = 'store_products';
 
@@ -32,6 +33,13 @@ class StoreProduct extends Model
         'weight',
         'is_active',
         'sort_order',
+    ];
+
+    /**
+     * Attachments
+     */
+    protected static $attachOne = [
+        'cover',
     ];
 
     /**
