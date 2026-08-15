@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $isMySql = in_array(DB::connection()->getDriverName(), ['mysql', 'mariadb'], true);
+        $driver = DB::connection()->getDriverName();
 
-        Schema::create('store_products', function (Blueprint $table) use ($isMySql) {
+        Schema::create('store_products', function (Blueprint $table) use ($driver) {
             $table->uuid('id')->primary()->index();
             $table->foreignIdFor(Organization::class)
                 ->constrained()
@@ -36,28 +36,17 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            // Unique slug per organization, scoped to non-deleted rows only.
-            // MySQL has no partial indexes, so the predicate is folded into a
-            // stored generated column that is NULL once the row is soft deleted
-            // (NULLs are not compared by a unique index). Other drivers get a
-            // real partial index below.
-            if ($isMySql) {
-                $table->string('active_slug')
-                    ->nullable()
-                    ->storedAs('(case when `deleted_at` is null then `slug` end)');
-
-                $table->unique(['organization_id', 'active_slug']);
+            if ($driver === 'pgsql') {
+                DB::statement(
+                    'create unique index store_products_organization_id_slug_unique
+                     on store_products (organization_id, slug) where deleted_at is null'
+                );
+            } else {
+                $table->unique(['organization_id', 'slug']);
             }
 
             $table->index(['organization_id', 'is_active']);
         });
-
-        if (! $isMySql) {
-            DB::statement(
-                'create unique index store_products_organization_id_slug_unique
-                 on store_products (organization_id, slug) where deleted_at is null'
-            );
-        }
     }
 
     /**
