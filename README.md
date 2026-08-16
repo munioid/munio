@@ -19,6 +19,7 @@
 
 - Member management
 - Post management
+- Event management
 
 ## 🛠️ Tech Stack
 
