@@ -2,6 +2,8 @@
 
 namespace App\Filament\Admin\Resources\Membership\Members\Tables;
 
+use App\Filament\Exports\MemberExporter;
+use App\Filament\Imports\MemberImporter;
 use Filament\Actions;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -41,6 +43,12 @@ class MembersTable
                 Actions\EditAction::make(),
             ])
             ->headerActions([
+                Actions\ExportAction::make()
+                    ->exporter(MemberExporter::class)
+                    ->label('Export Members'),
+                Actions\ImportAction::make()
+                    ->importer(MemberImporter::class)
+                    ->label('Import Members'),
                 Actions\BulkActionGroup::make([
                     Actions\DeleteBulkAction::make(),
                 ]),
