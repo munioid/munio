@@ -10,7 +10,7 @@ class ReservationApi
         path: '/api/events/reservations',
         summary: 'Create Reservation',
         tags: ['Event'],
-        security: [["bearerAuth" => []]]
+        security: [['bearerAuth' => []]]
     )]
     #[OA\RequestBody(
         required: true,

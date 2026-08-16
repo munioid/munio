@@ -2,7 +2,6 @@
 
 namespace App\Filament\Admin\Resources\Membership\Attributes;
 
-use App\Filament\Admin\Resources\Membership\Attributes\Pages;
 use App\Filament\Admin\Resources\Membership\Attributes\Schemas\AttributeForm;
 use App\Filament\Admin\Resources\Membership\Attributes\Tables\AttributesTable;
 use App\Models\Membership\Attribute;
@@ -16,6 +15,7 @@ class AttributeResource extends Resource
     protected static ?string $model = Attribute::class;
 
     protected static UnitEnum|string|null $navigationGroup = 'Membership';
+
     protected static ?int $navigationSort = 2;
 
     public static function form(Schema $form): Schema

@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Models\Event\Reservation;
 use App\Models\Organization\Organization;
 use App\Traits\HasAttachments;
+use Database\Factories\UserFactory;
 use Filament\Facades\Filament;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
@@ -24,8 +25,8 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements FilamentUser, HasTenants
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasUuids, HasApiTokens, HasAttachments;
+    /** @use HasFactory<UserFactory> */
+    use HasApiTokens, HasAttachments, HasFactory, HasUuids, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -38,7 +39,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         'email',
         'password',
         'is_admin',
-        'is_superuser'
+        'is_superuser',
     ];
 
     /**
@@ -64,9 +65,9 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         ];
     }
 
-    ### Attachments ###
+    // ## Attachments ###
     protected static $attachOne = [
-        'avatar'
+        'avatar',
     ];
 
     /**

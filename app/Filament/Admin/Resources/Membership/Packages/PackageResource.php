@@ -18,7 +18,7 @@ class PackageResource extends Resource
     protected static ?string $model = Package::class;
 
     protected static UnitEnum|string|null $navigationGroup = 'Membership';
-    
+
     protected static ?int $navigationSort = 3;
 
     public static function form(Schema $schema): Schema

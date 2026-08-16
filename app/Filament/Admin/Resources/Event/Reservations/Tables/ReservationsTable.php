@@ -2,7 +2,6 @@
 
 namespace App\Filament\Admin\Resources\Event\Reservations\Tables;
 
-use Dom\Text;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -36,13 +35,13 @@ class ReservationsTable
                     ->money('IDR')
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('status')
-                    ->badge()
+                    ->badge(),
             ])
             ->filters([
                 SelectFilter::make('event')
                     ->relationship('event', 'title')
                     ->searchable()
-                    ->preload()
+                    ->preload(),
             ])
             ->recordActions([
                 EditAction::make(),

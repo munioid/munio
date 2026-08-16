@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 #[UseFactory(TagFactory::class)]
 class Tag extends Model
 {
-    use Multitenantable, HasUuids, HasFactory, Searchable;
+    use HasFactory, HasUuids, Multitenantable, Searchable;
 
     protected $table = 'blog_tags';
 
@@ -26,13 +26,13 @@ class Tag extends Model
         'organization_id',
         'name',
         'slug',
-        'description'
+        'description',
     ];
 
     /**
      * The attrubutes that are searchable.
      */
     protected array $searchable = [
-        'name'
+        'name',
     ];
 }

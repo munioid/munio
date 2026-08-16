@@ -17,6 +17,4 @@ use OpenApi\Attributes as OA;
     bearerFormat: 'JWT',
     securityScheme: 'bearerToken'
 )]
-class OpenApi
-{
-}
+class OpenApi {}

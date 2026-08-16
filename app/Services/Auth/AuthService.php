@@ -14,7 +14,7 @@ class AuthService
             ->where('email', $credentials['email'])
             ->first();
 
-        if ($user === null || !Hash::check($credentials['password'], $user->password)) {
+        if ($user === null || ! Hash::check($credentials['password'], $user->password)) {
             throw new Exception(
                 'Maaf, kredensial yang anda masukkan tidak valid.',
                 401

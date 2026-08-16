@@ -39,7 +39,7 @@ class Onboarding extends Page
         'code' => 'default',
         'subdomain' => 'default',
         'user_name' => 'Admin',
-        'user_email' => 'admin@example.com'
+        'user_email' => 'admin@example.com',
     ];
 
     public function content(Schema $schema): Schema
@@ -84,11 +84,11 @@ class Onboarding extends Page
                                     TextInput::make('user_password_confirmation')
                                         ->password()
                                         ->required()
-                                        ->disabled(fn(Get $get) => !$get('user_password'))
+                                        ->disabled(fn (Get $get) => ! $get('user_password'))
                                         ->revealable()
-                                        ->rule(fn(Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
+                                        ->rule(fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
                                             if ($get('user_password') != $value) {
-                                                $fail("Passwords do not match. Please make sure both fields are identical.");
+                                                $fail('Passwords do not match. Please make sure both fields are identical.');
                                             }
                                         }),
                                 ])
@@ -96,14 +96,14 @@ class Onboarding extends Page
                             Wizard\Step::make('Finish')
                                 ->schema([
                                     Callout::make('finish')
-                                        ->description('The platform is ready to use. Please feel free to explore the available features and make the most of our services.')
-                                ])
+                                        ->description('The platform is ready to use. Please feel free to explore the available features and make the most of our services.'),
+                                ]),
 
                         ])
                             ->submitAction(
                                 new HtmlString(
                                     Blade::render(
-                                        <<<BLADE
+                                        <<<'BLADE'
                                             <x-filament::button
                                                 type="submit"
                                                 size="sm"
@@ -113,8 +113,8 @@ class Onboarding extends Page
                                         BLADE
                                     )
                                 )
-                            )
-                    ])
+                            ),
+                    ]),
             ]);
     }
 
@@ -124,24 +124,25 @@ class Onboarding extends Page
             DB::beginTransaction();
             $data = $this->data;
 
-            # Create Organization
+            // Create Organization
             $org = Organization::create([
                 'name' => data_get($data, 'name'),
                 'code' => data_get($data, 'code'),
-                'subdomain' => data_get($data, 'subdomain')
+                'subdomain' => data_get($data, 'subdomain'),
             ]);
 
-            # Create Superadmin
+            // Create Superadmin
             $user = User::create([
                 'name' => data_get($data, 'user_name'),
                 'email' => data_get($data, 'user_email'),
                 'password' => bcrypt(data_get($data, 'user_password')),
-                'is_admin' => true
+                'is_admin' => true,
             ]);
 
             $user->organizations()->attach($org->id);
 
             DB::commit();
+
             return redirect()->to('/admin');
         } catch (Exception $e) {
             DB::rollBack();

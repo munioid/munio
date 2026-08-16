@@ -2,7 +2,6 @@
 
 namespace App\Filament\Admin\Resources\Blog\Posts;
 
-use App\Filament\Admin\Resources\Blog\Posts\Pages;
 use App\Filament\Admin\Resources\Blog\Posts\Schemas\PostForm;
 use App\Filament\Admin\Resources\Blog\Posts\Tables\PostsTable;
 use App\Models\Blog\Post;
@@ -16,8 +15,8 @@ class PostResource extends Resource
     protected static ?string $model = Post::class;
 
     protected static UnitEnum|string|null $navigationGroup = 'Blog';
-    protected static ?int $navigationSort = 1;
 
+    protected static ?int $navigationSort = 1;
 
     public static function form(Schema $form): Schema
     {

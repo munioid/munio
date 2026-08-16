@@ -40,11 +40,11 @@ class Reservation extends Model
     protected function casts(): array
     {
         return [
-            'status' => ReservationStatusEnum::class
+            'status' => ReservationStatusEnum::class,
         ];
     }
 
-    ### Relationships ###
+    // ## Relationships ###
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);

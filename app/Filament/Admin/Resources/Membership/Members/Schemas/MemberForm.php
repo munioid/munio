@@ -28,7 +28,7 @@ class MemberForm
                         TextInput::make('number')
                             ->maxLength(255)
                             ->unique(table: 'membership_members', column: 'number', ignoreRecord: true)
-                            ->disabled(fn(Get $get) => Package::find($get('package_id'))?->is_auto_numbering ?: false),
+                            ->disabled(fn (Get $get) => Package::find($get('package_id'))?->is_auto_numbering ?: false),
                         TextInput::make('name')
                             ->required()
                             ->maxLength(255),
@@ -44,10 +44,10 @@ class MemberForm
                             ->preload()
                             ->searchable()
                             ->optionsLimit(10),
-                        MemberAttribute::make('Attributes')
+                        MemberAttribute::make('Attributes'),
                     ])
                     ->columnSpanFull()
-                    ->columns(2)
+                    ->columns(2),
             ]);
     }
 }

@@ -66,7 +66,7 @@ class StoreCategoriesTable
                     Actions\DeleteBulkAction::make()
                         ->modalDescription(
                             'Deleting a category also deletes every product inside it — permanently, '
-                                . 'not as a soft delete. Sub-categories are kept and become top-level.'
+                                .'not as a soft delete. Sub-categories are kept and become top-level.'
                         ),
                 ]),
             ])
@@ -89,8 +89,8 @@ class StoreCategoriesTable
                     'This category has :count product|This category has :count products',
                     $products,
                     ['count' => $products],
-                ) . ' that will be permanently deleted along with it — not soft-deleted, and not recoverable. '
-                    . 'Move them to another category first if you want to keep them.';
+                ).' that will be permanently deleted along with it — not soft-deleted, and not recoverable. '
+                    .'Move them to another category first if you want to keep them.';
             });
     }
 }

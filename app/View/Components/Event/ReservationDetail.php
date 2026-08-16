@@ -11,7 +11,7 @@ use Illuminate\View\Component;
 class ReservationDetail extends Component
 {
     public Event $event;
-    
+
     /**
      * Create a new component instance.
      */
@@ -27,6 +27,6 @@ class ReservationDetail extends Component
      */
     public function render(): View|Closure|string
     {
-        return view($this->theme . '.components.event.reservation-detail');
+        return view($this->theme.'.components.event.reservation-detail');
     }
 }

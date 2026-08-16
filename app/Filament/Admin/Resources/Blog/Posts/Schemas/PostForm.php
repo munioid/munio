@@ -26,7 +26,7 @@ class PostForm
                                     ->maxLength(255)
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(function (Set $set, ?string $state, ?Post $record) {
-                                        if (!$record?->slug or !$state) {
+                                        if (! $record?->slug or ! $state) {
                                             $set('slug', Str::slug($state));
                                         }
                                     }),
@@ -59,13 +59,13 @@ class PostForm
                                     ->reactive(),
                                 Forms\Components\DateTimePicker::make('published_at')
                                     ->native(false)
-                                    ->visible(fn(Get $get) => $get('published')),
+                                    ->visible(fn (Get $get) => $get('published')),
                             ])
-                            ->columnSpan(2)
+                            ->columnSpan(2),
                     ])
                     ->columnSpanFull()
                     ->columns(6)
-                    ->contained(false)
+                    ->contained(false),
             ]);
     }
 }

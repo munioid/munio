@@ -10,7 +10,7 @@ class EventApi
         path: '/api/events',
         summary: 'List Event',
         tags: ['Event'],
-        security: [["bearerAuth" => []]]
+        security: [['bearerAuth' => []]]
     )]
     #[OA\Parameter(ref: '#/components/parameters/SearchParameter')]
     #[OA\Parameter(ref: '#/components/parameters/PageParameter')]
@@ -26,9 +26,9 @@ class EventApi
                             property: 'data',
                             type: 'array',
                             items: new OA\Items(ref: '#/components/schemas/EventResponse')
-                        )
+                        ),
                     ]
-                )
+                ),
             ]
         )
     )]
@@ -38,7 +38,7 @@ class EventApi
         path: '/api/events/{id}',
         summary: 'Detail Event',
         tags: ['Event'],
-        security: [["bearerAuth" => []]]
+        security: [['bearerAuth' => []]]
     )]
     #[OA\Parameter(ref: '#/components/parameters/IdParameter')]
     #[OA\Response(
@@ -52,9 +52,9 @@ class EventApi
                         new OA\Property(
                             property: 'data',
                             ref: '#/components/schemas/EventResponse'
-                        )
+                        ),
                     ]
-                )
+                ),
             ]
         )
     )]

@@ -37,12 +37,12 @@ class EventResource extends JsonResource
             ]),
 
             $this->mergeWhen($this->pricing_type == PricingTypeEnum::PACKAGE, [
-                'packages' => EventPackageResource::collection($this->packages)
+                'packages' => EventPackageResource::collection($this->packages),
             ]),
 
             $this->mergeWhen($this->pricing_type == PricingTypeEnum::EXTERNAL, [
                 'price' => $this->price,
-                'external_link' => $this->external_link
+                'external_link' => $this->external_link,
             ]),
         ];
     }

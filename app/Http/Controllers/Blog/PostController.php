@@ -33,7 +33,7 @@ class PostController extends Controller
                 ->with(['category', 'tags', 'covers'])
                 ->find($id);
 
-            if (!$post) {
+            if (! $post) {
                 throw new Exception('Post tidak ditemukan.', 404);
             }
 

@@ -2,9 +2,8 @@
 
 namespace App\Filament\Admin\Resources\Blog\Tags;
 
-use App\Filament\Admin\Resources\Blog\Tags\Tables\TagsTable;
-use App\Filament\Admin\Resources\Blog\Tags\Pages;
 use App\Filament\Admin\Resources\Blog\Tags\Schemas\TagForm;
+use App\Filament\Admin\Resources\Blog\Tags\Tables\TagsTable;
 use App\Models\Blog\Tag;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -16,6 +15,7 @@ class TagResource extends Resource
     protected static ?string $model = Tag::class;
 
     protected static UnitEnum|string|null $navigationGroup = 'Blog';
+
     protected static ?int $navigationSort = 3;
 
     public static function form(Schema $form): Schema

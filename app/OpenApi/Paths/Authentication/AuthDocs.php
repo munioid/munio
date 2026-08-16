@@ -7,9 +7,9 @@ use OpenApi\Attributes as OA;
 class AuthDocs
 {
     #[OA\Post(
-        path: "/api/auth/login",
-        summary: "User Login",
-        tags: ["Authentication"]
+        path: '/api/auth/login',
+        summary: 'User Login',
+        tags: ['Authentication']
     )]
     #[OA\RequestBody(
         required: true,
@@ -27,10 +27,10 @@ class AuthDocs
     public function login(): void {}
 
     #[OA\Post(
-        path: "/api/auth/logout",
-        summary: "Logout",
-        tags: ["Authentication"],
-        security: [["bearerAuth" => []]]
+        path: '/api/auth/logout',
+        summary: 'Logout',
+        tags: ['Authentication'],
+        security: [['bearerAuth' => []]]
     )]
     #[OA\Response(
         response: 200,
@@ -38,7 +38,7 @@ class AuthDocs
         content: new OA\JsonContent(
             allOf: [
                 new OA\Schema(ref: '#/components/schemas/BaseSuccessResponse'),
-                new OA\Schema(ref: '#/components/schemas/LogoutResponse')
+                new OA\Schema(ref: '#/components/schemas/LogoutResponse'),
             ]
         )
     )]

@@ -22,7 +22,7 @@ class TagForm
                             ->maxLength(255)
                             ->live(onBlur: true)
                             ->afterStateUpdated(function (Set $set, ?string $state, $record) {
-                                if ((!$record?->slug) || !$state) {
+                                if ((! $record?->slug) || ! $state) {
                                     $set('slug', Str::slug($state));
                                 }
                             }),
@@ -30,10 +30,10 @@ class TagForm
                             ->required()
                             ->maxLength(255),
                         Textarea::make('description')
-                            ->columnSpanFull()
+                            ->columnSpanFull(),
                     ])
                     ->columns(2)
-                    ->columnSpanFull()
+                    ->columnSpanFull(),
             ]);
     }
 }

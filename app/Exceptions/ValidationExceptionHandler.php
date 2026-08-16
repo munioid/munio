@@ -4,7 +4,6 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class ValidationExceptionHandler extends Exception
@@ -17,7 +16,7 @@ class ValidationExceptionHandler extends Exception
             'http_code' => 422,
             'message' => collect($exception->errors())
                 ->flatten()
-                ->first()
+                ->first(),
         ], 422);
     }
 }

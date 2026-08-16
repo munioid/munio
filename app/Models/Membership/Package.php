@@ -25,13 +25,13 @@ use Illuminate\Database\Eloquent\Model;
 )]
 class Package extends Model
 {
-    use Multitenantable, HasUuids, HasAttachments;
+    use HasAttachments, HasUuids, Multitenantable;
 
     protected $table = 'membership_packages';
 
     protected static $attachOne = [
         'cover',
-        'vcard_background'
+        'vcard_background',
     ];
 
     /**
@@ -42,7 +42,7 @@ class Package extends Model
     protected function casts(): array
     {
         return [
-            'validity_type' => PackageValidityTypeEnum::class
+            'validity_type' => PackageValidityTypeEnum::class,
         ];
     }
 }

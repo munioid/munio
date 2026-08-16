@@ -2,8 +2,8 @@
 
 namespace App\Filament\Admin\Resources\Event\Reservations\Schemas;
 
-use App\Enums\ReservationStatusEnum;
 use App\Enums\PricingTypeEnum;
+use App\Enums\ReservationStatusEnum;
 use App\Models\Event\Event;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -26,7 +26,7 @@ class ReservationForm
                             ->preload()
                             ->live()
                             ->columnSpanFull()
-                            ->disabled(fn(string $operation) => $operation === 'edit'),
+                            ->disabled(fn (string $operation) => $operation === 'edit'),
                         TextInput::make('name')
                             ->required(),
                         TextInput::make('email')
@@ -36,7 +36,7 @@ class ReservationForm
                             ->required()
                             ->numeric()
                             ->default(1)
-                            ->disabled(fn(string $operation) => $operation === 'edit'),
+                            ->disabled(fn (string $operation) => $operation === 'edit'),
                         Select::make('package_id')
                             ->relationship(
                                 name: 'package',
@@ -48,8 +48,8 @@ class ReservationForm
                             ->searchable()
                             ->preload()
                             ->required()
-                            ->visible(fn(Get $get) => Event::find($get('event_id'))?->pricing_type == PricingTypeEnum::PACKAGE)
-                            ->disabled(fn(string $operation) => $operation === 'edit'),
+                            ->visible(fn (Get $get) => Event::find($get('event_id'))?->pricing_type == PricingTypeEnum::PACKAGE)
+                            ->disabled(fn (string $operation) => $operation === 'edit'),
                         Select::make('user_id')
                             ->relationship(name: 'user', titleAttribute: 'name')
                             ->searchable()
@@ -58,10 +58,10 @@ class ReservationForm
                             ->required()
                             ->options(ReservationStatusEnum::class)
                             ->native(false)
-                            ->default(ReservationStatusEnum::PENDING)
+                            ->default(ReservationStatusEnum::PENDING),
                     ])
                     ->columns(2)
-                    ->columnSpanFull()
+                    ->columnSpanFull(),
             ]);
     }
 }

@@ -21,7 +21,7 @@ use Illuminate\Support\Str;
     'file_path',
     'file_size',
     'content_type',
-    'created_by'
+    'created_by',
 ])]
 class File extends Model
 {
@@ -40,7 +40,7 @@ class File extends Model
         ];
     }
 
-    ### Relationships ###
+    // ## Relationships ###
     public function attachment(): MorphTo
     {
         return $this->morphTo();
@@ -51,7 +51,7 @@ class File extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    ### Functions ###
+    // ## Functions ###
     public function getPath()
     {
         $path = Storage::url($this->file_path);
@@ -71,18 +71,18 @@ class File extends Model
         $diskStorage = Storage::disk($disk);
 
         $directory = trim($directory, '/');
-        $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
-        $filepath = $tenant->code . ($directory ? '/' . $directory : '');
+        $filename = Str::uuid().'.'.$file->getClientOriginalExtension();
+        $filepath = $tenant->code.($directory ? '/'.$directory : '');
 
         $path = $diskStorage->putFileAs($filepath, $file, $filename);
 
         return static::create([
-            'field'        => $field,
-            'file_name'    => $file->getClientOriginalName(),
-            'file_path'    => $path,
-            'file_size'    => $file->getSize(),
+            'field' => $field,
+            'file_name' => $file->getClientOriginalName(),
+            'file_path' => $path,
+            'file_size' => $file->getSize(),
             'content_type' => $file->getMimeType(),
-            'created_by'   => $user?->id,
+            'created_by' => $user?->id,
         ]);
     }
 }

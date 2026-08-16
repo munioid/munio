@@ -14,7 +14,7 @@ class BasePaginationResponse
 
     #[OA\Property(
         type: 'array',
-        items: new OA\Items()
+        items: new OA\Items
     )]
     public array $data;
 
@@ -51,7 +51,7 @@ class BasePaginationResponse
                         example: 1
                     ),
                 ]
-            )
+            ),
         ]
     )]
     public object $meta;

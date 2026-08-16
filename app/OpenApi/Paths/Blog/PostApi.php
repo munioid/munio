@@ -10,7 +10,7 @@ class PostApi
         path: '/api/blog/posts',
         summary: 'List Posts',
         tags: ['Blog'],
-        security: [["bearerAuth" => []]]
+        security: [['bearerAuth' => []]]
     )]
     #[OA\Parameter(ref: '#/components/parameters/SearchParameter')]
     #[OA\Response(
@@ -25,9 +25,9 @@ class PostApi
                             property: 'data',
                             type: 'array',
                             items: new OA\Items(ref: '#/components/schemas/PostResponse')
-                        )
+                        ),
                     ]
-                )
+                ),
             ]
         )
     )]
@@ -37,7 +37,7 @@ class PostApi
         path: '/api/blog/posts/{id}',
         summary: 'Detail Post',
         tags: ['Blog'],
-        security: [["bearerAuth" => []]]
+        security: [['bearerAuth' => []]]
     )]
     #[OA\Parameter(ref: '#/components/parameters/IdParameter')]
     #[OA\Response(
@@ -51,9 +51,9 @@ class PostApi
                         new OA\Property(
                             property: 'data',
                             ref: '#/components/schemas/PostResponse'
-                        )
+                        ),
                     ]
-                )
+                ),
             ]
         )
     )]

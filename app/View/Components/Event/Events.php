@@ -25,6 +25,6 @@ class Events extends Component
      */
     public function render(): View|Closure|string
     {
-        return view($this->theme . '.components.event.events');
+        return view($this->theme.'.components.event.events');
     }
 }

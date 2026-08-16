@@ -12,7 +12,7 @@ class AttributeForm
 {
     public static function configure(Schema $schema): Schema
     {
-         return $schema
+        return $schema
             ->schema([
                 Section::make()
                     ->schema([
@@ -41,10 +41,10 @@ class AttributeForm
                             ])
                             ->columns(2)
                             ->columnSpanFull()
-                            ->visible(fn(Get $get) => $get('type') == MemberAttributeTypeEnum::Dropdown),
+                            ->visible(fn (Get $get) => $get('type') == MemberAttributeTypeEnum::Dropdown),
                     ])
                     ->columnSpanFull()
-                    ->columns(2)
+                    ->columns(2),
 
             ]);
     }

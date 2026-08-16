@@ -2,7 +2,6 @@
 
 namespace App\Filament\Admin\Resources\Store\Tags;
 
-use App\Filament\Admin\Resources\Store\Tags\Pages;
 use App\Filament\Admin\Resources\Store\Tags\Schemas\StoreTagForm;
 use App\Filament\Admin\Resources\Store\Tags\Tables\StoreTagsTable;
 use App\Models\Store\StoreTag;

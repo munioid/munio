@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 )]
 class Event extends Model
 {
-    use HasUuids, Multitenantable, HasFactory, HasAttachments, Searchable;
+    use HasAttachments, HasFactory, HasUuids, Multitenantable, Searchable;
 
     protected $table = 'event_events';
 
@@ -44,7 +44,6 @@ class Event extends Model
         'excerpt',
         'category.name',
     ];
-
 
     /**
      * Get the attributes that should be cast.
@@ -58,16 +57,16 @@ class Event extends Model
             'start_at' => 'date',
             'end_at' => 'date',
             'published' => 'boolean',
-            'published_at' => 'datetime'
+            'published_at' => 'datetime',
         ];
     }
 
-    ### Attachments ###
+    // ## Attachments ###
     protected static $attachOne = [
-        'cover'
+        'cover',
     ];
 
-    ### Relationships ###
+    // ## Relationships ###
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -83,13 +82,13 @@ class Event extends Model
         return $this->hasMany(Reservation::class);
     }
 
-    ### Scopes ###
+    // ## Scopes ###
     public function scopePublished(Builder $query)
     {
         $query->where('published', true);
     }
 
-    ### Attributes ###
+    // ## Attributes ###
     protected function eventDate(): Attribute
     {
         return Attribute::make(

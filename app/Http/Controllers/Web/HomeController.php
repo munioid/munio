@@ -11,6 +11,7 @@ class HomeController extends Controller
     {
         $organization = Filament::getTenant();
         $theme = 'default';
-        return view('pages.home', compact('theme','organization'));
+
+        return view('pages.home', compact('theme', 'organization'));
     }
 }

@@ -12,7 +12,7 @@ class MemberAttribute extends Fieldset
         parent::setUp();
 
         $this
-            ->schema(fn() => $this->getAttributeFields())
+            ->schema(fn () => $this->getAttributeFields())
             ->columnSpanFull()
             ->columns(2);
     }

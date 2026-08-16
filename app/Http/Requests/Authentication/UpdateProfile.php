@@ -13,7 +13,7 @@ class UpdateProfile extends FormRequest
     {
         return $this->user() !== null;
     }
-    
+
     public function rules(): array
     {
         return [
@@ -21,7 +21,7 @@ class UpdateProfile extends FormRequest
             'email' => ['nullable', 'email'],
             'last_password' => ['nullable', 'string'],
             'new_password' => ['nullable', 'string', 'min:8', 'confirmed', 'required_with:last_password'],
-            'new_password_confirmation' => ['nullable', 'string', 'required_with:new_password']
+            'new_password_confirmation' => ['nullable', 'string', 'required_with:new_password'],
         ];
     }
 
@@ -33,7 +33,7 @@ class UpdateProfile extends FormRequest
             'new_password.min' => 'Password baru minimal harus :min karakter.',
             'new_password.confirmed' => 'Konfirmasi password baru tidak sesuai.',
             'new_password.required_with' => 'Password baru wajib diisi.',
-            'new_password_confirmation.required_with' => 'Konfirmasi Password baru wajib diisi.'
+            'new_password_confirmation.required_with' => 'Konfirmasi Password baru wajib diisi.',
         ];
     }
 }

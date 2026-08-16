@@ -13,10 +13,10 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Callout;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 
 class PackageForm
 {
@@ -44,11 +44,11 @@ class PackageForm
                                 TextInput::make('validity_amount')
                                     ->required()
                                     ->numeric()
-                                    ->visible(fn(Get $get) => in_array($get('validity_type'), [PackageValidityTypeEnum::MONTHLY, PackageValidityTypeEnum::YEARLY])),
+                                    ->visible(fn (Get $get) => in_array($get('validity_type'), [PackageValidityTypeEnum::MONTHLY, PackageValidityTypeEnum::YEARLY])),
                                 DatePicker::make('validity_end_at')
                                     ->label('End at')
                                     ->required()
-                                    ->visible(fn(Get $get) => $get('validity_type') === PackageValidityTypeEnum::CUSTOMDATE),
+                                    ->visible(fn (Get $get) => $get('validity_type') === PackageValidityTypeEnum::CUSTOMDATE),
                                 Textarea::make('description')
                                     ->columnSpanFull(),
                                 RichEditor::make('information')
@@ -57,21 +57,21 @@ class PackageForm
                                     ->live()
                                     ->columnSpanFull(),
                                 TextInput::make('format')
-                                    ->visible(fn(Get $get) => $get('is_auto_numbering'))
+                                    ->visible(fn (Get $get) => $get('is_auto_numbering'))
                                     ->columnSpanFull(),
                                 Callout::make('Data Variables')
-                                    ->icon(\Filament\Support\Icons\Heroicon::OutlinedLightBulb)
-                                    ->visible(fn(Get $get) => $get('is_auto_numbering'))
+                                    ->icon(Heroicon::OutlinedLightBulb)
+                                    ->visible(fn (Get $get) => $get('is_auto_numbering'))
                                     ->iconColor('primary')
                                     ->info()
                                     ->footer(
                                         View::make('filament.membership.hint-variable')
                                             ->viewData([
-                                                'attributes' => Attribute::query()->notPrivate()->get()
+                                                'attributes' => Attribute::query()->notPrivate()->get(),
                                             ])
                                     )
-                                    ->visible(fn(Get $get) => $get('is_auto_numbering'))
-                                    ->columnSpanFull()
+                                    ->visible(fn (Get $get) => $get('is_auto_numbering'))
+                                    ->columnSpanFull(),
                             ])
                             ->columns(2)
                             ->columnSpan(4),
@@ -82,11 +82,11 @@ class PackageForm
                                     ->label('Virtual Card Background'),
                                 Toggle::make('is_active'),
                             ])
-                            ->columnSpan(2)
+                            ->columnSpan(2),
                     ])
                     ->columns(6)
                     ->columnSpanFull()
-                    ->contained(false)
+                    ->contained(false),
             ]);
     }
 }
