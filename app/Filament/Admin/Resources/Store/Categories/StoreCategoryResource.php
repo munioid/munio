@@ -21,7 +21,7 @@ class StoreCategoryResource extends Resource
 
     protected static ?string $modelLabel = 'Category';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Schema $form): Schema
     {

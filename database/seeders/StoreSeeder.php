@@ -25,6 +25,7 @@ class StoreSeeder extends Seeder
         $organization = Organization::query()->where('code', 'default')->firstOrFail();
 
         Filament::setTenant($organization, true);
+        app()->instance('currentTenant', $organization);
 
         $categories = [
             'electronics' => StoreCategory::query()->firstOrCreate(
@@ -204,6 +205,8 @@ class StoreSeeder extends Seeder
 
             $order = StoreOrder::query()->create([
                 'user_id' => $buyer->id,
+                'name' => $buyer->name,
+                'email' => $buyer->email,
                 'subtotal' => $subtotal,
                 'shipping_cost' => $orderData['shipping_cost'],
                 'total' => $subtotal + $orderData['shipping_cost'],

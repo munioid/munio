@@ -21,6 +21,11 @@ return new class extends Migration
             $table->foreignIdFor(User::class)
                 ->constrained()
                 ->restrictOnDelete();
+            // Customer snapshot at time of order — editable independently of
+            // the linked user record (e.g. shipping contact differs from account).
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone')->nullable();
             $table->string('order_number');
             $table->string('status')->default('pending');
             $table->decimal('subtotal', 12, 2)->unsigned();
