@@ -3,18 +3,6 @@
 ## Project Overview
 Laravel backend service. Follow `1.x` flow. Make all changes in `1.x` branch only.
 
-## Allowed Commands
-```bash
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-php artisan serve
-php artisan test
-npm install
-npm run build
-```
-
 ## Branch and PR Rules
 - Base branch for PR: `1.x`
 - **CRITICAL**: When creating a PR using GitHub CLI (`gh pr create`), you MUST explicitly set the base branch to 1.x using `--base 1.x`.
