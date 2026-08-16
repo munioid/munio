@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 #[UseFactory(PostFactory::class)]
 class Post extends Model
 {
-    use Multitenantable, HasUuids, HasFactory, Searchable, HasAttachments;
+    use HasAttachments, HasFactory, HasUuids, Multitenantable, Searchable;
 
     protected $table = 'blog_posts';
 
@@ -33,7 +33,7 @@ class Post extends Model
         'source',
         'published',
         'published_by',
-        'published_at'
+        'published_at',
     ];
 
     /**
@@ -42,7 +42,7 @@ class Post extends Model
     protected array $searchable = [
         'title',
         'category.name',
-        'tags.name'
+        'tags.name',
     ];
 
     /**
@@ -60,12 +60,12 @@ class Post extends Model
         ];
     }
 
-    ### Attachments ###
+    // ## Attachments ###
     protected static $attachOne = [
-        'cover'
+        'cover',
     ];
 
-    ### Relationships ###
+    // ## Relationships ###
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -76,7 +76,7 @@ class Post extends Model
         return $this->belongsToMany(Tag::class, table: 'blog_tags_posts_pivot');
     }
 
-    ### Scopes ###
+    // ## Scopes ###
     public function scopePublished(Builder $query)
     {
         $query->where('published', true);

@@ -10,7 +10,7 @@ class TagApi
         path: '/api/blog/tags',
         summary: 'List Tags',
         tags: ['Blog'],
-        security: [["bearerAuth" => []]]
+        security: [['bearerAuth' => []]]
     )]
     #[OA\Parameter(ref: '#/components/parameters/SearchParameter')]
     #[OA\Response(
@@ -25,9 +25,9 @@ class TagApi
                             property: 'data',
                             type: 'array',
                             items: new OA\Items(ref: '#/components/schemas/TagResponse')
-                        )
+                        ),
                     ]
-                )
+                ),
             ]
         )
     )]

@@ -19,7 +19,7 @@ class EventPackageResource extends JsonResource
             'name' => $this->name,
             'code' => $this->code,
             'price' => $this->price,
-            'stocks' => $this->stocks
+            'stocks' => $this->stocks,
         ];
     }
 }

@@ -27,21 +27,21 @@ class EventForm
                 Section::make([
                     Section::make()
                         ->schema([
-                            Forms\Components\TextInput::make('title')
+                            TextInput::make('title')
                                 ->required()
                                 ->maxLength(255)
                                 ->live(onBlur: true)
                                 ->afterStateUpdated(function (Set $set, ?string $state, ?Event $record) {
-                                    if (!$record?->slug or !$state) {
+                                    if (! $record?->slug or ! $state) {
                                         $set('slug', Str::slug($state));
                                     }
                                 }),
-                            Forms\Components\TextInput::make('slug')
+                            TextInput::make('slug')
                                 ->required()
                                 ->maxLength(255)
                                 ->unique(
                                     ignoreRecord: true,
-                                    modifyRuleUsing: fn(Unique $rule) => $rule->where('organization_id', Filament::getTenant()->id)),
+                                    modifyRuleUsing: fn (Unique $rule) => $rule->where('organization_id', Filament::getTenant()->id)),
                             Forms\Components\RichEditor::make('content')
                                 ->columnSpanFull(),
                             Forms\Components\Textarea::make('excerpt')
@@ -63,7 +63,7 @@ class EventForm
                                 ->reactive(),
                             Forms\Components\DateTimePicker::make('published_at')
                                 ->native(false)
-                                ->visible(fn(Get $get) => $get('published')),
+                                ->visible(fn (Get $get) => $get('published')),
                         ])
                         ->columnSpan(2),
                     Tabs::make()
@@ -79,12 +79,12 @@ class EventForm
                                         ->columnSpanFull(),
                                     TextInput::make('price')
                                         ->numeric()
-                                        ->hidden(fn(Get $get) => $get('pricing_type') == PricingTypeEnum::PACKAGE),
+                                        ->hidden(fn (Get $get) => $get('pricing_type') == PricingTypeEnum::PACKAGE),
                                     TextInput::make('stocks')
                                         ->numeric()
-                                        ->visible(fn(Get $get) => $get('pricing_type') == PricingTypeEnum::SINGLE),
+                                        ->visible(fn (Get $get) => $get('pricing_type') == PricingTypeEnum::SINGLE),
                                     TextInput::make('external_link')
-                                        ->visible(fn(Get $get) => $get('pricing_type') == PricingTypeEnum::EXTERNAL),
+                                        ->visible(fn (Get $get) => $get('pricing_type') == PricingTypeEnum::EXTERNAL),
                                     Repeater::make('packages')
                                         ->hiddenLabel()
                                         ->relationship()
@@ -99,16 +99,16 @@ class EventForm
                                             TextInput::make('stocks')
                                                 ->minValue(0)
                                                 ->default(0)
-                                                ->required()
+                                                ->required(),
                                         ])
                                         ->addActionLabel('Add Package')
                                         ->columnSpanFull()
                                         ->columns(2)
-                                        ->visible(fn(Get $get) => $get('pricing_type') == PricingTypeEnum::PACKAGE),
-                                ])
+                                        ->visible(fn (Get $get) => $get('pricing_type') == PricingTypeEnum::PACKAGE),
+                                ]),
                         ])
                         ->columns(2)
-                        ->columnSpan(4)
+                        ->columnSpan(4),
                 ])
                     ->contained(false)
                     ->columns(6)

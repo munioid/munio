@@ -26,7 +26,7 @@ class ReservationObserver
             default:
                 break;
         }
-        
+
         $reservation->total = $reservation->quantity * $reservation->price;
     }
 

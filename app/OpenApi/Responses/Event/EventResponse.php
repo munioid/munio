@@ -74,7 +74,7 @@ class EventResponse
     )]
     public string $publishedAt;
 
-     #[OA\Property(
+    #[OA\Property(
         property: 'pricing_type',
         example: 'package'
     )]
@@ -100,7 +100,7 @@ class EventResponse
 
     #[OA\Property(
         type: 'array',
-        items: new OA\Items(ref:'#/components/schemas/EventPackageResponse')
+        items: new OA\Items(ref: '#/components/schemas/EventPackageResponse')
     )]
     public array $packages;
 }

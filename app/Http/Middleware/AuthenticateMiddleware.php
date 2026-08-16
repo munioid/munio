@@ -17,6 +17,7 @@ class AuthenticateMiddleware extends Middleware
                     'Silakan login terlebih dahulu untuk melanjutkan.'
                 );
             }
+
             return null;
         }
 

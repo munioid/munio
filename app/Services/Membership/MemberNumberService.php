@@ -22,6 +22,7 @@ class MemberNumberService
             if (str_starts_with($value, 'index')) {
                 $prefix = strstr($format, '{{index', true);
                 $format = self::replaceNumberingIndex($value, $format, $prefix);
+
                 continue;
             }
 
@@ -59,7 +60,7 @@ class MemberNumberService
         }
 
         return str_replace(
-            '{{' . $placeholder . '}}',
+            '{{'.$placeholder.'}}',
             $index,
             $format
         );
@@ -70,7 +71,7 @@ class MemberNumberService
         $value = data_get($data, $placeholder);
 
         return str_replace(
-            '{{' . $placeholder . '}}',
+            '{{'.$placeholder.'}}',
             $value,
             $format
         );

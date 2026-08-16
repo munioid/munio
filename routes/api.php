@@ -37,15 +37,15 @@ Route::middleware('customAuth')->group(function () {
     });
 
     // Event
-    Route::prefix('events')->group(function() {
+    Route::prefix('events')->group(function () {
         // Categories
         Route::get('categories', [EventCategoryController::class, 'index']);
 
         // Reservations
-        Route::prefix('reservations')->group(function() {
+        Route::prefix('reservations')->group(function () {
             Route::post('/', [ReservationController::class, 'store']);
         });
-        
+
         // Events
         Route::get('/', [EventController::class, 'index']);
         Route::get('{id}', [EventController::class, 'detail']);

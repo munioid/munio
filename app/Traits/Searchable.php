@@ -15,7 +15,7 @@ trait Searchable
             return $query;
         }
 
-        if (!property_exists($this, 'searchable') || empty($this->searchable)) {
+        if (! property_exists($this, 'searchable') || empty($this->searchable)) {
             return $query;
         }
 

@@ -16,9 +16,9 @@ use UnitEnum;
 class ReservationResource extends Resource
 {
     protected static ?string $model = Reservation::class;
-    
+
     protected static UnitEnum|string|null $navigationGroup = 'Event';
-    
+
     protected static ?int $navigationSort = 3;
 
     public static function form(Schema $schema): Schema

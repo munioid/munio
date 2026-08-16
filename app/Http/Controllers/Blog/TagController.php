@@ -13,7 +13,7 @@ class TagController extends Controller
     public function index(Request $request): JsonResponse
     {
         $search = $request->search;
-        
+
         $tags = Tag::query()
             ->when($search, function ($query, $searchKey) {
                 $query->search($searchKey);

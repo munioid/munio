@@ -16,14 +16,13 @@ class EventFilter extends Component
         public string $theme,
         public Collection $categories,
         public ?string $selectedCategory = null
-    ) {
-    }
+    ) {}
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view($this->theme . '.components.event.event-filter');
+        return view($this->theme.'.components.event.event-filter');
     }
 }

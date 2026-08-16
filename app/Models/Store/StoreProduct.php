@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StoreProduct extends Model
 {
-    use HasUuids, HasAttachments, Multitenantable, SoftDeletes;
+    use HasAttachments, HasUuids, Multitenantable, SoftDeletes;
 
     protected $table = 'store_products';
 

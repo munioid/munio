@@ -3,7 +3,6 @@
 namespace App\Filament\Admin\Clusters\Settings\Resources\Users;
 
 use App\Filament\Admin\Clusters\Settings;
-use App\Filament\Admin\Clusters\Settings\Resources\Users\Pages;
 use App\Filament\Admin\Clusters\Settings\Resources\Users\Schemas\UserForm;
 use App\Filament\Admin\Clusters\Settings\Resources\Users\Tables\UsersTable;
 use App\Models\User;

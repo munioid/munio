@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index(Request $request): JsonResponse
     {
         $search = $request->search;
-        
+
         $categories = Category::query()
             ->with(['parent'])
             ->when($search, function ($query, $searchKey) {

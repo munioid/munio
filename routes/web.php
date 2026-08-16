@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware([
     'hasTenant',
-    'customAuth'
+    'customAuth',
 ])->group(function () {
     Route::get('/', [HomeController::class, 'index']);
 
@@ -41,7 +41,6 @@ Route::middleware([
         Route::get('{slug}/reservation', [EventController::class, 'reservation']);
     });
 });
-
 
 Route::get('/membership/vcard/{id}', function ($id) {
     $member = Member::find($id);

@@ -39,5 +39,4 @@ class ReservationRequest
         example: 1
     )]
     public int $quantity;
-
 }

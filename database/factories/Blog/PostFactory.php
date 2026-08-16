@@ -21,6 +21,7 @@ class PostFactory extends Factory
     {
         $title = fake()->unique()->sentence();
         $published = fake()->boolean();
+
         return [
             'title' => $title,
             'slug' => Str::slug($title),
@@ -29,7 +30,7 @@ class PostFactory extends Factory
             'source' => fake()->url(),
             'category_id' => Category::query()->inRandomOrder()->first()?->id,
             'published' => $published,
-            'published_at' => $published ? fake()->dateTimeBetween('-10 months', 'now') : null
+            'published_at' => $published ? fake()->dateTimeBetween('-10 months', 'now') : null,
         ];
     }
 

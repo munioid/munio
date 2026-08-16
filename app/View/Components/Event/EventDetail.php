@@ -11,6 +11,7 @@ use Illuminate\View\Component;
 class EventDetail extends Component
 {
     public int|float|null $price;
+
     public bool $pricingExternal;
 
     /**

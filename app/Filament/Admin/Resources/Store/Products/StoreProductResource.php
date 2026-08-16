@@ -2,7 +2,6 @@
 
 namespace App\Filament\Admin\Resources\Store\Products;
 
-use App\Filament\Admin\Resources\Store\Products\Pages;
 use App\Filament\Admin\Resources\Store\Products\Schemas\StoreProductForm;
 use App\Filament\Admin\Resources\Store\Products\Tables\StoreProductsTable;
 use App\Models\Store\StoreProduct;

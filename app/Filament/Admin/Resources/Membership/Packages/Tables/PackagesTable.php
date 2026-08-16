@@ -22,7 +22,7 @@ class PackagesTable
                 TextColumn::make('validity_type')
                     ->badge(),
                 IconColumn::make('is_active')
-                    ->boolean()
+                    ->boolean(),
             ])
             ->filters([
                 //

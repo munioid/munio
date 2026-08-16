@@ -2,7 +2,6 @@
 
 namespace App\Filament\Admin\Resources\Blog\Categories;
 
-use App\Filament\Admin\Resources\Blog\Categories\Pages;
 use App\Filament\Admin\Resources\Blog\Categories\Schemas\CategoryForm;
 use App\Filament\Admin\Resources\Blog\Categories\Tables\CategoriesTable;
 use App\Models\Blog\Category;

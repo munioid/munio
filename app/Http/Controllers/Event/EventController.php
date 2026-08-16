@@ -33,7 +33,7 @@ class EventController extends Controller
                 ->with(['category', 'cover'])
                 ->find($id);
 
-            if (!$event) {
+            if (! $event) {
                 throw new Exception('Event not found.', 404);
             }
 

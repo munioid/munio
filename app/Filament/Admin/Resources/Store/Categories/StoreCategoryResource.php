@@ -2,7 +2,6 @@
 
 namespace App\Filament\Admin\Resources\Store\Categories;
 
-use App\Filament\Admin\Resources\Store\Categories\Pages;
 use App\Filament\Admin\Resources\Store\Categories\Schemas\StoreCategoryForm;
 use App\Filament\Admin\Resources\Store\Categories\Tables\StoreCategoriesTable;
 use App\Models\Store\StoreCategory;

@@ -3,15 +3,16 @@
 namespace App\Traits;
 
 use App\Models\File;
+use Illuminate\Database\Eloquent\Model;
 
 /**
- * @mixin \Illuminate\Database\Eloquent\Model
+ * @mixin Model
  */
 trait HasAttachments
 {
     public static function bootHasAttachments(): void
     {
-        /** @var class-string<\Illuminate\Database\Eloquent\Model> $class */
+        /** @var class-string<Model> $class */
         $class = static::class;
 
         foreach (static::$attachOne ?? [] as $field) {

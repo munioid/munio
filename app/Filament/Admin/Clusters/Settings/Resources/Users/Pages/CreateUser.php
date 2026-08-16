@@ -2,10 +2,8 @@
 
 namespace App\Filament\Admin\Clusters\Settings\Resources\Users\Pages;
 
-use Filament\Actions;
-use App\Filament\Admin\Clusters\Settings;
-use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Admin\Clusters\Settings\Resources\Users\UserResource;
+use Filament\Resources\Pages\CreateRecord;
 
 class CreateUser extends CreateRecord
 {

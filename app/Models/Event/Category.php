@@ -18,11 +18,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 )]
 class Category extends Model
 {
-    use HasUuids, Multitenantable, HasFactory;
+    use HasFactory, HasUuids, Multitenantable;
 
     protected $table = 'event_categories';
 
-    ### Attributes ###
+    // ## Attributes ###
     public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_id');

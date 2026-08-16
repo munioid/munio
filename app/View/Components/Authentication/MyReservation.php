@@ -15,14 +15,13 @@ class MyReservation extends Component
     public function __construct(
         public string $theme,
         public LengthAwarePaginator $reservations
-    ) {
-    }
+    ) {}
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view($this->theme . '.components.authentication.my-reservation');
+        return view($this->theme.'.components.authentication.my-reservation');
     }
 }

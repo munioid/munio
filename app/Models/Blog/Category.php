@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[UseFactory(CategoryFactory::class)]
 class Category extends Model
 {
-    use Multitenantable, HasUuids, HasFactory, Searchable;
+    use HasFactory, HasUuids, Multitenantable, Searchable;
 
     protected $table = 'blog_categories';
 
@@ -28,14 +28,14 @@ class Category extends Model
         'name',
         'slug',
         'description',
-        'parent_id'
+        'parent_id',
     ];
 
     /**
      * The attrubutes that are searchable.
      */
     protected array $searchable = [
-        'name'
+        'name',
     ];
 
     /**

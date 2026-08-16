@@ -98,10 +98,10 @@ class Organization extends Page
                     ->columns(2),
                 Section::make('Colors')
                     ->schema([
-                        ColorPicker::make('colors.primary')
+                        ColorPicker::make('colors.primary'),
                     ])
                     ->columns(2)
-                    ->collapsed()
+                    ->collapsed(),
             ])
             ->model($this->record)
             ->statePath('data')

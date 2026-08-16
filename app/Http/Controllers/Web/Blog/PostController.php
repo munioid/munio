@@ -16,7 +16,8 @@ class PostController extends Controller
         $categories = Category::all();
         $tags = Tag::all();
         $theme = 'default';
-        return view('pages.blog.posts', compact('theme','organization', 'categories', 'tags'));
+
+        return view('pages.blog.posts', compact('theme', 'organization', 'categories', 'tags'));
     }
 
     public function detail(string $slug)
@@ -26,10 +27,10 @@ class PostController extends Controller
             ->whereSlug($slug)
             ->first();
 
-        if (!$post) {
+        if (! $post) {
             abort(404, 'Not found.');
         }
-        
+
         return view('pages.blog.post-detail', compact('organization', 'post'));
     }
 }

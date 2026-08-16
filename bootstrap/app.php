@@ -14,16 +14,16 @@ use Illuminate\Validation\ValidationException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        api: __DIR__ . '/../routes/api.php',
-        web: __DIR__ . '/../routes/web.php',
-        commands: __DIR__ . '/../routes/console.php',
+        api: __DIR__.'/../routes/api.php',
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'auth' => AuthenticateMiddleware::class,
             'customAuth' => CustomAuthMiddleware::class,
-            'hasTenant' => HasTenantMiddleware::class
+            'hasTenant' => HasTenantMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

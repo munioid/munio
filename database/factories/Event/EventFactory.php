@@ -21,13 +21,14 @@ class EventFactory extends Factory
     {
         $title = fake()->unique()->sentence();
         $startAt = fake()->dateTimeBetween('-1 month', '+1 month');
-        $endAt = (clone $startAt)->modify('+' . fake()->numberBetween(1, 3) . ' days');
+        $endAt = (clone $startAt)->modify('+'.fake()->numberBetween(1, 3).' days');
         $published = fake()->boolean();
 
         $pricingType = fake()->randomElement([
             'single',
-            'external'
+            'external',
         ]);
+
         return [
             'title' => $title,
             'slug' => Str::slug($title),

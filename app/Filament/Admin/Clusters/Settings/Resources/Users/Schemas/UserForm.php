@@ -21,10 +21,10 @@ class UserForm
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->maxLength(255)
-                    ->dehydrateStateUsing(fn($state) => filled($state) ? bcrypt($state) : null)
-                    ->dehydrated(fn($state) => filled($state)),
+                    ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
+                    ->dehydrated(fn ($state) => filled($state)),
                 Forms\Components\Toggle::make('is_admin')
-                    ->required()
+                    ->required(),
             ]);
     }
 }

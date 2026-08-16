@@ -38,7 +38,7 @@ class StoreCategoryForm
                             // so scope the unique rule to the organization by hand.
                             ->unique(
                                 ignoreRecord: true,
-                                modifyRuleUsing: fn(Unique $rule) => $rule->where('organization_id', Filament::getTenant()->id),
+                                modifyRuleUsing: fn (Unique $rule) => $rule->where('organization_id', Filament::getTenant()->id),
                             ),
                         Textarea::make('description')
                             ->columnSpanFull(),
