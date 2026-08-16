@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class StoreOrder extends Model
@@ -25,6 +26,9 @@ class StoreOrder extends Model
      */
     protected $fillable = [
         'user_id',
+        'name',
+        'email',
+        'phone',
         'order_number',
         'status',
         'subtotal',
@@ -32,6 +36,14 @@ class StoreOrder extends Model
         'total',
         'notes',
     ];
+
+    /**
+     * Explicit "changed by" override for the next status-history row this
+     * request writes. Set by changeStatus() so callers (e.g. the seeder) can
+     * attribute a transition to a specific user without an authenticated web
+     * session. Falls back to the current Filament/web user when left unset.
+     */
+    protected ?string $pendingStatusChangeActorId = null;
 
     /**
      * Boot
@@ -53,10 +65,20 @@ class StoreOrder extends Model
         static::created(function (self $order) {
             // Seed the audit trail (OD-Order-2): every order gets an initial
             // history row, status_from left null since there was no prior status.
-            $order->statusHistories()->create([
-                'status_from' => null,
-                'status_to' => $order->status,
-            ]);
+            $order->recordStatusHistory(null, $order->status);
+        });
+
+        // OD-Order-3: admin can freely change `status` (no state machine), but
+        // every change — whether via changeStatus(), the Filament edit form,
+        // or a plain ->update(['status' => ...]) — must be logged automatically.
+        static::updated(function (self $order) {
+            $changes = $order->getChanges();
+
+            if (! array_key_exists('status', $changes)) {
+                return;
+            }
+
+            $order->recordStatusHistory($order->getOriginal('status'), $order->status);
         });
     }
 
@@ -98,18 +120,34 @@ class StoreOrder extends Model
      */
 
     /**
-     * Transition the order to a new status and record the change in the
-     * immutable status history trail (OD-Order-2).
+     * Transition the order to a new status. The immutable status history
+     * trail (OD-Order-2) is written automatically by the `updated` hook in
+     * boot() — this only needs to attribute the change to $changedBy before
+     * saving, for callers (e.g. the seeder) without an authenticated web user.
      */
     public function changeStatus(StoreOrderStatusEnum $status, ?User $changedBy = null): StoreOrderStatusHistory
     {
-        $history = $this->statusHistories()->create([
-            'status_from' => $this->status,
-            'status_to' => $status,
-            'changed_by' => $changedBy?->id,
-        ]);
+        $this->pendingStatusChangeActorId = $changedBy?->id;
 
         $this->update(['status' => $status]);
+
+        return $this->statusHistories()->latest('created_at')->latest('id')->firstOrFail();
+    }
+
+    /**
+     * Write a single row to the status history audit trail, attributed to the
+     * explicit actor set via changeStatus() or, failing that, the current
+     * authenticated (Filament) user.
+     */
+    protected function recordStatusHistory(StoreOrderStatusEnum|string|null $from, StoreOrderStatusEnum|string|null $to): StoreOrderStatusHistory
+    {
+        $history = $this->statusHistories()->create([
+            'status_from' => $from,
+            'status_to' => $to,
+            'changed_by' => $this->pendingStatusChangeActorId ?? Auth::id(),
+        ]);
+
+        $this->pendingStatusChangeActorId = null;
 
         return $history;
     }
