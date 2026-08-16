@@ -28,7 +28,7 @@ Laravel backend service. Follow `1.x` flow. Make all changes in `1.x` branch onl
 
 ## Fast Path Commands
 ```bash
-git checkout develop
+git checkout 1.x
 git pull --ff-only
 composer install
 php artisan test
