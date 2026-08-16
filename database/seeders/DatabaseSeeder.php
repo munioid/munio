@@ -19,12 +19,12 @@ class DatabaseSeeder extends Seeder
 
         User::firstOrCreate(
             [
-                'email' => 'superadmin@example.com'
+                'email' => 'superadmin@example.com',
             ],
             [
                 'name' => 'Superadmin',
                 'password' => bcrypt('admin123'),
-                'is_superuser' => true
+                'is_superuser' => true,
             ]
         );
     }

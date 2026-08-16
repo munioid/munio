@@ -114,8 +114,8 @@ class StoreProductImporter extends Importer
 
     public static function getCompletedNotificationBody(Import $import): string
     {
-        return 'Imported ' . number_format($import->successful_rows) . ' products.' .
-            ($import->getFailedRowsCount() ? ' ' . number_format($import->getFailedRowsCount()) . ' rows failed validation.' : '');
+        return 'Imported '.number_format($import->successful_rows).' products.'.
+            ($import->getFailedRowsCount() ? ' '.number_format($import->getFailedRowsCount()).' rows failed validation.' : '');
     }
 
     protected function beforeValidate(): void

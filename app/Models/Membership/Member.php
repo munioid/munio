@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 #[ObservedBy(MemberObserver::class)]
 class Member extends Model
 {
-    use Multitenantable, HasUuids;
+    use HasUuids, Multitenantable;
 
     protected $table = 'membership_members';
 
@@ -32,7 +32,7 @@ class Member extends Model
         'email',
         'status',
         'status_updated_at',
-        'user_id'
+        'user_id',
     ];
 
     /**
@@ -48,6 +48,7 @@ class Member extends Model
             }
         });
     }
+
     /**
      * Relationships
      */
@@ -67,12 +68,12 @@ class Member extends Model
         return $this->belongsTo(User::class);
     }
 
-    ### Functions ###
+    // ## Functions ###
     public function generateNumber()
     {
         $data = $this->attributes()
             ->get()
-            ->mapWithKeys(fn($attribute) => [
+            ->mapWithKeys(fn ($attribute) => [
                 $attribute->fieldname => $attribute->pivot->value,
             ])
             ->toArray();

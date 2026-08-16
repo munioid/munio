@@ -26,9 +26,11 @@ class ReservationController extends Controller
             ReservationService::createReservation($data);
 
             DB::commit();
+
             return $this->respondSuccess('Reservation submitted.');
         } catch (Throwable $th) {
             DB::rollBack();
+
             return $this->respondWithError($th->getMessage(), $th->getCode());
         }
     }

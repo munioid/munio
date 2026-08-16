@@ -16,7 +16,7 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         $organization = Organization::firstOrFail();
-        
+
         $this->command->info('Proses seeding blog kategori dimulai...');
         Category::factory(5)
             ->state([

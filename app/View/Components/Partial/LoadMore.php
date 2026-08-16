@@ -10,8 +10,7 @@ class LoadMore extends Component
 {
     public function __construct(
         public string $theme
-    ) {
-    }
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

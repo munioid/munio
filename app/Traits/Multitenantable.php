@@ -2,9 +2,9 @@
 
 namespace App\Traits;
 
+use App\Models\Organization\Organization;
 use Filament\Facades\Filament;
 use Illuminate\Database\Eloquent\Builder;
-use App\Models\Organization\Organization;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 trait Multitenantable

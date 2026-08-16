@@ -14,7 +14,7 @@ class BaseCollectionResponse
 
     #[OA\Property(
         type: 'array',
-        items: new OA\Items()
+        items: new OA\Items
     )]
     public array $data;
 }

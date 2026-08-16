@@ -28,10 +28,10 @@ class EventController extends Controller
             ->whereSlug($slug)
             ->first();
 
-        if (!$event) {
+        if (! $event) {
             abort(404, 'Not found.');
         }
-        
+
         return view('pages.event.detail', compact('theme', 'organization', 'event'));
     }
 
@@ -43,10 +43,10 @@ class EventController extends Controller
             ->whereSlug($slug)
             ->first();
 
-        if (!$event) {
+        if (! $event) {
             abort(404, 'Not found.');
         }
-        
+
         return view('pages.event.reservation', compact('theme', 'organization', 'event'));
     }
 
@@ -58,7 +58,7 @@ class EventController extends Controller
             ->where('code', $code)
             ->first();
 
-        if (!$reservation) {
+        if (! $reservation) {
             abort(404, 'Not Found.');
         }
 

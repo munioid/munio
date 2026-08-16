@@ -12,6 +12,7 @@ use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 class MunioFileUpload extends FileUpload
 {
     protected string $relationship;
+
     protected array $uploadedFiles = [];
 
     protected function setUp(): void
@@ -27,8 +28,8 @@ class MunioFileUpload extends FileUpload
             $contentType = $file->getMimeType();
             $size = $file->getSize();
             $disk = $this->getDiskName();
-            $directory = $this->getDirectory() . '/' . $tenant->code;
-            $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+            $directory = $this->getDirectory().'/'.$tenant->code;
+            $filename = Str::uuid().'.'.$file->getClientOriginalExtension();
             $diskStorage = Storage::disk($disk);
 
             $path = $diskStorage->putFileAs($directory, $file, $filename);
@@ -40,7 +41,7 @@ class MunioFileUpload extends FileUpload
                 'file_path' => $path,
                 'file_size' => $size,
                 'content_type' => $contentType,
-                'created_by' => $user?->id
+                'created_by' => $user?->id,
             ];
 
             return $path;

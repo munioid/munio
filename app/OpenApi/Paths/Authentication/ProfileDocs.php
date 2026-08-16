@@ -10,7 +10,7 @@ class ProfileDocs
         path: '/api/profile',
         summary: 'Get Profile',
         tags: ['Authentication'],
-        security: [["bearerAuth" => []]]
+        security: [['bearerAuth' => []]]
     )]
     #[OA\Response(
         response: 200,
@@ -23,9 +23,9 @@ class ProfileDocs
                         new OA\Property(
                             property: 'data',
                             ref: '#/components/schemas/ProfileResponse'
-                        )
+                        ),
                     ]
-                )
+                ),
             ]
         )
     )]
@@ -35,7 +35,7 @@ class ProfileDocs
         path: '/api/profile/update',
         summary: 'Update Profile',
         tags: ['Authentication'],
-        security: [["bearerAuth" => []]]
+        security: [['bearerAuth' => []]]
     )]
     #[OA\RequestBody(
         required: true,
@@ -49,7 +49,7 @@ class ProfileDocs
         content: new OA\JsonContent(
             allOf: [
                 new OA\Schema(ref: '#/components/schemas/BaseSuccessResponse'),
-                new OA\Schema(ref: '#/components/schemas/UpdateProfileResponse')
+                new OA\Schema(ref: '#/components/schemas/UpdateProfileResponse'),
             ]
         )
     )]

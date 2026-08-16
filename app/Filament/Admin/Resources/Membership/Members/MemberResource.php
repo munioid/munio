@@ -2,8 +2,6 @@
 
 namespace App\Filament\Admin\Resources\Membership\Members;
 
-use App\Filament\Admin\Resources\Membership\Members\Pages;
-use App\Filament\Admin\Resources\Membership\Members\RelationManagers;
 use App\Filament\Admin\Resources\Membership\Members\Schemas\MemberForm;
 use App\Filament\Admin\Resources\Membership\Members\Tables\MembersTable;
 use App\Models\Membership\Member;
@@ -17,6 +15,7 @@ class MemberResource extends Resource
     protected static ?string $model = Member::class;
 
     protected static UnitEnum|string|null $navigationGroup = 'Membership';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Schema $form): Schema

@@ -12,7 +12,7 @@ class MemberObserver
      */
     public function saved(Member $member): void
     {
-        if ($member->status == MemberStatusEnum::ACTIVE and !$member->number and $member->attributes()->count()) {
+        if ($member->status == MemberStatusEnum::ACTIVE and ! $member->number and $member->attributes()->count()) {
             $member->generateNumber();
         }
     }

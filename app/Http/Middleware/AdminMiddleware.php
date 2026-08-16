@@ -2,21 +2,21 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Organization\Organization;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\Organization\Organization;
 
 class AdminMiddleware
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Organization::exists()) {
+        if (! Organization::exists()) {
             return redirect()->to('/onboarding');
         }
 

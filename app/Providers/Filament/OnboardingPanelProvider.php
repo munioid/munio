@@ -2,21 +2,21 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Onboarding\Pages\Onboarding;
 use App\Http\Middleware\OnboardingMiddleware;
-use Filament\Pages;
-use Filament\Panel;
-use Filament\Widgets;
-use Filament\PanelProvider;
 use Filament\Enums\ThemeMode;
-use Filament\Support\Colors\Color;
-use Illuminate\Session\Middleware\StartSession;
-use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
-use Illuminate\Routing\Middleware\SubstituteBindings;
-use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Panel;
+use Filament\PanelProvider;
+use Filament\Support\Colors\Color;
+use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class OnboardingPanelProvider extends PanelProvider
 {
@@ -31,7 +31,7 @@ class OnboardingPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Onboarding/Resources'), for: 'App\\Filament\\Onboarding\\Resources')
             ->discoverPages(in: app_path('Filament/Onboarding/Pages'), for: 'App\\Filament\\Onboarding\\Pages')
             ->pages([
-                \App\Filament\Onboarding\Pages\Onboarding::class,
+                Onboarding::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Onboarding/Widgets'), for: 'App\\Filament\\Onboarding\\Widgets')
             ->widgets([
@@ -47,7 +47,7 @@ class OnboardingPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                OnboardingMiddleware::class
+                OnboardingMiddleware::class,
             ])
             ->defaultThemeMode(ThemeMode::Light);
     }

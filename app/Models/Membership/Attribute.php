@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Attribute extends Model
 {
-    use Multitenantable, HasUuids;
+    use HasUuids, Multitenantable;
 
     protected $table = 'membership_attributes';
 
@@ -31,7 +31,7 @@ class Attribute extends Model
         'options',
         'notes',
         'is_private',
-        'is_required'
+        'is_required',
     ];
 
     /**
@@ -70,13 +70,13 @@ class Attribute extends Model
         }
     }
 
-    ### Scopes ###
+    // ## Scopes ###
     public function scopeNotPrivate(Builder $query)
     {
         $query->where('is_private', false);
     }
 
-    ### Components ###
+    // ## Components ###
     public function toFormComponent(): Field
     {
         $field = match ($this->type) {

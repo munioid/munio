@@ -13,11 +13,11 @@ class ReservationService
     public static function createReservation(array $data)
     {
         $event = Event::find(data_get($data, 'event_id'));
-        if (!$event) {
+        if (! $event) {
             throw new Exception('Event not found.', 404);
         }
-        
-        $reservation = new Reservation();
+
+        $reservation = new Reservation;
         $reservation->event_id = $event->id;
         $reservation->name = data_get($data, 'name');
         $reservation->email = data_get($data, 'email');
@@ -27,7 +27,7 @@ class ReservationService
         if ($event->pricing_type == PricingTypeEnum::PACKAGE) {
             $package = $event->packages()
                 ->find(data_get($data, 'package_id'));
-            if (!$package) {
+            if (! $package) {
                 throw new Exception('Package not found.', 404);
             }
 
@@ -36,12 +36,12 @@ class ReservationService
 
         if (data_get($data, 'user_id')) {
             $user = User::find(data_get($data, 'user_id'));
-            if (!$user) {
+            if (! $user) {
                 throw new Exception('Pengguna tidak ditemukan.', 404);
             }
             $reservation->user_id = $user->id;
         }
-        
+
         $reservation->save();
 
         return $reservation;

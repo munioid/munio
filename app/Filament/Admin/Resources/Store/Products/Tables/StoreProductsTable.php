@@ -39,7 +39,7 @@ class StoreProductsTable
                 TextColumn::make('stock_status')
                     ->badge()
                     ->sortable()
-                    ->color(fn (StoreProductStockStatusEnum|string|null $state): string | array | bool | null => match ($state instanceof StoreProductStockStatusEnum ? $state : StoreProductStockStatusEnum::tryFrom((string) $state)) {
+                    ->color(fn (StoreProductStockStatusEnum|string|null $state): string|array|bool|null => match ($state instanceof StoreProductStockStatusEnum ? $state : StoreProductStockStatusEnum::tryFrom((string) $state)) {
                         StoreProductStockStatusEnum::IN_STOCK => 'success',
                         StoreProductStockStatusEnum::OUT_OF_STOCK => 'danger',
                         StoreProductStockStatusEnum::ON_BACKORDER => 'warning',

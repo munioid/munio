@@ -14,10 +14,11 @@ abstract class Controller
     protected function respondWithError(string $message, int $statusCode)
     {
         $this->statusCode = $statusCode != 0 ? $statusCode : 500;
+
         return response()->json([
             'success' => false,
             'http_code' => $this->statusCode,
-            'message' => $message
+            'message' => $message,
         ], $this->statusCode);
     }
 
@@ -31,8 +32,8 @@ abstract class Controller
                     'count' => $paginated->count(),
                     'per_page' => $paginated->perPage(),
                     'current_page' => $paginated->currentPage(),
-                    'total_pages' => $paginated->lastPage()
-                ]
+                    'total_pages' => $paginated->lastPage(),
+                ],
             ], $additionalMeta)
         );
     }
@@ -53,11 +54,11 @@ abstract class Controller
     {
         return response()->json([
             'success' => true,
-            'message' => $message
+            'message' => $message,
         ]);
     }
 
-    protected function respondWithArray(array $data, array $meta = [],  array $headers = []): JsonResponse
+    protected function respondWithArray(array $data, array $meta = [], array $headers = []): JsonResponse
     {
         return response()->json([
             'success' => $this->statusCode == 200 ? true : false,

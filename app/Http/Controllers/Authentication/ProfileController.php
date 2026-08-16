@@ -44,6 +44,7 @@ class ProfileController extends Controller
                 ]);
             }
             DB::commit();
+
             return $this->respondSuccess('Profile berhasil dirubah.');
         } catch (Throwable $th) {
             return $this->respondWithError($th->getMessage(), $th->getCode());

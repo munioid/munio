@@ -6,11 +6,11 @@ use OpenApi\Attributes as OA;
 
 class CategoryApi
 {
-   #[OA\Get(
+    #[OA\Get(
         path: '/api/blog/categories',
         summary: 'List Categories',
         tags: ['Blog'],
-        security: [["bearerAuth" => []]]
+        security: [['bearerAuth' => []]]
     )]
     #[OA\Parameter(ref: '#/components/parameters/SearchParameter')]
     #[OA\Response(
@@ -25,9 +25,9 @@ class CategoryApi
                             property: 'data',
                             type: 'array',
                             items: new OA\Items(ref: '#/components/schemas/CategoryResponse')
-                        )
+                        ),
                     ]
-                )
+                ),
             ]
         )
     )]

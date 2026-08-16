@@ -67,7 +67,7 @@ class AttributesRelationManager extends RelationManager
                                 $set('attribute_id', $attribute?->id);
                             });
                     })
-                    ->schema(fn(Actions\AttachAction $action) => [
+                    ->schema(fn (Actions\AttachAction $action) => [
                         $action->getRecordSelect(),
                         Forms\Components\Hidden::make('type')
                             ->live(),
@@ -77,14 +77,14 @@ class AttributesRelationManager extends RelationManager
                             ->live(),
                         Forms\Components\TextInput::make('value')
                             ->label('Value')
-                            ->required(fn(Get $get) => $get('is_required'))
-                            ->visible(fn(Get $get) => $get('type') == MemberAttributeTypeEnum::Text),
+                            ->required(fn (Get $get) => $get('is_required'))
+                            ->visible(fn (Get $get) => $get('type') == MemberAttributeTypeEnum::Text),
                         Forms\Components\Select::make('value')
                             ->label('Value')
-                            ->required(fn(Get $get) => $get('is_required'))
+                            ->required(fn (Get $get) => $get('is_required'))
                             ->native(false)
-                            ->options(fn(Get $get) => collect(Attribute::find($get('attribute_id'))->options)->pluck('value', 'code')->toArray())
-                            ->visible(fn(Get $get) => $get('type') == MemberAttributeTypeEnum::Dropdown),
+                            ->options(fn (Get $get) => collect(Attribute::find($get('attribute_id'))->options)->pluck('value', 'code')->toArray())
+                            ->visible(fn (Get $get) => $get('type') == MemberAttributeTypeEnum::Dropdown),
                     ]),
             ])
             ->recordActions([

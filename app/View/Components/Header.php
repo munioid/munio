@@ -11,8 +11,7 @@ class Header extends Component
 {
     public function __construct(
         public Organization $organization
-    ) {
-    }
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

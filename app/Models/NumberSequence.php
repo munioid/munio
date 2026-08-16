@@ -13,5 +13,5 @@ use Illuminate\Database\Eloquent\Model;
 )]
 class NumberSequence extends Model
 {
-    use Multitenantable, HasUuids;
+    use HasUuids, Multitenantable;
 }

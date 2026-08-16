@@ -13,8 +13,8 @@ use Filament\Actions\Imports\Models\Import;
 use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Validation\ValidationException;
-use Throwable;
 use Tests\TestCase;
+use Throwable;
 
 class StoreProductImporterTest extends TestCase
 {

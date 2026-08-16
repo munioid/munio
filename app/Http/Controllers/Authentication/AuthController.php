@@ -27,10 +27,11 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'token' => $result['token'],
-                'token_type' => $result['token_type']
+                'token_type' => $result['token_type'],
             ], 200);
         } catch (Throwable $th) {
             $httpCode = $th->getCode() != 0 ? $th->getCode() : 500;
+
             return $this->respondWithError($th->getMessage(), $httpCode);
         }
     }

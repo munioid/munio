@@ -2,10 +2,10 @@
 
 namespace App\Filament\Admin\Resources\Event\Events\Tables;
 
-use Filament\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Tables;
 use Filament\Tables\Table;
 
 class EventsTable
@@ -36,7 +36,7 @@ class EventsTable
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
