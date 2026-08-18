@@ -8,6 +8,7 @@ use App\Filament\Imports\MemberImporter;
 use Filament\Actions;
 use Filament\Facades\Filament;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Icons\Heroicon;
 
 class ListMembers extends ListRecords
 {
@@ -19,14 +20,14 @@ class ListMembers extends ListRecords
             Actions\CreateAction::make(),
             Actions\ExportAction::make()
                 ->exporter(MemberExporter::class)
-                ->label('Export Members')
-                ->icon('heroicon-o-document-arrow-down')
+                ->label('Export')
+                ->icon(Heroicon::ArrowDownTray)
                 ->color('info')
                 ->options(fn (): array => ['organization_id' => Filament::getTenant()?->id]),
             Actions\ImportAction::make()
                 ->importer(MemberImporter::class)
-                ->label('Import Members')
-                ->icon('heroicon-o-document-arrow-up')
+                ->label('Import')
+                ->icon(Heroicon::ArrowUpTray)
                 ->color('info')
                 ->options(fn (): array => ['organization_id' => Filament::getTenant()?->id]),
         ];
