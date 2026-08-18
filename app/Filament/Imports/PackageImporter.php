@@ -25,40 +25,40 @@ class PackageImporter extends Importer
             ImportColumn::make('event_slug')
                 ->label('Event Slug')
                 ->requiredMapping()
-                ->examples(['winter-expo-2024', 'summer-festival-2024', 'concert-series-2024'])
+                ->examples(['winter-expo-2024'])
                 ->rules(['required', 'string'])
                 ->guess(['event', 'event_slug']),
 
             ImportColumn::make('name')
                 ->label('Package Name')
                 ->requiredMapping()
-                ->examples(['VIP Pass', 'Regular Pass', 'Student Pass'])
+                ->examples(['VIP Pass'])
                 ->rules(['required', 'string', 'max:255']),
 
             ImportColumn::make('code')
                 ->label('Package Code')
                 ->requiredMapping()
-                ->examples(['VIP-001', 'REG-001', 'STU-001'])
+                ->examples(['VIP-001'])
                 ->rules(['required', 'string', 'max:255']),
 
             ImportColumn::make('price')
                 ->label('Price')
                 ->ignoreBlankState()
-                ->examples(['100000', '50000', '25000'])
+                ->examples(['100000'])
                 ->castStateUsing(fn (mixed $state): mixed => filled($state) ? (float) $state : null)
                 ->rules(['nullable', 'numeric', 'min:0']),
 
             ImportColumn::make('stocks')
                 ->label('Stocks')
                 ->ignoreBlankState()
-                ->examples(['50', '200', '100'])
+                ->examples(['50'])
                 ->castStateUsing(fn (mixed $state): mixed => filled($state) ? (int) $state : null)
                 ->rules(['nullable', 'integer', 'min:0']),
 
             ImportColumn::make('booked')
                 ->label('Booked')
                 ->ignoreBlankState()
-                ->examples(['5', '45', '20'])
+                ->examples(['5'])
                 ->castStateUsing(fn (mixed $state): mixed => filled($state) ? (int) $state : null)
                 ->rules(['nullable', 'integer', 'min:0']),
         ];
