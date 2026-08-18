@@ -25,42 +25,42 @@ class PackageImporter extends Importer
             ImportColumn::make('event_slug')
                 ->label('Event Slug')
                 ->requiredMapping()
+                ->examples(['winter-expo-2024', 'summer-festival-2024', 'concert-series-2024'])
                 ->rules(['required', 'string'])
-                ->guess(['event', 'event_slug'])
-                ->example('winter-expo'),
+                ->guess(['event', 'event_slug']),
 
             ImportColumn::make('name')
                 ->label('Package Name')
                 ->requiredMapping()
-                ->rules(['required', 'string', 'max:255'])
-                ->example('VIP Pass | Regular | Standard'),
+                ->examples(['VIP Pass', 'Regular Pass', 'Student Pass'])
+                ->rules(['required', 'string', 'max:255']),
 
             ImportColumn::make('code')
                 ->label('Package Code')
                 ->requiredMapping()
-                ->rules(['required', 'string', 'max:255'])
-                ->example('VIP-001 | REG-001'),
+                ->examples(['VIP-001', 'REG-001', 'STU-001'])
+                ->rules(['required', 'string', 'max:255']),
 
             ImportColumn::make('price')
                 ->label('Price')
                 ->ignoreBlankState()
+                ->examples(['100000', '50000', '25000'])
                 ->castStateUsing(fn (mixed $state): mixed => filled($state) ? (float) $state : null)
-                ->rules(['nullable', 'numeric', 'min:0'])
-                ->example('100000 (VIP) | 50000 (Regular)'),
+                ->rules(['nullable', 'numeric', 'min:0']),
 
             ImportColumn::make('stocks')
                 ->label('Stocks')
                 ->ignoreBlankState()
+                ->examples(['50', '200', '100'])
                 ->castStateUsing(fn (mixed $state): mixed => filled($state) ? (int) $state : null)
-                ->rules(['nullable', 'integer', 'min:0'])
-                ->example('50 (VIP) | 200 (Regular)'),
+                ->rules(['nullable', 'integer', 'min:0']),
 
             ImportColumn::make('booked')
                 ->label('Booked')
                 ->ignoreBlankState()
+                ->examples(['5', '45', '20'])
                 ->castStateUsing(fn (mixed $state): mixed => filled($state) ? (int) $state : null)
-                ->rules(['nullable', 'integer', 'min:0'])
-                ->example('10 (current bookings)'),
+                ->rules(['nullable', 'integer', 'min:0']),
         ];
     }
 

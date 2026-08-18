@@ -23,36 +23,43 @@ class EventImporter extends Importer
             ImportColumn::make('title')
                 ->label('Title')
                 ->requiredMapping()
+                ->examples(['Summer Festival 2024', 'Winter Expo 2024', 'Concert Series 2024'])
                 ->rules(['required', 'string', 'max:255']),
 
             ImportColumn::make('slug')
                 ->label('Slug')
                 ->requiredMapping()
+                ->examples(['summer-festival-2024', 'winter-expo-2024', 'concert-series-2024'])
                 ->rules(['required', 'string', 'max:255']),
 
             ImportColumn::make('content')
                 ->label('Content')
                 ->ignoreBlankState()
+                ->examples(['Join us for the biggest summer festival...', 'Experience the latest technology...', 'Enjoy world-class performances...'])
                 ->rules(['nullable', 'string']),
 
             ImportColumn::make('excerpt')
                 ->label('Excerpt')
                 ->ignoreBlankState()
+                ->examples(['The ultimate summer celebration', 'Winter technology showcase', 'International concert series'])
                 ->rules(['nullable', 'string', 'max:500']),
 
             ImportColumn::make('start_at')
                 ->label('Start At')
                 ->requiredMapping()
+                ->examples(['2024-07-01', '2024-12-01', '2024-09-15'])
                 ->rules(['required', 'date_format:Y-m-d']),
 
             ImportColumn::make('end_at')
                 ->label('End At')
                 ->requiredMapping()
+                ->examples(['2024-07-07', '2024-12-10', '2024-09-30'])
                 ->rules(['required', 'date_format:Y-m-d']),
 
             ImportColumn::make('category_slug')
                 ->label('Category Slug')
                 ->ignoreBlankState()
+                ->examples(['festival', 'expo', 'concert'])
                 ->rules(['nullable', 'string'])
                 ->guess(['category', 'category_slug'])
                 ->relationship('category', resolveUsing: function (string $state, EventImporter $importer): ?Category {
@@ -62,90 +69,42 @@ class EventImporter extends Importer
             ImportColumn::make('published')
                 ->label('Published')
                 ->ignoreBlankState()
+                ->examples(['yes', 'no', 'yes'])
                 ->castStateUsing(fn (mixed $state): mixed => filled($state) ? strtolower(trim((string) $state)) === 'yes' || $state === 'true' || $state === '1' : $state)
                 ->rules(['nullable', 'boolean']),
 
             ImportColumn::make('published_at')
                 ->label('Published At')
                 ->ignoreBlankState()
+                ->examples(['2024-06-01 10:00:00', '2024-11-15 14:30:00', '2024-08-20 09:00:00'])
                 ->rules(['nullable', 'date_format:Y-m-d H:i:s']),
 
             ImportColumn::make('pricing_type')
                 ->label('Pricing Type')
                 ->ignoreBlankState()
+                ->examples(['single', 'package', 'url'])
                 ->rules(['nullable', 'string'])
                 ->guess(['pricing_type', 'type']),
 
             ImportColumn::make('price')
                 ->label('Price')
                 ->ignoreBlankState()
+                ->examples(['50000', '', ''])
                 ->castStateUsing(fn (mixed $state): mixed => filled($state) ? (float) $state : null)
                 ->rules(['nullable', 'numeric', 'min:0']),
 
             ImportColumn::make('stocks')
                 ->label('Stocks')
                 ->ignoreBlankState()
+                ->examples(['100', '', ''])
                 ->castStateUsing(fn (mixed $state): mixed => filled($state) ? (int) $state : null)
                 ->rules(['nullable', 'integer', 'min:0']),
 
             ImportColumn::make('external_link')
                 ->label('External Link')
                 ->ignoreBlankState()
+                ->examples(['', '', 'https://ticketmaster.com/concert-2024'])
                 ->rules(['nullable', 'url', 'max:255']),
-        ];
-    }
-
-    public static function getExamples(): array
-    {
-        return [
-            // Example 1: Single pricing type — price filled
-            [
-                'title' => 'Summer Festival 2024',
-                'slug' => 'summer-festival-2024',
-                'content' => 'Join us for the biggest summer festival of the year with live music, food, and entertainment.',
-                'excerpt' => 'The ultimate summer celebration',
-                'start_at' => '2024-07-01',
-                'end_at' => '2024-07-07',
-                'category_slug' => 'festival',
-                'published' => 'yes',
-                'published_at' => '2024-06-01 10:00:00',
-                'pricing_type' => 'single',
-                'price' => '50000',
-                'stocks' => '100',
-                'external_link' => '',
-            ],
-            // Example 2: Package pricing type — price and stocks empty
-            [
-                'title' => 'Winter Expo 2024',
-                'slug' => 'winter-expo-2024',
-                'content' => 'Experience the latest technology and innovations at our winter expo with multiple package tiers available.',
-                'excerpt' => 'Winter technology showcase',
-                'start_at' => '2024-12-01',
-                'end_at' => '2024-12-10',
-                'category_slug' => 'expo',
-                'published' => 'yes',
-                'published_at' => '2024-11-15 14:30:00',
-                'pricing_type' => 'package',
-                'price' => '',
-                'stocks' => '',
-                'external_link' => '',
-            ],
-            // Example 3: URL pricing type — external link filled
-            [
-                'title' => 'Concert Series 2024',
-                'slug' => 'concert-series-2024',
-                'content' => 'Enjoy world-class performances from international and local artists. Tickets managed on our partner ticketing platform.',
-                'excerpt' => 'International concert series',
-                'start_at' => '2024-09-15',
-                'end_at' => '2024-09-30',
-                'category_slug' => 'concert',
-                'published' => 'yes',
-                'published_at' => '2024-08-20 09:00:00',
-                'pricing_type' => 'url',
-                'price' => '',
-                'stocks' => '',
-                'external_link' => 'https://ticketmaster.com/concert-2024',
-            ],
         ];
     }
 
