@@ -20,10 +20,14 @@ class ListMembers extends ListRecords
             Actions\ExportAction::make()
                 ->exporter(MemberExporter::class)
                 ->label('Export Members')
+                ->icon('heroicon-o-document-arrow-down')
+                ->color('info')
                 ->options(fn (): array => ['organization_id' => Filament::getTenant()?->id]),
             Actions\ImportAction::make()
                 ->importer(MemberImporter::class)
                 ->label('Import Members')
+                ->icon('heroicon-o-document-arrow-up')
+                ->color('info')
                 ->options(fn (): array => ['organization_id' => Filament::getTenant()?->id]),
         ];
     }
