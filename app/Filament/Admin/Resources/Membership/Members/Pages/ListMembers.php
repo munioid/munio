@@ -3,7 +3,10 @@
 namespace App\Filament\Admin\Resources\Membership\Members\Pages;
 
 use App\Filament\Admin\Resources\Membership\Members\MemberResource;
+use App\Filament\Exports\MemberExporter;
+use App\Filament\Imports\MemberImporter;
 use Filament\Actions;
+use Filament\Facades\Filament;
 use Filament\Resources\Pages\ListRecords;
 
 class ListMembers extends ListRecords
@@ -14,6 +17,14 @@ class ListMembers extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            Actions\ExportAction::make()
+                ->exporter(MemberExporter::class)
+                ->label('Export Members')
+                ->options(fn (): array => ['organization_id' => Filament::getTenant()?->id]),
+            Actions\ImportAction::make()
+                ->importer(MemberImporter::class)
+                ->label('Import Members')
+                ->options(fn (): array => ['organization_id' => Filament::getTenant()?->id]),
         ];
     }
 }
