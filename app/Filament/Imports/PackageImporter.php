@@ -161,6 +161,39 @@ class PackageImporter extends Importer
         return (string) $organizationId;
     }
 
+    public function getExamples(): array
+    {
+        return [
+            // VIP package untuk winter-expo-2024
+            [
+                'event_slug' => 'winter-expo-2024',
+                'name' => 'VIP Pass',
+                'code' => 'VIP-001',
+                'price' => '100000',
+                'stocks' => '50',
+                'booked' => '5',
+            ],
+            // Regular package untuk winter-expo-2024
+            [
+                'event_slug' => 'winter-expo-2024',
+                'name' => 'Regular Pass',
+                'code' => 'REG-001',
+                'price' => '50000',
+                'stocks' => '200',
+                'booked' => '45',
+            ],
+            // Student package untuk winter-expo-2024
+            [
+                'event_slug' => 'winter-expo-2024',
+                'name' => 'Student Pass',
+                'code' => 'STU-001',
+                'price' => '25000',
+                'stocks' => '100',
+                'booked' => '20',
+            ],
+        ];
+    }
+
     public static function getCompletedNotificationBody(Import $import): string
     {
         $message = 'Imported '.number_format($import->successful_rows).' packages.';

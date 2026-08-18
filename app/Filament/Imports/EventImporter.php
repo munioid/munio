@@ -212,6 +212,60 @@ class EventImporter extends Importer
         return (string) $organizationId;
     }
 
+    public function getExamples(): array
+    {
+        return [
+            // Single pricing type: harga langsung di event
+            [
+                'title' => 'Summer Festival 2024',
+                'slug' => 'summer-festival-2024',
+                'content' => 'Join us for the biggest summer festival of the year with live music, food vendors, and family activities.',
+                'excerpt' => 'The ultimate summer celebration',
+                'start_at' => '2024-07-01',
+                'end_at' => '2024-07-07',
+                'category_slug' => 'festival',
+                'published' => 'yes',
+                'published_at' => '2024-06-01 10:00:00',
+                'pricing_type' => 'single',
+                'price' => '50000',
+                'stocks' => '100',
+                'external_link' => '',
+            ],
+            // Package pricing type: harga dikelola via packages
+            [
+                'title' => 'Winter Expo 2024',
+                'slug' => 'winter-expo-2024',
+                'content' => 'Experience the annual winter technology exposition featuring the latest innovations.',
+                'excerpt' => 'Tech innovation showcase',
+                'start_at' => '2024-12-10',
+                'end_at' => '2024-12-15',
+                'category_slug' => 'expo',
+                'published' => 'yes',
+                'published_at' => '2024-11-01 09:00:00',
+                'pricing_type' => 'package',
+                'price' => '',
+                'stocks' => '',
+                'external_link' => '',
+            ],
+            // URL pricing type: ticketing dikelola di platform eksternal
+            [
+                'title' => 'Concert Series 2024',
+                'slug' => 'concert-series-2024',
+                'content' => 'An evening of live performances from international artists.',
+                'excerpt' => 'Live music concert',
+                'start_at' => '2024-09-15',
+                'end_at' => '2024-09-15',
+                'category_slug' => 'concert',
+                'published' => 'yes',
+                'published_at' => '2024-08-01 14:30:00',
+                'pricing_type' => 'url',
+                'price' => '',
+                'stocks' => '',
+                'external_link' => 'https://ticketmaster.com/concert-2024',
+            ],
+        ];
+    }
+
     public static function getCompletedNotificationBody(Import $import): string
     {
         $message = 'Imported '.number_format($import->successful_rows).' events.';
