@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\PricingTypeEnum;
 use App\Models\Event\Category;
 use App\Models\Event\Event;
 use App\Models\Organization\Organization;
@@ -27,5 +28,15 @@ class EventSeeder extends Seeder
         Event::factory(20)
             ->create();
         $this->command->info('Proses seeding event selesai...');
+
+        // Create some events with package pricing type and their packages
+        $this->command->info('Proses seeding package event dimulai...');
+        Event::factory(5)
+            ->state(['pricing_type' => PricingTypeEnum::PACKAGE])
+            ->withPackages(2)
+            ->create();
+        $this->command->info('Proses seeding package event selesai...');
+
+        $this->call(ReservationSeeder::class);
     }
 }
