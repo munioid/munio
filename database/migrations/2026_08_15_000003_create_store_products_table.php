@@ -15,7 +15,7 @@ return new class extends Migration
     {
         $driver = DB::connection()->getDriverName();
 
-        Schema::create('store_products', function (Blueprint $table) use ($driver) {
+        Schema::create('store_products', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
             $table->foreignIdFor(Organization::class)
                 ->constrained()
@@ -36,6 +36,10 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->index(['organization_id', 'is_active']);
+        });
+
+        Schema::table('store_products', function (Blueprint $table) use ($driver) {
             if ($driver === 'pgsql') {
                 DB::statement(
                     'create unique index store_products_organization_id_slug_unique
@@ -44,8 +48,6 @@ return new class extends Migration
             } else {
                 $table->unique(['organization_id', 'slug']);
             }
-
-            $table->index(['organization_id', 'is_active']);
         });
     }
 
