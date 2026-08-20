@@ -52,6 +52,28 @@ class EventFactory extends Factory
         ];
     }
 
+    /**
+     * Create packages for the event (for pricing_type = package).
+     */
+    public function withPackages(int $count = 2): static
+    {
+        return $this->afterCreating(function (Event $event) use ($count) {
+            if ($event->pricing_type->value === 'package') {
+                $event->packages()->createMany(
+                    collect(range(1, $count))->map(function ($i) {
+                        return [
+                            'name' => 'Package '.$i,
+                            'code' => strtoupper(fake()->unique()->bothify('PKG-####')),
+                            'price' => fake()->numberBetween(50000, 300000),
+                            'stocks' => fake()->numberBetween(10, 100),
+                            'booked' => 0,
+                        ];
+                    })->all()
+                );
+            }
+        });
+    }
+
     protected function fakeContent(): string
     {
         return sprintf(

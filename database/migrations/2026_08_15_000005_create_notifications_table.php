@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('type');
             // uuidMorphs, not morphs: every notifiable in this app has a uuid key.
             $table->uuidMorphs('notifiable');
-            $table->text('data');
+            $table->json('data');
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });

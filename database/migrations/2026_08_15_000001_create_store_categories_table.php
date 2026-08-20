@@ -13,14 +13,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('store_categories', function (Blueprint $table) {
-            $table->uuid('id')->primary()->index();
+            $table->uuid('id')->primary();
             $table->foreignIdFor(Organization::class)
                 ->constrained()
                 ->cascadeOnDelete();
             $table->string('name');
             $table->string('slug');
             $table->text('description')->nullable();
-            $table->foreignUuid('parent_id')
+            $table->uuid('parent_id')
                 ->nullable()
                 ->constrained('store_categories')
                 ->nullOnDelete();
