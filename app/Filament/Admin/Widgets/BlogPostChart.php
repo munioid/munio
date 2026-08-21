@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Widgets;
 
 use App\Models\Blog\Post;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Support\Facades\DB;
 
 class BlogPostChart extends ChartWidget
 {
@@ -19,12 +20,18 @@ class BlogPostChart extends ChartWidget
             return [$i => now()->subMonths(11 - $i)->format('Y-m')];
         });
 
+        // Database-agnostic date formatting for PostgreSQL and MySQL compatibility
+        $dbDriver = DB::getDriverName();
+        $dateFormatSql = $dbDriver === 'pgsql'
+            ? "TO_CHAR(published_at, 'YYYY-MM')"
+            : "DATE_FORMAT(published_at, '%Y-%m')";
+
         $postCharts = Post::query()
             ->published()
             ->where('published_at', '>=', now()->subMonths(11)->startOfMonth())
             ->groupBy('month')
             ->orderBy('month')
-            ->selectRaw('COUNT(*) as count, DATE_FORMAT(published_at, "%Y-%m") as month')
+            ->selectRaw("COUNT(*) as count, {$dateFormatSql} as month")
             ->pluck('count', 'month');
 
         $data = $months->map(function ($month) use ($postCharts) {

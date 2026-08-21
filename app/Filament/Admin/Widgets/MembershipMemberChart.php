@@ -6,6 +6,7 @@ use App\Enums\MemberStatusEnum;
 use App\Models\Membership\Member;
 use Filament\Support\Facades\FilamentColor;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Support\Facades\DB;
 
 class MembershipMemberChart extends ChartWidget
 {
@@ -21,8 +22,14 @@ class MembershipMemberChart extends ChartWidget
             return [$i => now()->subMonths(11 - $i)->format('Y-m')];
         });
 
+        // Database-agnostic date formatting for PostgreSQL and MySQL compatibility
+        $dbDriver = DB::getDriverName();
+        $dateFormatSql = $dbDriver === 'pgsql'
+            ? "TO_CHAR(status_updated_at, 'YYYY-MM')"
+            : "DATE_FORMAT(status_updated_at, '%Y-%m')";
+
         $countsByStatus = Member::query()
-            ->selectRaw('status, DATE_FORMAT(status_updated_at, "%Y-%m") as month, COUNT(*) as count')
+            ->selectRaw("status, {$dateFormatSql} as month, COUNT(*) as count")
             ->where('status_updated_at', '>=', now()->subMonths(12)->startOfMonth())
             ->groupBy('status', 'month')
             ->get()
