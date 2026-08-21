@@ -3,10 +3,7 @@
 namespace App\Filament\Admin\Resources\Store\Products\Tables;
 
 use App\Enums\StoreProductStockStatusEnum;
-use App\Filament\Exports\StoreProductExporter;
-use App\Filament\Imports\StoreProductImporter;
 use Filament\Actions;
-use Filament\Facades\Filament;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -75,19 +72,6 @@ class StoreProductsTable
                     ->searchable()
                     ->preload(),
                 TrashedFilter::make(),
-            ])
-            ->headerActions([
-                Actions\ExportAction::make()
-                    ->exporter(StoreProductExporter::class)
-                    ->options(fn (): array => [
-                        'organization_id' => Filament::getTenant()?->getKey(),
-                    ]),
-                Actions\ImportAction::make()
-                    ->importer(StoreProductImporter::class)
-                    ->chunkSize(1000)
-                    ->options(fn (): array => [
-                        'organization_id' => Filament::getTenant()?->getKey(),
-                    ]),
             ])
             ->recordActions([
                 Actions\EditAction::make(),
