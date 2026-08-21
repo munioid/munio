@@ -3,7 +3,9 @@
 namespace App\Filament\Admin\Resources\Store\Orders\Tables;
 
 use App\Enums\StoreOrderStatusEnum;
+use App\Filament\Exports\OrderExporter;
 use Filament\Actions;
+use Filament\Facades\Filament;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -50,6 +52,13 @@ class StoreOrdersTable
                     ->relationship('user', 'name')
                     ->searchable()
                     ->preload(),
+            ])
+            ->headerActions([
+                Actions\ExportAction::make()
+                    ->exporter(OrderExporter::class)
+                    ->options(fn (): array => [
+                        'organization_id' => Filament::getTenant()?->getKey(),
+                    ]),
             ])
             ->recordActions([
                 Actions\EditAction::make(),
