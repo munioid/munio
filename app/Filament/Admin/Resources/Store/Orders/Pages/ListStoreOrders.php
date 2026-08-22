@@ -4,10 +4,12 @@ namespace App\Filament\Admin\Resources\Store\Orders\Pages;
 
 use App\Filament\Admin\Resources\Store\Orders\StoreOrderResource;
 use App\Filament\Exports\OrderExporter;
+use App\Filament\Exports\OrderItemExporter;
 use Filament\Actions;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\ExportAction;
 use Filament\Facades\Filament;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Support\Icons\Heroicon;
 
 class ListStoreOrders extends ListRecords
 {
@@ -17,12 +19,23 @@ class ListStoreOrders extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
-            Actions\ExportAction::make()
-                ->exporter(OrderExporter::class)
+            ActionGroup::make([
+                ExportAction::make('exportOrders')
+                    ->label('Export Orders')
+                    ->exporter(OrderExporter::class)
+                    ->options([
+                        'organization_id' => Filament::getTenant()?->id,
+                    ]),
+                ExportAction::make('exportOrderItems')
+                    ->label('Export Order Items')
+                    ->exporter(OrderItemExporter::class)
+                    ->options([
+                        'organization_id' => Filament::getTenant()?->id,
+                    ]),
+            ])
                 ->label('Export')
-                ->icon(Heroicon::ArrowDownTray)
-                ->color('info')
-                ->options(fn (): array => ['organization_id' => Filament::getTenant()?->id]),
+                ->button()
+                ->color('info'),
         ];
     }
 }
