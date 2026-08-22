@@ -48,9 +48,10 @@ class OrderItemExporter extends Exporter
         $this->ensureTenant();
     }
 
-    public function getEloquentQuery(): EloquentCollection
+    public function getRecords(): EloquentCollection
     {
         return StoreOrderItem::query()
+            ->with('order')
             ->whereHas('order', function ($query) {
                 $query->where('organization_id', $this->getOrganizationId());
             })
