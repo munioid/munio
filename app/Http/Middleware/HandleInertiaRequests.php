@@ -8,16 +8,21 @@ use Inertia\Middleware;
 class HandleInertiaRequests extends Middleware
 {
     /**
-     * The root template that is loaded on every request.
-     */
-    protected $rootView = 'app';
-
-    /**
      * Determines the current asset version.
      */
     public function version(Request $request): ?string
     {
         return parent::version($request);
+    }
+
+    /**
+     * The root template that is loaded on every request, resolved per theme.
+     */
+    public function rootView(Request $request): string
+    {
+        $theme = $request->theme ?? 'default';
+
+        return "{$theme}.layouts.app";
     }
 
     /**
@@ -27,20 +32,31 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        // Get organization from request if available (set by middleware)
+        $organization = $request->organization ?? null;
+        $theme = $request->theme ?? 'default';
+        $primaryColor = $organization?->colors['primary'] ?? '#1f2937';
+
+        // Share view data for Blade root template
+        view()->share([
+            'theme' => $theme,
+            'primaryColor' => $primaryColor,
+        ]);
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
             ],
             'organization' => [
-                'name' => config('app.name', 'Munio'),
-                'icon' => null,
-                'favicon' => null,
+                'name' => $organization?->name ?? config('app.name', 'Munio'),
+                'icon' => $organization?->icon?->getPath(),
+                'favicon' => $organization?->favicon?->getPath(),
                 'colors' => [
-                    'primary' => '#1f2937',
+                    'primary' => $primaryColor,
                 ],
             ],
-            'theme' => 'default',
-            'primaryColor' => '#1f2937',
+            'theme' => $theme,
+            'primaryColor' => $primaryColor,
         ]);
     }
 }
