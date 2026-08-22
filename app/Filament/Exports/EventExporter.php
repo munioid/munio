@@ -7,6 +7,7 @@ use App\Models\Organization\Organization;
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Facades\Filament;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Validation\ValidationException;
 
 class EventExporter extends Exporter
@@ -80,11 +81,12 @@ class EventExporter extends Exporter
         $this->ensureTenant();
     }
 
-    public function getEloquentQuery()
+    public function getRecords(): EloquentCollection
     {
-        return parent::getEloquentQuery()
+        return Event::query()
             ->where('organization_id', $this->getOrganizationId())
-            ->with(['category']);
+            ->with(['category'])
+            ->get();
     }
 
     protected function ensureTenant(): void

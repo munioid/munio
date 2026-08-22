@@ -69,9 +69,9 @@ class ReservationExporter extends Exporter
         $this->ensureTenant();
     }
 
-    public function getEloquentQuery(): EloquentCollection
+    public function getRecords(): EloquentCollection
     {
-        return parent::getEloquentQuery()
+        return Reservation::query()
             ->where('organization_id', $this->getOrganizationId())
             ->with(['event', 'package'])
             ->get();

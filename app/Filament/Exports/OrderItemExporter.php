@@ -2,50 +2,45 @@
 
 namespace App\Filament\Exports;
 
-use App\Models\Event\Package;
 use App\Models\Organization\Organization;
+use App\Models\Store\StoreOrderItem;
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Facades\Filament;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Validation\ValidationException;
 
-class PackageExporter extends Exporter
+class OrderItemExporter extends Exporter
 {
-    protected static ?string $model = Package::class;
+    protected static ?string $model = StoreOrderItem::class;
 
     public static function getColumns(): array
     {
         return [
-            ExportColumn::make('event_slug')
-                ->label('Event Slug')
-                ->getStateUsing(fn (Package $record): string => $record->event?->slug ?? ''),
+            ExportColumn::make('order_number')
+                ->label('Order Number')
+                ->getStateUsing(fn (StoreOrderItem $record): string => $record->order?->order_number ?? ''),
 
-            ExportColumn::make('name')
-                ->label('Name')
-                ->getStateUsing(fn (Package $record): string => $record->name ?? ''),
-
-            ExportColumn::make('code')
-                ->label('Code')
-                ->getStateUsing(fn (Package $record): string => $record->code ?? ''),
+            ExportColumn::make('product_name')
+                ->label('Product Name'),
 
             ExportColumn::make('price')
                 ->label('Price')
-                ->getStateUsing(fn (Package $record): ?string => $record->price !== null ? (string) $record->price : ''),
+                ->getStateUsing(fn (StoreOrderItem $record): string => (string) $record->price),
 
-            ExportColumn::make('stocks')
-                ->label('Stocks')
-                ->getStateUsing(fn (Package $record): ?string => $record->stocks !== null ? (string) $record->stocks : ''),
+            ExportColumn::make('quantity')
+                ->label('Quantity')
+                ->getStateUsing(fn (StoreOrderItem $record): string => (string) $record->quantity),
 
-            ExportColumn::make('booked')
-                ->label('Booked')
-                ->getStateUsing(fn (Package $record): ?string => $record->booked !== null ? (string) $record->booked : ''),
+            ExportColumn::make('subtotal')
+                ->label('Subtotal')
+                ->getStateUsing(fn (StoreOrderItem $record): string => (string) $record->subtotal),
         ];
     }
 
     public static function getCompletedNotificationBody($export): string
     {
-        return 'Exported '.number_format($export->successful_rows).' packages.';
+        return 'Exported '.number_format($export->successful_rows).' order items.';
     }
 
     protected function beforeQuery(): void
@@ -55,9 +50,11 @@ class PackageExporter extends Exporter
 
     public function getRecords(): EloquentCollection
     {
-        return Package::query()
-            ->where('organization_id', $this->getOrganizationId())
-            ->with(['event'])
+        return StoreOrderItem::query()
+            ->with('order')
+            ->whereHas('order', function ($query) {
+                $query->where('organization_id', $this->getOrganizationId());
+            })
             ->get();
     }
 
