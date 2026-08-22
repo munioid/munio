@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Filament\Facades\Filament;
+use Inertia\Inertia;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $organization = Filament::getTenant();
-        $theme = 'default';
-
-        return view('pages.home', compact('theme', 'organization'));
+        return Inertia::render('Home');
     }
 }

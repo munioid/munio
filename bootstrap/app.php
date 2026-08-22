@@ -4,6 +4,7 @@ use App\Exceptions\AuthExceptionHandler;
 use App\Exceptions\ValidationExceptionHandler;
 use App\Http\Middleware\AuthenticateMiddleware;
 use App\Http\Middleware\CustomAuthMiddleware;
+use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\HasTenantMiddleware;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
@@ -20,6 +21,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->web(append: [
+            HandleInertiaRequests::class,
+        ]);
+
         $middleware->alias([
             'auth' => AuthenticateMiddleware::class,
             'customAuth' => CustomAuthMiddleware::class,
