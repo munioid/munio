@@ -73,9 +73,9 @@ class StoreProductExporter extends Exporter
         $this->ensureTenant();
     }
 
-    public function getEloquentQuery(): EloquentCollection
+    public function getRecords(): EloquentCollection
     {
-        return parent::getEloquentQuery()
+        return StoreProduct::query()
             ->where('organization_id', $this->getOrganizationId())
             ->with(['category', 'tags'])
             ->get();

@@ -77,9 +77,9 @@ class MemberExporter extends Exporter
         $this->ensureTenant();
     }
 
-    public function getEloquentQuery(): EloquentCollection
+    public function getRecords(): EloquentCollection
     {
-        return parent::getEloquentQuery()
+        return Member::query()
             ->where('organization_id', $this->getOrganizationId())
             ->with(['package', 'attributes'])
             ->get();
