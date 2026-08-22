@@ -32,6 +32,12 @@ class HandleInertiaRequests extends Middleware
         $theme = $request->theme ?? 'default';
         $primaryColor = $organization?->colors['primary'] ?? '#1f2937';
 
+        // Share view data for Blade root template
+        view()->share([
+            'theme' => $theme,
+            'primaryColor' => $primaryColor,
+        ]);
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
