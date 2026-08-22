@@ -8,16 +8,21 @@ use Inertia\Middleware;
 class HandleInertiaRequests extends Middleware
 {
     /**
-     * The root template that is loaded on every request.
-     */
-    protected $rootView = 'app';
-
-    /**
      * Determines the current asset version.
      */
     public function version(Request $request): ?string
     {
         return parent::version($request);
+    }
+
+    /**
+     * The root template that is loaded on every request, resolved per theme.
+     */
+    public function rootView(Request $request): string
+    {
+        $theme = $request->theme ?? 'default';
+
+        return "{$theme}.layouts.app";
     }
 
     /**
