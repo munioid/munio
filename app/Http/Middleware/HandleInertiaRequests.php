@@ -27,20 +27,25 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        // Get organization from request if available (set by middleware)
+        $organization = $request->organization ?? null;
+        $theme = $request->theme ?? 'default';
+        $primaryColor = $organization?->colors['primary'] ?? '#1f2937';
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
             ],
             'organization' => [
-                'name' => config('app.name', 'Munio'),
-                'icon' => null,
-                'favicon' => null,
+                'name' => $organization?->name ?? config('app.name', 'Munio'),
+                'icon' => $organization?->icon?->getPath(),
+                'favicon' => $organization?->favicon?->getPath(),
                 'colors' => [
-                    'primary' => '#1f2937',
+                    'primary' => $primaryColor,
                 ],
             ],
-            'theme' => 'default',
-            'primaryColor' => '#1f2937',
+            'theme' => $theme,
+            'primaryColor' => $primaryColor,
         ]);
     }
 }

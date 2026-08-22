@@ -1,9 +1,7 @@
 import React from 'react'
+import AppLayout from './AppLayout'
 
+// DefaultLayout is now an alias for AppLayout to maintain backward compatibility
 export default function DefaultLayout({ children }) {
-    return (
-        <div className="min-h-screen bg-white">
-            {children}
-        </div>
-    )
+    return <AppLayout>{children}</AppLayout>
 }

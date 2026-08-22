@@ -1,16 +1,16 @@
 import React from 'react'
 import { usePage } from '@inertiajs/react'
-import DefaultLayout from '../Layouts/DefaultLayout'
+import AppLayout from '../Layouts/AppLayout'
 
 export default function Home() {
     const { props } = usePage()
     const { organization, theme, primaryColor, auth } = props
 
     return (
-        <DefaultLayout>
-            <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <AppLayout>
+            <div className="py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-3xl mx-auto">
-                    <div className="bg-white rounded-lg shadow-md p-8">
+                    <div className="bg-gray-50 rounded-lg p-8">
                         <h1 className="text-3xl font-bold text-gray-900 mb-4">
                             Welcome to {organization.name}
                         </h1>
@@ -39,11 +39,11 @@ export default function Home() {
                         </div>
 
                         <p className="mt-8 text-sm text-gray-500">
-                            This is a test page from the default theme. Inertia is working!
+                            This is a test page from the default theme. Layout & Shell are working!
                         </p>
                     </div>
                 </div>
             </div>
-        </DefaultLayout>
+        </AppLayout>
     )
 }
