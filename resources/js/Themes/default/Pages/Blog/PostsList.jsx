@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { usePage, router } from '@inertiajs/react'
 import AppLayout from '../../Layouts/AppLayout'
 import Filter from '../../Components/Blog/Filter'
@@ -10,21 +10,22 @@ export default function PostsList() {
     const [isLoadingMore, setIsLoadingMore] = useState(false)
     const [displayedPosts, setDisplayedPosts] = useState(posts.data)
 
+    // Reset displayed posts when filters change
+    useEffect(() => {
+        setDisplayedPosts(posts.data)
+    }, [posts.data])
+
     const handleLoadMore = () => {
-        if (!posts.next_page_url) return
+        if (posts.current_page >= posts.last_page) return
 
         setIsLoadingMore(true)
 
-        // Extract page number from next_page_url
-        const urlParams = new URLSearchParams(new URL(posts.next_page_url, window.location.origin).search)
-        const nextPage = urlParams.get('page')
-
-        // Build parameters
+        // Build parameters for next page
         const params = new URLSearchParams()
         if (filters?.category) params.append('category', filters.category)
         if (filters?.tag) params.append('tag', filters.tag)
         if (filters?.search) params.append('search', filters.search)
-        params.append('page', nextPage)
+        params.append('page', posts.current_page + 1)
 
         router.visit(`/posts?${params.toString()}`, {
             preserveScroll: true,

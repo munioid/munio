@@ -1,41 +1,32 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { router } from '@inertiajs/react'
 
 export default function Filter({ categories, tags, filters }) {
     const [search, setSearch] = useState(filters?.search || '')
     const [selectedCategory, setSelectedCategory] = useState(filters?.category || null)
     const [selectedTags, setSelectedTags] = useState(filters?.tag ? [filters.tag] : [])
-    const [searchTimeout, setSearchTimeout] = useState(null)
 
-    // Handle search with debounce
-    useEffect(() => {
-        clearTimeout(searchTimeout)
-        const timeout = setTimeout(() => {
-            updateFilters({ search, selectedCategory, selectedTags })
-        }, 300)
-        setSearchTimeout(timeout)
-    }, [search])
-
-    const updateFilters = (filterState = {}) => {
+    const updateFilters = (searchValue, categoryValue, tagsValue) => {
         const params = new URLSearchParams()
 
-        const category = filterState.selectedCategory !== undefined ? filterState.selectedCategory : selectedCategory
-        const tagsToUse = filterState.selectedTags !== undefined ? filterState.selectedTags : selectedTags
-        const searchToUse = filterState.search !== undefined ? filterState.search : search
-
-        if (category) params.append('category', category)
-        if (tagsToUse.length > 0) params.append('tag', tagsToUse[0])
-        if (searchToUse) params.append('search', searchToUse)
+        if (categoryValue) params.append('category', categoryValue)
+        if (tagsValue && tagsValue.length > 0) params.append('tag', tagsValue[0])
+        if (searchValue) params.append('search', searchValue)
 
         router.visit(`/posts${params.toString() ? '?' + params.toString() : ''}`, {
             preserveScroll: true,
         })
     }
 
+    const handleSearchSubmit = (e) => {
+        e.preventDefault()
+        updateFilters(search, selectedCategory, selectedTags)
+    }
+
     const handleCategoryClick = (categoryId) => {
         const newCategory = selectedCategory === categoryId ? null : categoryId
         setSelectedCategory(newCategory)
-        updateFilters({ selectedCategory: newCategory, selectedTags, search })
+        updateFilters(search, newCategory, selectedTags)
     }
 
     const handleTagClick = (tagId) => {
@@ -43,7 +34,7 @@ export default function Filter({ categories, tags, filters }) {
             ? selectedTags.filter(t => t !== tagId)
             : [tagId]
         setSelectedTags(newTags)
-        updateFilters({ selectedCategory, selectedTags: newTags, search })
+        updateFilters(search, selectedCategory, newTags)
     }
 
     const handleReset = () => {
@@ -55,8 +46,8 @@ export default function Filter({ categories, tags, filters }) {
 
     return (
         <div className="sticky top-0 z-10 bg-white border-b px-5 py-1 pb-4">
-            {/* Search */}
-            <div className="mt-4">
+            {/* Search Form */}
+            <form onSubmit={handleSearchSubmit} className="mt-4">
                 <input
                     id="search"
                     type="search"
@@ -65,7 +56,7 @@ export default function Filter({ categories, tags, filters }) {
                     placeholder="Cari berita..."
                     className="w-full rounded-xl border border-gray-300 bg-white py-2 pl-4 pr-2 text-sm focus:outline-none focus:border-primary focus:ring-primary"
                 />
-            </div>
+            </form>
 
             {/* Categories */}
             <div className="mt-4 flex gap-2 overflow-x-auto pb-2">
