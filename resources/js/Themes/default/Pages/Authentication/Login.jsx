@@ -1,60 +1,20 @@
-import React, { useState } from 'react'
-import { usePage, router } from '@inertiajs/react'
+import React from 'react'
+import { useForm, usePage } from '@inertiajs/react'
+import { route } from 'ziggy-js'
 import AuthLayout from '../../Layouts/AuthLayout'
 
 export default function Login() {
     const { props } = usePage()
     const { organization } = props
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [errors, setErrors] = useState({})
-    const [isLoading, setIsLoading] = useState(false)
 
-    const getCsrfToken = () => {
-        const token = document.querySelector('meta[name="csrf-token"]')?.content
-        if (!token) {
-            console.warn('CSRF token not found in meta tag')
-        }
-        return token || ''
-    }
+    const { data, setData, post, processing, errors } = useForm({
+        email: '',
+        password: '',
+    })
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
-        setIsLoading(true)
-        setErrors({})
-
-        try {
-            const csrfToken = getCsrfToken()
-            const response = await fetch('/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': csrfToken,
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                body: JSON.stringify({ email, password }),
-                credentials: 'same-origin',
-            })
-
-            const data = await response.json()
-
-            if (response.ok && data.success) {
-                // Successful login
-                window.location.href = '/'
-            } else {
-                // Login failed with validation errors
-                if (data.errors) {
-                    setErrors(data.errors)
-                } else {
-                    setErrors({ form: data.message || 'Login failed' })
-                }
-            }
-        } catch (error) {
-            setErrors({ form: error.message })
-        } finally {
-            setIsLoading(false)
-        }
+        post('/login')
     }
 
     return (
@@ -70,9 +30,9 @@ export default function Login() {
                         </p>
                     </div>
 
-                    {errors.form && (
+                    {errors.email && (
                         <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-                            {errors.form}
+                            {errors.email}
                         </div>
                     )}
 
@@ -83,8 +43,8 @@ export default function Login() {
                             </label>
                             <input
                                 type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={data.email}
+                                onChange={(e) => setData('email', e.target.value)}
                                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--primary-color)] focus:border-transparent outline-none transition ${
                                     errors.email
                                         ? 'border-red-500'
@@ -104,8 +64,8 @@ export default function Login() {
                             </label>
                             <input
                                 type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={data.password}
+                                onChange={(e) => setData('password', e.target.value)}
                                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[var(--primary-color)] focus:border-transparent outline-none transition ${
                                     errors.password
                                         ? 'border-red-500'
@@ -121,10 +81,10 @@ export default function Login() {
 
                         <button
                             type="submit"
-                            disabled={isLoading}
+                            disabled={processing}
                             className="w-full py-2 px-4 bg-[var(--primary-color)] text-white font-medium rounded-lg hover:opacity-90 disabled:opacity-50 transition"
                         >
-                            {isLoading ? 'Logging in...' : 'Login'}
+                            {processing ? 'Logging in...' : 'Login'}
                         </button>
                     </form>
                 </div>

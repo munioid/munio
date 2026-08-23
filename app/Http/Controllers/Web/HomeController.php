@@ -53,6 +53,9 @@ class HomeController extends Controller
         return Inertia::render('Home', [
             'posts' => $posts,
             'events' => $events,
+            'auth' => [
+                'user' => auth()->user(),
+            ],
         ]);
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Authentication;
 
 use App\Http\Controllers\Controller;
-use Filament\Facades\Filament;
+use App\Http\Requests\Authentication\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -20,34 +20,30 @@ class LoginController extends Controller
         return Inertia::render('Authentication/Login');
     }
 
-    public function store(Request $request)
+    public function store(LoginRequest $request)
     {
-        // Validate credentials
-        $validated = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string|min:6',
-        ]);
+        $credentials = $request->validated();
 
-        // Attempt to authenticate
-        if (Auth::guard('web')->attempt($validated)) {
-            // Authentication successful
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return response()->json(['success' => true]);
+
+            return redirect()->intended('/');
         }
 
-        // Authentication failed
-        return response()->json([
-            'errors' => [
-                'email' => 'Email atau password tidak sesuai',
-            ],
-        ], 422);
+        return back()
+            ->withErrors([
+                'email' => 'Email atau password tidak sesuai.',
+            ])
+            ->withInput($request->only('email'));
     }
 
     public function logout(Request $request)
     {
-        Auth::guard('web')->logout();
+        Auth::logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login');
+
+        return redirect('/');
     }
 }

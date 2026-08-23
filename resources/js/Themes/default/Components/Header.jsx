@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link, usePage } from '@inertiajs/react'
+import { useRoute } from '../Hooks/useRoute'
 import { UserIcon } from '@heroicons/react/24/outline'
 
 export default function Header() {
     const { props } = usePage()
     const { organization, auth } = props
+    const route = useRoute()
 
     return (
         <header className="bg-white shadow-sm">
@@ -34,8 +36,9 @@ export default function Header() {
                 <div className="flex gap-3">
                     {auth?.user ? (
                         <Link
-                            href="/profile"
-                            className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-gray-200 bg-[var(--primary-color)] text-lg font-semibold text-white"
+                            href={route('profile.view')}
+                            className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-gray-200 bg-[var(--primary-color)] text-lg font-semibold text-white hover:opacity-90 transition"
+                            title={auth.user.name}
                         >
                             {auth.user.avatar ? (
                                 <img
@@ -49,8 +52,9 @@ export default function Header() {
                         </Link>
                     ) : (
                         <Link
-                            href="/login"
-                            className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white hover:bg-gray-50"
+                            href={route('login')}
+                            className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition"
+                            title="Login"
                         >
                             <UserIcon className="h-6 w-6 text-gray-600" />
                         </Link>
