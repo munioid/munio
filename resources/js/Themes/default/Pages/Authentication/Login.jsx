@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { usePage } from '@inertiajs/react'
+import { usePage, router } from '@inertiajs/react'
 import AuthLayout from '../../Layouts/AuthLayout'
 
 export default function Login() {
@@ -10,18 +10,28 @@ export default function Login() {
     const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false)
 
+    const getCsrfToken = () => {
+        const token = document.querySelector('meta[name="csrf-token"]')?.content
+        if (!token) {
+            console.warn('CSRF token not found in meta tag')
+        }
+        return token || ''
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsLoading(true)
         setErrors({})
 
         try {
+            const csrfToken = getCsrfToken()
             const response = await fetch('/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content,
+                    'X-CSRF-Token': csrfToken,
                     'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
                 },
                 body: JSON.stringify({ email, password }),
                 credentials: 'same-origin',
