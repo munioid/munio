@@ -1,6 +1,6 @@
 import React from 'react'
-import { useForm } from '@inertiajs/react'
-import { usePage } from '@inertiajs/react'
+import { useForm, usePage } from '@inertiajs/react'
+import { route } from 'ziggy-js'
 import AuthLayout from '../../Layouts/AuthLayout'
 
 export default function Login() {

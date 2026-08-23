@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, usePage } from '@inertiajs/react'
+import { route } from 'ziggy-js'
 import AuthLayout from '../../Layouts/AuthLayout'
 import { ChevronRightIcon, ArrowLeftIcon, UserIcon, LockClosedIcon, CalendarDaysIcon } from '@heroicons/react/24/outline'
 
