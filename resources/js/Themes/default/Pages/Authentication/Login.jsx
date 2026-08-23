@@ -21,15 +21,24 @@ export default function Login() {
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content,
+                    'Accept': 'application/json',
                 },
                 body: JSON.stringify({ email, password }),
+                credentials: 'same-origin',
             })
 
-            if (response.ok) {
+            const data = await response.json()
+
+            if (response.ok && data.success) {
+                // Successful login
                 window.location.href = '/'
             } else {
-                const data = await response.json()
-                setErrors(data.errors || { form: 'Login failed' })
+                // Login failed with validation errors
+                if (data.errors) {
+                    setErrors(data.errors)
+                } else {
+                    setErrors({ form: data.message || 'Login failed' })
+                }
             }
         } catch (error) {
             setErrors({ form: error.message })

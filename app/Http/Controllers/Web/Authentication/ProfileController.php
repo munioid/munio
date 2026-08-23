@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Authentication;
 use App\Http\Controllers\Controller;
 use Filament\Facades\Filament;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
@@ -13,7 +14,7 @@ class ProfileController extends Controller
         $organization = Filament::getTenant();
         $theme = $request->theme;
 
-        return view('pages.authentication.profile', compact('theme', 'organization'));
+        return Inertia::render('Authentication/Profile', compact('theme', 'organization'));
     }
 
     public function edit(Request $request)
@@ -21,7 +22,7 @@ class ProfileController extends Controller
         $organization = Filament::getTenant();
         $theme = $request->theme;
 
-        return view('pages.authentication.edit-profile', compact('theme', 'organization'));
+        return Inertia::render('Authentication/EditProfile', compact('theme', 'organization'));
     }
 
     public function changePassword(Request $request)
@@ -29,7 +30,7 @@ class ProfileController extends Controller
         $organization = Filament::getTenant();
         $theme = $request->theme;
 
-        return view('pages.authentication.change-password', compact('theme', 'organization'));
+        return Inertia::render('Authentication/ChangePassword', compact('theme', 'organization'));
     }
 
     public function myReservations(Request $request)
@@ -37,6 +38,6 @@ class ProfileController extends Controller
         $organization = Filament::getTenant();
         $theme = $request->theme;
 
-        return view('pages.authentication.my-reservation', compact('theme', 'organization'));
+        return Inertia::render('Authentication/MyReservations', compact('theme', 'organization'));
     }
 }
