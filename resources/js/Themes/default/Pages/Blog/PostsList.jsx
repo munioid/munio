@@ -78,7 +78,7 @@ export default function PostsList() {
                     )}
 
                     {/* Load More Button */}
-                    {posts.current_page < posts.last_page && (
+                    {currentPage < lastPage && (
                         <div className="px-5 py-4">
                             <button
                                 onClick={handleLoadMore}
