@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link, usePage } from '@inertiajs/react'
-import { route } from 'ziggy-js'
+import { useRoute } from '../../Hooks/useRoute'
 import AuthLayout from '../../Layouts/AuthLayout'
 import { ArrowLeftIcon, CalendarDaysIcon, TicketIcon } from '@heroicons/react/24/outline'
 
 export default function MyReservations() {
     const { props } = usePage()
     const { reservations, primaryColor } = props
+    const route = useRoute()
 
     // Format date
     const formatDate = (dateString) => {

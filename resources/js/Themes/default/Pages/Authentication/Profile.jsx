@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link, usePage } from '@inertiajs/react'
-import { route } from 'ziggy-js'
+import { useRoute } from '../../Hooks/useRoute'
 import AuthLayout from '../../Layouts/AuthLayout'
 import { ChevronRightIcon, ArrowLeftIcon, UserIcon, LockClosedIcon, CalendarDaysIcon } from '@heroicons/react/24/outline'
 
 export default function Profile() {
     const { props } = usePage()
     const { user, primaryColor } = props
+    const route = useRoute()
 
     // Get user initials for avatar fallback
     const getInitials = (name) => {

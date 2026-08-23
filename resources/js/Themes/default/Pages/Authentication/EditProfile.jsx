@@ -1,12 +1,13 @@
 import React from 'react'
 import { useForm, usePage } from '@inertiajs/react'
-import { route } from 'ziggy-js'
+import { useRoute } from '../../Hooks/useRoute'
 import AuthLayout from '../../Layouts/AuthLayout'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
 
 export default function EditProfile() {
     const { props } = usePage()
     const { user, primaryColor, flash } = props
+    const route = useRoute()
     const { data, setData, put, processing, errors, recentlySuccessful } = useForm({
         name: user?.name || '',
         email: user?.email || '',
