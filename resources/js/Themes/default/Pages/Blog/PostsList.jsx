@@ -1,92 +1,76 @@
 import React, { useState } from 'react'
-import { usePage, Link } from '@inertiajs/react'
+import { usePage, router } from '@inertiajs/react'
 import AppLayout from '../../Layouts/AppLayout'
 import Filter from '../../Components/Blog/Filter'
 import PostCard from '../../Components/Blog/PostCard'
 
 export default function PostsList() {
-    const { props } = usePage()
+    const { props, url } = usePage()
     const { posts, categories, tags, filters } = props
-    const [selectedFilters, setSelectedFilters] = useState({
-        category: filters?.category || null,
-        tag: filters?.tag || null,
-        search: filters?.search || '',
-    })
+    const [isLoadingMore, setIsLoadingMore] = useState(false)
+    const [displayedPosts, setDisplayedPosts] = useState(posts.data)
 
-    const handleFilterChange = (filterType, value) => {
-        setSelectedFilters(prev => ({
-            ...prev,
-            [filterType]: value
-        }))
-    }
+    const handleLoadMore = () => {
+        if (!posts.next_page_url) return
 
-    const handleSearch = (value) => {
-        handleFilterChange('search', value)
-    }
+        setIsLoadingMore(true)
 
-    const getFilterUrl = () => {
+        // Extract page number from next_page_url
+        const urlParams = new URLSearchParams(new URL(posts.next_page_url, window.location.origin).search)
+        const nextPage = urlParams.get('page')
+
+        // Build parameters
         const params = new URLSearchParams()
-        if (selectedFilters.category) params.append('category', selectedFilters.category)
-        if (selectedFilters.tag) params.append('tag', selectedFilters.tag)
-        if (selectedFilters.search) params.append('search', selectedFilters.search)
-        return `/posts${params.toString() ? '?' + params.toString() : ''}`
+        if (filters?.category) params.append('category', filters.category)
+        if (filters?.tag) params.append('tag', filters.tag)
+        if (filters?.search) params.append('search', filters.search)
+        params.append('page', nextPage)
+
+        router.visit(`/posts?${params.toString()}`, {
+            preserveScroll: true,
+            onSuccess: (page) => {
+                const newPosts = page.props.posts.data
+                setDisplayedPosts(prev => [...prev, ...newPosts])
+                setIsLoadingMore(false)
+            },
+            onError: () => setIsLoadingMore(false),
+        })
     }
 
     return (
         <AppLayout>
-            <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-7xl mx-auto">
-                    {/* Header */}
-                    <div className="mb-12">
-                        <h1 className="text-4xl font-bold text-gray-900 mb-4">Blog</h1>
-                        <p className="text-lg text-gray-600">
-                            Jelajahi artikel dan berita terbaru dari kami
-                        </p>
-                    </div>
+            <div className="min-h-screen bg-gray-50 pb-4">
+                {/* Filter Section */}
+                <Filter
+                    categories={categories}
+                    tags={tags}
+                    filters={filters}
+                />
 
-                    {/* Filter Section */}
-                    <div className="mb-12">
-                        <Filter
-                            categories={categories}
-                            tags={tags}
-                            filters={selectedFilters}
-                            onFilterChange={handleFilterChange}
-                            onSearch={handleSearch}
-                        />
-                    </div>
+                {/* Posts List */}
+                <div className="space-y-5 py-4">
+                    {displayedPosts.length > 0 ? (
+                        displayedPosts.map(post => (
+                            <PostCard key={post.id} post={post} />
+                        ))
+                    ) : (
+                        <div className="px-5 py-12 text-center">
+                            <p className="text-gray-600 text-lg">
+                                Tidak ada post yang ditemukan
+                            </p>
+                        </div>
+                    )}
 
-                    {/* Posts Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                        {posts.data.length > 0 ? (
-                            posts.data.map(post => (
-                                <PostCard key={post.id} post={post} />
-                            ))
-                        ) : (
-                            <div className="col-span-full py-12 text-center">
-                                <p className="text-gray-600 text-lg">
-                                    Tidak ada post yang ditemukan
-                                </p>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Pagination */}
-                    {posts.last_page > 1 && (
-                        <div className="flex justify-center items-center gap-2">
-                            {posts.links.map((link, index) => (
-                                <Link
-                                    key={index}
-                                    href={link.url || '#'}
-                                    className={`px-4 py-2 rounded-lg transition ${
-                                        link.active
-                                            ? 'bg-[var(--primary-color)] text-white'
-                                            : link.url
-                                                ? 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                                                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                    }`}
-                                    dangerouslySetInnerHTML={{ __html: link.label }}
-                                />
-                            ))}
+                    {/* Load More Button */}
+                    {posts.current_page < posts.last_page && (
+                        <div className="px-5 py-4">
+                            <button
+                                onClick={handleLoadMore}
+                                disabled={isLoadingMore}
+                                className="w-full rounded-xl border border-primary py-3 text-primary font-medium hover:bg-primary hover:text-white transition disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {isLoadingMore ? 'Memuat...' : 'Muat Lebih Banyak'}
+                            </button>
                         </div>
                     )}
                 </div>

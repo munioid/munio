@@ -1,147 +1,128 @@
-import React, { useState } from 'react'
-import { useForm } from '@inertiajs/react'
+import React, { useState, useEffect } from 'react'
+import { router } from '@inertiajs/react'
 
-export default function Filter({ categories, tags, filters, onFilterChange, onSearch }) {
-    const [isExpanded, setIsExpanded] = useState(false)
-    const { data, setData, get } = useForm({
-        category: filters?.category || '',
-        tag: filters?.tag || '',
-        search: filters?.search || '',
-    })
+export default function Filter({ categories, tags, filters }) {
+    const [search, setSearch] = useState(filters?.search || '')
+    const [selectedCategory, setSelectedCategory] = useState(filters?.category || null)
+    const [selectedTags, setSelectedTags] = useState(filters?.tag ? [filters.tag] : [])
+    const [searchTimeout, setSearchTimeout] = useState(null)
 
-    const handleSearchSubmit = (e) => {
-        e.preventDefault()
+    // Handle search with debounce
+    useEffect(() => {
+        clearTimeout(searchTimeout)
+        const timeout = setTimeout(() => {
+            updateFilters({ search, selectedCategory, selectedTags })
+        }, 300)
+        setSearchTimeout(timeout)
+    }, [search])
+
+    const updateFilters = (filterState = {}) => {
         const params = new URLSearchParams()
-        if (data.category) params.append('category', data.category)
-        if (data.tag) params.append('tag', data.tag)
-        if (data.search) params.append('search', data.search)
 
-        window.location.href = `/posts${params.toString() ? '?' + params.toString() : ''}`
+        const category = filterState.selectedCategory !== undefined ? filterState.selectedCategory : selectedCategory
+        const tagsToUse = filterState.selectedTags !== undefined ? filterState.selectedTags : selectedTags
+        const searchToUse = filterState.search !== undefined ? filterState.search : search
+
+        if (category) params.append('category', category)
+        if (tagsToUse.length > 0) params.append('tag', tagsToUse[0])
+        if (searchToUse) params.append('search', searchToUse)
+
+        router.visit(`/posts${params.toString() ? '?' + params.toString() : ''}`, {
+            preserveScroll: true,
+        })
+    }
+
+    const handleCategoryClick = (categoryId) => {
+        const newCategory = selectedCategory === categoryId ? null : categoryId
+        setSelectedCategory(newCategory)
+        updateFilters({ selectedCategory: newCategory, selectedTags, search })
+    }
+
+    const handleTagClick = (tagId) => {
+        const newTags = selectedTags.includes(tagId)
+            ? selectedTags.filter(t => t !== tagId)
+            : [tagId]
+        setSelectedTags(newTags)
+        updateFilters({ selectedCategory, selectedTags: newTags, search })
     }
 
     const handleReset = () => {
-        setData({ category: '', tag: '', search: '' })
-        window.location.href = '/posts'
+        setSearch('')
+        setSelectedCategory(null)
+        setSelectedTags([])
+        router.visit('/posts', { preserveScroll: true })
     }
 
-    const isFiltersActive = data.category || data.tag || data.search
-
     return (
-        <div className="bg-white rounded-lg shadow-md p-6">
-            {/* Mobile Toggle */}
-            <div className="md:hidden mb-4">
-                <button
-                    onClick={() => setIsExpanded(!isExpanded)}
-                    className="w-full flex items-center justify-between text-lg font-semibold text-gray-900"
-                >
-                    <span>Filter & Cari</span>
-                    <svg
-                        className={`w-5 h-5 transition transform ${isExpanded ? 'rotate-180' : ''}`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                    </svg>
-                </button>
+        <div className="sticky top-0 z-10 bg-white border-b px-5 py-1 pb-4">
+            {/* Search */}
+            <div className="mt-4">
+                <input
+                    id="search"
+                    type="search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Cari berita..."
+                    className="w-full rounded-xl border border-gray-300 bg-white py-2 pl-4 pr-2 text-sm focus:outline-none focus:border-primary focus:ring-primary"
+                />
             </div>
 
-            {/* Filter Content */}
-            <form onSubmit={handleSearchSubmit} className={`space-y-6 ${!isExpanded && 'hidden md:block'}`}>
-                {/* Search */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Cari Artikel
-                    </label>
-                    <input
-                        type="text"
-                        placeholder="Ketik judul atau kata kunci..."
-                        value={data.search}
-                        onChange={(e) => setData('search', e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--primary-color)] focus:border-transparent outline-none transition"
-                    />
-                </div>
+            {/* Categories */}
+            <div className="mt-4 flex gap-2 overflow-x-auto pb-2">
+                <button
+                    onClick={() => handleCategoryClick(null)}
+                    className={`shrink-0 rounded-full px-4 py-2 text-sm transition ${
+                        selectedCategory === null
+                            ? 'bg-primary text-white'
+                            : 'border border-gray-200'
+                    }`}
+                >
+                    Semua
+                </button>
 
-                {/* Categories Filter */}
-                {categories.length > 0 && (
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Kategori
-                        </label>
-                        <select
-                            value={data.category}
-                            onChange={(e) => setData('category', e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--primary-color)] focus:border-transparent outline-none transition"
-                        >
-                            <option value="">Semua Kategori</option>
-                            {categories.map(category => (
-                                <option key={category.id} value={category.id}>
-                                    {category.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                )}
-
-                {/* Tags Filter */}
-                {tags.length > 0 && (
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-3">
-                            Tag
-                        </label>
-                        <div className="flex flex-wrap gap-2">
-                            {tags.map(tag => (
-                                <label
-                                    key={tag.id}
-                                    className={`flex items-center px-3 py-1 rounded-full cursor-pointer transition ${
-                                        data.tag === tag.id.toString()
-                                            ? 'bg-[var(--primary-color)] text-white'
-                                            : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                                    }`}
-                                >
-                                    <input
-                                        type="radio"
-                                        name="tag"
-                                        value={tag.id}
-                                        checked={data.tag === tag.id.toString()}
-                                        onChange={(e) => setData('tag', e.target.value)}
-                                        className="mr-2"
-                                    />
-                                    <span className="text-sm">{tag.name}</span>
-                                </label>
-                            ))}
-                            {data.tag && (
-                                <button
-                                    type="button"
-                                    onClick={() => setData('tag', '')}
-                                    className="px-3 py-1 text-sm text-gray-600 hover:text-gray-900"
-                                >
-                                    ✕ Clear
-                                </button>
-                            )}
-                        </div>
-                    </div>
-                )}
-
-                {/* Action Buttons */}
-                <div className="flex gap-2 pt-4 border-t border-gray-200">
+                {categories.map(category => (
                     <button
-                        type="submit"
-                        className="flex-1 py-2 px-4 bg-[var(--primary-color)] text-white font-medium rounded-lg hover:opacity-90 transition"
+                        key={category.id}
+                        onClick={() => handleCategoryClick(category.id)}
+                        className={`shrink-0 rounded-full px-4 py-2 text-sm transition ${
+                            selectedCategory === category.id
+                                ? 'bg-primary text-white'
+                                : 'border border-gray-200'
+                        }`}
                     >
-                        Cari
+                        {category.name}
                     </button>
-                    {isFiltersActive && (
-                        <button
-                            type="button"
-                            onClick={handleReset}
-                            className="flex-1 py-2 px-4 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition"
-                        >
-                            Reset
-                        </button>
-                    )}
+                ))}
+            </div>
+
+            {/* Tags */}
+            <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
+                {tags.map(tag => (
+                    <button
+                        key={tag.id}
+                        onClick={() => handleTagClick(tag.id)}
+                        className={`shrink-0 rounded-full px-4 py-2 text-sm transition ${
+                            selectedTags.includes(tag.id)
+                                ? 'bg-primary text-white'
+                                : 'border border-gray-200'
+                        }`}
+                    >
+                        #{tag.name}
+                    </button>
+                ))}
+            </div>
+
+            {/* Reset Button */}
+            {(search || selectedCategory || selectedTags.length > 0) && (
+                <div className="mt-3 px-0">
+                    <button
+                        onClick={handleReset}
+                        className="text-sm text-primary font-medium hover:underline"
+                    >
+                        Reset Filter
+                    </button>
                 </div>
-            </form>
+            )}
         </div>
     )
 }
