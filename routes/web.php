@@ -16,15 +16,19 @@ Route::middleware([
 
     // Login page
     Route::get('login', [LoginController::class, 'login'])->name('login');
+    Route::post('login', [LoginController::class, 'store'])->name('login.store');
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
     // Profile page
     Route::prefix('profile')
         ->middleware('auth:web')
         ->group(function () {
-            Route::get('/', [ProfileController::class, 'profile']);
-            Route::get('edit', [ProfileController::class, 'edit']);
-            Route::get('change-password', [ProfileController::class, 'changePassword']);
-            Route::get('my-reservations', [ProfileController::class, 'myReservations']);
+            Route::get('/', [ProfileController::class, 'profile'])->name('profile.view');
+            Route::get('edit', [ProfileController::class, 'edit'])->name('profile.edit');
+            Route::put('update', [ProfileController::class, 'updateProfile'])->name('profile.update');
+            Route::get('change-password', [ProfileController::class, 'changePassword'])->name('password.change');
+            Route::put('change-password', [ProfileController::class, 'updatePassword'])->name('password.update');
+            Route::get('my-reservations', [ProfileController::class, 'myReservations'])->name('profile.reservations');
         });
 
     // Blog posts page
