@@ -10,6 +10,13 @@ export default function PostCard({ post }) {
         })
     }
 
+    const getImageUrl = (post) => {
+        if (!post.cover) return null
+        // Handle different attachment formats
+        if (typeof post.cover === 'string') return post.cover
+        return post.cover.path || post.cover.url || null
+    }
+
     return (
         <Link
             href={`/posts/${post.slug}`}
@@ -17,11 +24,14 @@ export default function PostCard({ post }) {
         >
             {/* Featured Image */}
             <div className="relative w-full h-48 bg-gray-200 overflow-hidden">
-                {post.cover ? (
+                {getImageUrl(post) ? (
                     <img
-                        src={post.cover.path}
+                        src={getImageUrl(post)}
                         alt={post.title}
                         className="w-full h-full object-cover hover:scale-105 transition transform duration-300"
+                        onError={(e) => {
+                            e.target.style.display = 'none'
+                        }}
                     />
                 ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">

@@ -19,6 +19,13 @@ export default function PostDetail() {
         })
     }
 
+    const getImageUrl = (post) => {
+        if (!post.cover) return null
+        // Handle different attachment formats
+        if (typeof post.cover === 'string') return post.cover
+        return post.cover.path || post.cover.url || null
+    }
+
     return (
         <AppLayout>
             <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -37,12 +44,15 @@ export default function PostDetail() {
                     {/* Post Content */}
                     <article className="bg-white rounded-lg shadow-lg overflow-hidden">
                         {/* Featured Image */}
-                        {post.cover && (
+                        {getImageUrl(post) && (
                             <div className="w-full h-96 bg-gray-200 overflow-hidden">
                                 <img
-                                    src={post.cover.path}
+                                    src={getImageUrl(post)}
                                     alt={post.title}
                                     className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                        e.target.parentElement.style.display = 'none'
+                                    }}
                                 />
                             </div>
                         )}
@@ -115,12 +125,15 @@ export default function PostDetail() {
                                         href={`/posts/${relatedPost.slug}`}
                                         className="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
                                     >
-                                        {relatedPost.cover && (
+                                        {getImageUrl(relatedPost) && (
                                             <div className="w-full h-48 bg-gray-200 overflow-hidden">
                                                 <img
-                                                    src={relatedPost.cover.path}
+                                                    src={getImageUrl(relatedPost)}
                                                     alt={relatedPost.title}
                                                     className="w-full h-full object-cover hover:scale-105 transition transform"
+                                                    onError={(e) => {
+                                                        e.target.parentElement.style.display = 'none'
+                                                    }}
                                                 />
                                             </div>
                                         )}

@@ -44,8 +44,11 @@ class PostController extends Controller
             });
         }
 
-        // Paginate results
-        $posts = $query->paginate(12)->withQueryString();
+        // Paginate results with relationships
+        $posts = $query
+            ->with(['category', 'tags'])
+            ->paginate(12)
+            ->withQueryString();
 
         // Get all categories and tags for filter
         $categories = Category::orderBy('name')->get();
@@ -68,6 +71,7 @@ class PostController extends Controller
         $organization = Filament::getTenant();
         $post = Post::query()
             ->whereSlug($slug)
+            ->with(['category', 'tags'])
             ->first();
 
         if (! $post) {
@@ -83,11 +87,12 @@ class PostController extends Controller
                           $q->whereIn('blog_tags.id', $post->tags->pluck('id'));
                       });
             })
+            ->with(['category', 'tags'])
             ->limit(3)
             ->get();
 
         return Inertia::render('Blog/PostDetail', [
-            'post' => $post->load(['category', 'tags']),
+            'post' => $post,
             'relatedPosts' => $relatedPosts,
         ]);
     }
