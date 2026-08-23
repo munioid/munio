@@ -44,9 +44,9 @@ class PostController extends Controller
             });
         }
 
-        // Paginate results with relationships
+        // Paginate results with relationships and cover attachment
         $posts = $query
-            ->with(['category', 'tags'])
+            ->with(['category', 'tags', 'cover'])
             ->paginate(12)
             ->withQueryString();
 
@@ -71,7 +71,7 @@ class PostController extends Controller
         $organization = Filament::getTenant();
         $post = Post::query()
             ->whereSlug($slug)
-            ->with(['category', 'tags'])
+            ->with(['category', 'tags', 'cover'])
             ->first();
 
         if (! $post) {
@@ -87,7 +87,7 @@ class PostController extends Controller
                           $q->whereIn('blog_tags.id', $post->tags->pluck('id'));
                       });
             })
-            ->with(['category', 'tags'])
+            ->with(['category', 'tags', 'cover'])
             ->limit(3)
             ->get();
 
