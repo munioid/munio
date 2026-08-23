@@ -34,6 +34,7 @@ Route::middleware([
     // Blog posts page
     Route::prefix('posts')->group(function () {
         Route::get('/', [PostController::class, 'index']);
+        Route::get('api/load-more', [PostController::class, 'loadMore']);
         Route::get('{slug}', [PostController::class, 'detail']);
     });
 

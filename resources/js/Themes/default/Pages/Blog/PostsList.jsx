@@ -9,33 +9,48 @@ export default function PostsList() {
     const { posts, categories, tags, filters } = props
     const [isLoadingMore, setIsLoadingMore] = useState(false)
     const [displayedPosts, setDisplayedPosts] = useState(posts.data)
+    const [currentPage, setCurrentPage] = useState(posts.current_page)
+    const [lastPage, setLastPage] = useState(posts.last_page)
 
     // Reset displayed posts when filters change
     useEffect(() => {
         setDisplayedPosts(posts.data)
-    }, [posts.data])
+        setCurrentPage(posts.current_page)
+        setLastPage(posts.last_page)
+    }, [posts.data, posts.current_page, posts.last_page])
 
-    const handleLoadMore = () => {
-        if (posts.current_page >= posts.last_page) return
+    const handleLoadMore = async () => {
+        if (currentPage >= lastPage) return
 
         setIsLoadingMore(true)
 
-        // Build parameters for next page
-        const params = new URLSearchParams()
-        if (filters?.category) params.append('category', filters.category)
-        if (filters?.tag) params.append('tag', filters.tag)
-        if (filters?.search) params.append('search', filters.search)
-        params.append('page', posts.current_page + 1)
+        try {
+            // Build parameters for next page
+            const params = new URLSearchParams()
+            if (filters?.category) params.append('category', filters.category)
+            if (filters?.tag) params.append('tag', filters.tag)
+            if (filters?.search) params.append('search', filters.search)
+            params.append('page', currentPage + 1)
 
-        router.visit(`/posts?${params.toString()}`, {
-            preserveScroll: true,
-            onSuccess: (page) => {
-                const newPosts = page.props.posts.data
-                setDisplayedPosts(prev => [...prev, ...newPosts])
-                setIsLoadingMore(false)
-            },
-            onError: () => setIsLoadingMore(false),
-        })
+            // Fetch from API endpoint without changing URL
+            const response = await fetch(`/posts/api/load-more?${params.toString()}`, {
+                headers: {
+                    'Accept': 'application/json',
+                }
+            })
+
+            if (!response.ok) throw new Error('Failed to load more posts')
+
+            const data = await response.json()
+
+            setDisplayedPosts(prev => [...prev, ...data.data])
+            setCurrentPage(data.current_page)
+            setLastPage(data.last_page)
+            setIsLoadingMore(false)
+        } catch (error) {
+            console.error('Error loading more posts:', error)
+            setIsLoadingMore(false)
+        }
     }
 
     return (

@@ -66,6 +66,50 @@ class PostController extends Controller
         ]);
     }
 
+    public function loadMore(Request $request)
+    {
+        // Get filter parameters
+        $categoryId = $request->query('category');
+        $tagId = $request->query('tag');
+        $search = $request->query('search');
+
+        // Base query for published posts
+        $query = Post::query()
+            ->published()
+            ->orderByDesc('published_at');
+
+        // Apply filters
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+        }
+
+        if ($tagId) {
+            $query->whereHas('tags', function ($q) use ($tagId) {
+                $q->where('blog_tags.id', $tagId);
+            });
+        }
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('excerpt', 'like', "%{$search}%");
+            });
+        }
+
+        // Paginate results with relationships and cover attachment
+        $posts = $query
+            ->with(['category', 'tags', 'cover'])
+            ->paginate(12)
+            ->withQueryString();
+
+        return response()->json([
+            'data' => $posts->items(),
+            'current_page' => $posts->currentPage(),
+            'last_page' => $posts->lastPage(),
+            'total' => $posts->total(),
+        ]);
+    }
+
     public function detail(string $slug)
     {
         $organization = Filament::getTenant();
