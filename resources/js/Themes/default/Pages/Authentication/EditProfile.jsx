@@ -3,6 +3,7 @@ import { useForm, usePage } from '@inertiajs/react'
 import { useRoute } from '../../Hooks/useRoute'
 import AuthLayout from '../../Layouts/AuthLayout'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { Button, Input, Alert } from '../../Components/Partial'
 
 export default function EditProfile() {
     const { props } = usePage()
@@ -67,69 +68,46 @@ export default function EditProfile() {
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="px-5 pb-8 pt-5">
                     {recentlySuccessful && (
-                        <div className="mb-4 rounded-lg bg-green-50 p-4 text-sm text-green-700 border border-green-200">
+                        <Alert variant="success" dismissible className="mb-4">
                             Profil berhasil diperbarui!
-                        </div>
+                        </Alert>
                     )}
 
                     {flash?.success && (
-                        <div className="mb-4 rounded-lg bg-green-50 p-4 text-sm text-green-700 border border-green-200">
+                        <Alert variant="success" dismissible className="mb-4">
                             {flash.success}
-                        </div>
+                        </Alert>
                     )}
 
-                    <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
-                        <div className="divide-y divide-gray-100">
-                            {/* Name */}
-                            <div className="p-5">
-                                <label className="mb-2 block text-sm font-medium text-gray-700">
-                                    Nama <span className="text-red-600">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    value={data.name}
-                                    onChange={(e) => setData('name', e.target.value)}
-                                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent outline-none transition ${
-                                        errors.name ? 'border-red-500' : 'border-gray-300'
-                                    }`}
-                                    style={!errors.name ? { '--focus-color': primaryColor } : {}}
-                                    placeholder="Nama lengkap Anda"
-                                    required
-                                />
-                                {errors.name && (
-                                    <p className="mt-2 text-sm text-red-600">{errors.name}</p>
-                                )}
-                            </div>
+                    <div className="overflow-hidden rounded-2xl bg-white shadow-sm px-5 py-5 space-y-5">
+                        <Input
+                            type="text"
+                            label="Nama"
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
+                            error={errors.name}
+                            placeholder="Nama lengkap Anda"
+                            required
+                        />
 
-                            {/* Email */}
-                            <div className="p-5">
-                                <label className="mb-2 block text-sm font-medium text-gray-700">
-                                    Email
-                                </label>
-                                <input
-                                    type="email"
-                                    value={data.email}
-                                    onChange={(e) => setData('email', e.target.value)}
-                                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent outline-none transition ${
-                                        errors.email ? 'border-red-500' : 'border-gray-300'
-                                    }`}
-                                    placeholder="your@email.com"
-                                />
-                                {errors.email && (
-                                    <p className="mt-2 text-sm text-red-600">{errors.email}</p>
-                                )}
-                            </div>
-                        </div>
+                        <Input
+                            type="email"
+                            label="Email"
+                            value={data.email}
+                            onChange={(e) => setData('email', e.target.value)}
+                            error={errors.email}
+                            placeholder="your@email.com"
+                        />
                     </div>
 
-                    <button
+                    <Button
                         type="submit"
                         disabled={processing}
-                        className="mt-6 w-full rounded-2xl py-4 font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
-                        style={{ backgroundColor: primaryColor }}
+                        loading={processing}
+                        className="mt-6 w-full py-4 text-lg"
                     >
-                        {processing ? 'Menyimpan...' : 'Simpan'}
-                    </button>
+                        Simpan
+                    </Button>
                 </form>
             </div>
         </AuthLayout>

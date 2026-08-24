@@ -3,6 +3,7 @@ import { usePage } from '@inertiajs/react'
 import AppLayout from '../../Layouts/AppLayout'
 import Filter from '../../Components/Event/Filter'
 import EventCard from '../../Components/Event/EventCard'
+import { LoadMore } from '../../Components/Partial'
 
 export default function EventsList() {
     const { props } = usePage()
@@ -77,15 +78,10 @@ export default function EventsList() {
 
                     {/* Load More Button */}
                     {currentPage < lastPage && (
-                        <div className="px-5">
-                            <button
-                                onClick={handleLoadMore}
-                                disabled={isLoadingMore}
-                                className="w-full rounded-xl border border-primary py-3 text-primary font-medium hover:bg-primary hover:text-white transition disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                {isLoadingMore ? 'Memuat...' : 'Muat Lebih Banyak'}
-                            </button>
-                        </div>
+                        <LoadMore
+                            onClick={handleLoadMore}
+                            loading={isLoadingMore}
+                        />
                     )}
                 </div>
             </div>

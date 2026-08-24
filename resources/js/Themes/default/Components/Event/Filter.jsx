@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { router } from '@inertiajs/react'
+import { Button } from '../../Components/Partial'
 
 export default function Filter({ categories, filters }) {
     const [search, setSearch] = useState(filters?.search || '')
@@ -49,29 +50,25 @@ export default function Filter({ categories, filters }) {
 
             {/* Categories */}
             <div className="mt-4 flex gap-2 overflow-x-auto pb-2">
-                <button
+                <Button
+                    variant={selectedCategory === null ? 'primary' : 'ghost'}
+                    size="sm"
                     onClick={() => handleCategoryClick(null)}
-                    className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition ${
-                        selectedCategory === null
-                            ? 'bg-primary text-white'
-                            : 'border border-gray-200 hover:border-gray-300'
-                    }`}
+                    className="shrink-0 rounded-full"
                 >
                     Semua
-                </button>
+                </Button>
 
                 {categories.map(category => (
-                    <button
+                    <Button
                         key={category.id}
+                        variant={selectedCategory === category.slug ? 'primary' : 'ghost'}
+                        size="sm"
                         onClick={() => handleCategoryClick(category.slug)}
-                        className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition whitespace-nowrap ${
-                            selectedCategory === category.slug
-                                ? 'bg-primary text-white'
-                                : 'border border-gray-200 hover:border-gray-300'
-                        }`}
+                        className="shrink-0 rounded-full whitespace-nowrap"
                     >
                         {category.name}
-                    </button>
+                    </Button>
                 ))}
             </div>
         </div>

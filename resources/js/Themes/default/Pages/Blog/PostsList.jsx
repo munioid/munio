@@ -3,6 +3,7 @@ import { usePage, router } from '@inertiajs/react'
 import AppLayout from '../../Layouts/AppLayout'
 import Filter from '../../Components/Blog/Filter'
 import PostCard from '../../Components/Blog/PostCard'
+import { LoadMore } from '../../Components/Partial'
 
 export default function PostsList() {
     const { props, url } = usePage()
@@ -79,14 +80,11 @@ export default function PostsList() {
 
                     {/* Load More Button */}
                     {currentPage < lastPage && (
-                        <div className="px-5 py-4">
-                            <button
+                        <div className="py-4">
+                            <LoadMore
                                 onClick={handleLoadMore}
-                                disabled={isLoadingMore}
-                                className="w-full rounded-xl border border-primary py-3 text-primary font-medium hover:bg-primary hover:text-white transition disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                {isLoadingMore ? 'Memuat...' : 'Muat Lebih Banyak'}
-                            </button>
+                                loading={isLoadingMore}
+                            />
                         </div>
                     )}
                 </div>

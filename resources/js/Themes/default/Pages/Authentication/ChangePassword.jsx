@@ -3,6 +3,7 @@ import { useForm, usePage } from '@inertiajs/react'
 import { useRoute } from '../../Hooks/useRoute'
 import AuthLayout from '../../Layouts/AuthLayout'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { Button, Input, Alert } from '../../Components/Partial'
 
 export default function ChangePassword() {
     const { props } = usePage()
@@ -72,86 +73,54 @@ export default function ChangePassword() {
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="px-5 pb-8 pt-5">
                     {recentlySuccessful && (
-                        <div className="mb-4 rounded-lg bg-green-50 p-4 text-sm text-green-700 border border-green-200">
+                        <Alert variant="success" dismissible className="mb-4">
                             Password berhasil diperbarui!
-                        </div>
+                        </Alert>
                     )}
 
-                    <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
-                        <div className="divide-y divide-gray-100">
-                            {/* Current Password */}
-                            <div className="p-5">
-                                <label className="mb-2 block text-sm font-medium text-gray-700">
-                                    Password Lama <span className="text-red-600">*</span>
-                                </label>
-                                <input
-                                    type="password"
-                                    value={data.current_password}
-                                    onChange={(e) => setData('current_password', e.target.value)}
-                                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent outline-none transition ${
-                                        errors.current_password ? 'border-red-500' : 'border-gray-300'
-                                    }`}
-                                    placeholder="••••••••"
-                                    autoComplete="current-password"
-                                    required
-                                />
-                                {errors.current_password && (
-                                    <p className="mt-2 text-sm text-red-600">{errors.current_password}</p>
-                                )}
-                            </div>
+                    <div className="overflow-hidden rounded-2xl bg-white shadow-sm px-5 py-5 space-y-5">
+                        <Input
+                            type="password"
+                            label="Password Lama"
+                            value={data.current_password}
+                            onChange={(e) => setData('current_password', e.target.value)}
+                            error={errors.current_password}
+                            placeholder="••••••••"
+                            autoComplete="current-password"
+                            required
+                        />
 
-                            {/* New Password */}
-                            <div className="p-5">
-                                <label className="mb-2 block text-sm font-medium text-gray-700">
-                                    Password Baru <span className="text-red-600">*</span>
-                                </label>
-                                <input
-                                    type="password"
-                                    value={data.password}
-                                    onChange={(e) => setData('password', e.target.value)}
-                                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent outline-none transition ${
-                                        errors.password ? 'border-red-500' : 'border-gray-300'
-                                    }`}
-                                    placeholder="••••••••"
-                                    autoComplete="new-password"
-                                    required
-                                />
-                                {errors.password && (
-                                    <p className="mt-2 text-sm text-red-600">{errors.password}</p>
-                                )}
-                            </div>
+                        <Input
+                            type="password"
+                            label="Password Baru"
+                            value={data.password}
+                            onChange={(e) => setData('password', e.target.value)}
+                            error={errors.password}
+                            placeholder="••••••••"
+                            autoComplete="new-password"
+                            required
+                        />
 
-                            {/* Confirm Password */}
-                            <div className="p-5">
-                                <label className="mb-2 block text-sm font-medium text-gray-700">
-                                    Konfirmasi Password <span className="text-red-600">*</span>
-                                </label>
-                                <input
-                                    type="password"
-                                    value={data.password_confirmation}
-                                    onChange={(e) => setData('password_confirmation', e.target.value)}
-                                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent outline-none transition ${
-                                        errors.password_confirmation ? 'border-red-500' : 'border-gray-300'
-                                    }`}
-                                    placeholder="••••••••"
-                                    autoComplete="new-password"
-                                    required
-                                />
-                                {errors.password_confirmation && (
-                                    <p className="mt-2 text-sm text-red-600">{errors.password_confirmation}</p>
-                                )}
-                            </div>
-                        </div>
+                        <Input
+                            type="password"
+                            label="Konfirmasi Password"
+                            value={data.password_confirmation}
+                            onChange={(e) => setData('password_confirmation', e.target.value)}
+                            error={errors.password_confirmation}
+                            placeholder="••••••••"
+                            autoComplete="new-password"
+                            required
+                        />
                     </div>
 
-                    <button
+                    <Button
                         type="submit"
                         disabled={processing}
-                        className="mt-6 w-full rounded-2xl py-4 font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
-                        style={{ backgroundColor: primaryColor }}
+                        loading={processing}
+                        className="mt-6 w-full py-4 text-lg"
                     >
-                        {processing ? 'Menyimpan...' : 'Simpan'}
-                    </button>
+                        Simpan
+                    </Button>
                 </form>
             </div>
         </AuthLayout>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { router } from '@inertiajs/react'
+import { Button, Badge } from '../../Components/Partial'
 
 export default function Filter({ categories, tags, filters }) {
     const [search, setSearch] = useState(filters?.search || '')
@@ -60,46 +61,40 @@ export default function Filter({ categories, tags, filters }) {
 
             {/* Categories */}
             <div className="mt-4 flex gap-2 overflow-x-auto pb-2">
-                <button
+                <Button
+                    variant={selectedCategory === null ? 'primary' : 'ghost'}
+                    size="sm"
                     onClick={() => handleCategoryClick(null)}
-                    className={`shrink-0 rounded-full px-4 py-2 text-sm transition ${
-                        selectedCategory === null
-                            ? 'bg-primary text-white'
-                            : 'border border-gray-200'
-                    }`}
+                    className="shrink-0 rounded-full"
                 >
                     Semua
-                </button>
+                </Button>
 
                 {categories.map(category => (
-                    <button
+                    <Button
                         key={category.id}
+                        variant={selectedCategory === category.id ? 'primary' : 'ghost'}
+                        size="sm"
                         onClick={() => handleCategoryClick(category.id)}
-                        className={`shrink-0 rounded-full px-4 py-2 text-sm transition ${
-                            selectedCategory === category.id
-                                ? 'bg-primary text-white'
-                                : 'border border-gray-200'
-                        }`}
+                        className="shrink-0 rounded-full"
                     >
                         {category.name}
-                    </button>
+                    </Button>
                 ))}
             </div>
 
             {/* Tags */}
             <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
                 {tags.map(tag => (
-                    <button
+                    <Button
                         key={tag.id}
+                        variant={selectedTags.includes(tag.id) ? 'primary' : 'ghost'}
+                        size="sm"
                         onClick={() => handleTagClick(tag.id)}
-                        className={`shrink-0 rounded-full px-4 py-2 text-sm transition ${
-                            selectedTags.includes(tag.id)
-                                ? 'bg-primary text-white'
-                                : 'border border-gray-200'
-                        }`}
+                        className="shrink-0 rounded-full"
                     >
                         #{tag.name}
-                    </button>
+                    </Button>
                 ))}
             </div>
 
