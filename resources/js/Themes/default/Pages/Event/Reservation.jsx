@@ -53,7 +53,7 @@ export default function Reservation() {
         setLoading(true)
 
         try {
-            const response = await fetch('/api/reservations', {
+            const response = await fetch('/api/events/reservations', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -68,7 +68,8 @@ export default function Reservation() {
             })
 
             if (!response.ok) {
-                throw new Error('Gagal membuat reservasi')
+                const errorData = await response.json()
+                throw new Error(errorData.message || 'Gagal membuat reservasi')
             }
 
             const data = await response.json()
@@ -76,7 +77,7 @@ export default function Reservation() {
             window.location.href = `/events/reservations/${data.data.code}`
         } catch (error) {
             console.error('Error creating reservation:', error)
-            alert('Gagal membuat reservasi. Silakan coba lagi.')
+            alert(error.message || 'Gagal membuat reservasi. Silakan coba lagi.')
             setLoading(false)
         }
     }
