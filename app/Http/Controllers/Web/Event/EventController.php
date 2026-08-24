@@ -15,15 +15,17 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $organization = Filament::getTenant();
-        $categoryId = $request->query('category');
+        $categorySlug = $request->query('category');
         $search = $request->query('search');
 
         // Base query for active events
         $query = Event::query();
 
         // Apply filters
-        if ($categoryId) {
-            $query->where('category_id', $categoryId);
+        if ($categorySlug) {
+            $query->whereHas('category', function ($q) use ($categorySlug) {
+                $q->where('slug', $categorySlug);
+            });
         }
 
         if ($search) {
@@ -47,7 +49,7 @@ class EventController extends Controller
             'categories' => $categories,
             'filters' => [
                 'search' => $search,
-                'category' => $categoryId,
+                'category' => $categorySlug,
             ],
         ]);
     }
@@ -55,14 +57,16 @@ class EventController extends Controller
     public function loadMore(Request $request)
     {
         $search = $request->query('search');
-        $categoryId = $request->query('category');
+        $categorySlug = $request->query('category');
 
         // Base query for active events
         $query = Event::query();
 
         // Apply filters
-        if ($categoryId) {
-            $query->where('category_id', $categoryId);
+        if ($categorySlug) {
+            $query->whereHas('category', function ($q) use ($categorySlug) {
+                $q->where('slug', $categorySlug);
+            });
         }
 
         if ($search) {

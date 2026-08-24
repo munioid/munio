@@ -62,7 +62,7 @@ export default function EventsList() {
                 />
 
                 {/* Events List */}
-                <div className="space-y-5 py-4 px-5">
+                <div className="space-y-5 py-4">
                     {displayedEvents.length > 0 ? (
                         displayedEvents.map(event => (
                             <EventCard key={event.id} event={event} />
@@ -77,7 +77,7 @@ export default function EventsList() {
 
                     {/* Load More Button */}
                     {currentPage < lastPage && (
-                        <div className="py-4">
+                        <div className="px-5">
                             <button
                                 onClick={handleLoadMore}
                                 disabled={isLoadingMore}
