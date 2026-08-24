@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { router } from '@inertiajs/react'
 
 export default function Filter({ categories, filters }) {
     const [search, setSearch] = useState(filters?.search || '')
     const [selectedCategory, setSelectedCategory] = useState(filters?.category || null)
+    const debounceTimeoutRef = useRef(null)
 
-    const handleFilterChange = (newSearch = search, newCategory = selectedCategory) => {
+    const handleFilterChange = (newSearch, newCategory) => {
         const params = new URLSearchParams()
         if (newSearch) params.append('search', newSearch)
         if (newCategory) params.append('category', newCategory)
@@ -16,8 +17,14 @@ export default function Filter({ categories, filters }) {
     const handleSearchChange = (e) => {
         const value = e.target.value
         setSearch(value)
-        // Debounce the search
-        setTimeout(() => {
+
+        // Clear previous timeout if it exists
+        if (debounceTimeoutRef.current) {
+            clearTimeout(debounceTimeoutRef.current)
+        }
+
+        // Set new debounced search
+        debounceTimeoutRef.current = setTimeout(() => {
             handleFilterChange(value, selectedCategory)
         }, 300)
     }
