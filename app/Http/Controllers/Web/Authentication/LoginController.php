@@ -12,6 +12,11 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
+        // If user is already authenticated, redirect to home
+        if ($request->user()) {
+            return redirect('/');
+        }
+
         return Inertia::render('Authentication/Login');
     }
 

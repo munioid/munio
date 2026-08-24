@@ -18,6 +18,7 @@
         "@inertiajs/react": "^3.7.0",
         "@tailwindcss/typography": "^0.5.20",
         "@vitejs/plugin-react": "^4.2.0",
+        "dompurify": "^3.4.14",
         "react": "^19.2.8",
         "react-dom": "^19.2.8",
         "ziggy-js": "^2.6.4"
