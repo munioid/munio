@@ -21,19 +21,15 @@ class EventController extends Controller
         // Base query for active events
         $query = Event::query();
 
-        // Apply filters
+        // Apply category filter
         if ($categorySlug) {
             $query->whereHas('category', function ($q) use ($categorySlug) {
                 $q->where('slug', $categorySlug);
             });
         }
 
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('excerpt', 'like', "%{$search}%");
-            });
-        }
+        // Apply search using Searchable trait
+        $query->search($search);
 
         // Paginate results with relationships and cover attachment
         $events = $query
@@ -62,19 +58,15 @@ class EventController extends Controller
         // Base query for active events
         $query = Event::query();
 
-        // Apply filters
+        // Apply category filter
         if ($categorySlug) {
             $query->whereHas('category', function ($q) use ($categorySlug) {
                 $q->where('slug', $categorySlug);
             });
         }
 
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('excerpt', 'like', "%{$search}%");
-            });
-        }
+        // Apply search using Searchable trait
+        $query->search($search);
 
         // Paginate results with relationships and cover attachment
         $events = $query
