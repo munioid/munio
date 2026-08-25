@@ -64,18 +64,25 @@ export default function Reservation() {
         setLoading(true)
 
         try {
+            const payload = {
+                event_id: event.id,
+                name: formData.name,
+                email: formData.email,
+                quantity: formData.quantity,
+            }
+
+            // Add user_id if user is logged in
+            if (auth?.user?.id) {
+                payload.user_id = auth.user.id
+            }
+
             const response = await fetch('/api/events/reservations', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content,
                 },
-                body: JSON.stringify({
-                    event_id: event.id,
-                    name: formData.name,
-                    email: formData.email,
-                    quantity: formData.quantity,
-                })
+                body: JSON.stringify(payload)
             })
 
             if (!response.ok) {

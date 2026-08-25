@@ -25,6 +25,7 @@ class ReservationRequest extends FormRequest
             'name' => ['required'],
             'email' => ['required', 'email'],
             'quantity' => ['required', 'integer', 'min:1'],
+            'user_id' => ['nullable', 'uuid', 'exists:users,id'],
         ];
     }
 }
