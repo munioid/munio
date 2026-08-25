@@ -47,6 +47,13 @@ class EventController extends Controller
                 'search' => $search,
                 'category' => $categorySlug,
             ],
+            'auth' => [
+                'user' => $request->user(),
+            ],
+            'organization' => [
+                'name' => $organization?->name,
+                'icon' => $organization?->icon?->getPath(),
+            ],
         ]);
     }
 
@@ -96,6 +103,13 @@ class EventController extends Controller
 
         return Inertia::render('Event/EventDetail', [
             'event' => $event,
+            'auth' => [
+                'user' => $request->user(),
+            ],
+            'organization' => [
+                'name' => $organization?->name,
+                'icon' => $organization?->icon?->getPath(),
+            ],
         ]);
     }
 
@@ -113,6 +127,13 @@ class EventController extends Controller
 
         return Inertia::render('Event/Reservation', [
             'event' => $event,
+            'auth' => [
+                'user' => $request->user(),
+            ],
+            'organization' => [
+                'name' => $organization?->name,
+                'icon' => $organization?->icon?->getPath(),
+            ],
         ]);
     }
 
@@ -130,6 +151,13 @@ class EventController extends Controller
 
         return Inertia::render('Event/ReservationDetail', [
             'reservation' => $reservation,
+            'auth' => [
+                'user' => $request->user(),
+            ],
+            'organization' => [
+                'name' => $organization?->name,
+                'icon' => $organization?->icon?->getPath(),
+            ],
         ]);
     }
 }

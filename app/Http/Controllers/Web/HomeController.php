@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Blog\Post;
 use App\Models\Event\Event;
+use Filament\Facades\Filament;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $posts = Post::query()
             ->published()
@@ -50,11 +52,17 @@ class HomeController extends Controller
                 ] : null,
             ]);
 
+        $organization = Filament::getTenant();
+
         return Inertia::render('Home', [
             'posts' => $posts,
             'events' => $events,
             'auth' => [
-                'user' => auth()->user(),
+                'user' => $request->user(),
+            ],
+            'organization' => [
+                'name' => $organization?->name,
+                'icon' => $organization?->icon?->getPath(),
             ],
         ]);
     }

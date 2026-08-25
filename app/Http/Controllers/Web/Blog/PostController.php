@@ -63,6 +63,13 @@ class PostController extends Controller
                 'tag' => $tagId,
                 'search' => $search,
             ],
+            'auth' => [
+                'user' => $request->user(),
+            ],
+            'organization' => [
+                'name' => $organization?->name,
+                'icon' => $organization?->icon?->getPath(),
+            ],
         ]);
     }
 
@@ -110,7 +117,7 @@ class PostController extends Controller
         ]);
     }
 
-    public function detail(string $slug)
+    public function detail(string $slug, Request $request)
     {
         $organization = Filament::getTenant();
         $post = Post::query()
@@ -138,6 +145,13 @@ class PostController extends Controller
         return Inertia::render('Blog/PostDetail', [
             'post' => $post,
             'relatedPosts' => $relatedPosts,
+            'auth' => [
+                'user' => $request->user(),
+            ],
+            'organization' => [
+                'name' => $organization?->name,
+                'icon' => $organization?->icon?->getPath(),
+            ],
         ]);
     }
 }
