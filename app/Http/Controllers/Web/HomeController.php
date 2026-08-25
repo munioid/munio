@@ -53,12 +53,18 @@ class HomeController extends Controller
             ]);
 
         $organization = Filament::getTenant();
+        $user = $request->user();
 
         return Inertia::render('Home', [
             'posts' => $posts,
             'events' => $events,
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user ? [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'avatar' => $user->avatar ? $user->avatar->getPath() : null,
+                ] : null,
             ],
             'organization' => [
                 'name' => $organization?->name,

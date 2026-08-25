@@ -44,9 +44,16 @@ class HandleInertiaRequests extends Middleware
             'primaryColor' => $primaryColor,
         ]);
 
+        $user = $request->user();
+
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user ? [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'avatar' => $user->avatar ? $user->avatar->getPath() : null,
+                ] : null,
             ],
             'organization' => [
                 'name' => $organization?->name ?? config('app.name', 'Munio'),

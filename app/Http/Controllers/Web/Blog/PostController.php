@@ -54,6 +54,8 @@ class PostController extends Controller
         $categories = Category::orderBy('name')->get();
         $tags = Tag::orderBy('name')->get();
 
+        $user = $request->user();
+
         return Inertia::render('Blog/PostsList', [
             'posts' => $posts,
             'categories' => $categories,
@@ -64,7 +66,12 @@ class PostController extends Controller
                 'search' => $search,
             ],
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user ? [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'avatar' => $user->avatar ? $user->avatar->getPath() : null,
+                ] : null,
             ],
             'organization' => [
                 'name' => $organization?->name,
@@ -142,11 +149,18 @@ class PostController extends Controller
             ->limit(3)
             ->get();
 
+        $user = $request->user();
+
         return Inertia::render('Blog/PostDetail', [
             'post' => $post,
             'relatedPosts' => $relatedPosts,
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user ? [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'avatar' => $user->avatar ? $user->avatar->getPath() : null,
+                ] : null,
             ],
             'organization' => [
                 'name' => $organization?->name,

@@ -40,6 +40,8 @@ class EventController extends Controller
         // Get all categories for filter
         $categories = Category::orderBy('name')->get();
 
+        $user = $request->user();
+
         return Inertia::render('Event/EventsList', [
             'events' => $events,
             'categories' => $categories,
@@ -48,7 +50,12 @@ class EventController extends Controller
                 'category' => $categorySlug,
             ],
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user ? [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'avatar' => $user->avatar ? $user->avatar->getPath() : null,
+                ] : null,
             ],
             'organization' => [
                 'name' => $organization?->name,
@@ -101,10 +108,17 @@ class EventController extends Controller
             abort(404, 'Not found.');
         }
 
+        $user = $request->user();
+
         return Inertia::render('Event/EventDetail', [
             'event' => $event,
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user ? [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'avatar' => $user->avatar ? $user->avatar->getPath() : null,
+                ] : null,
             ],
             'organization' => [
                 'name' => $organization?->name,
@@ -125,10 +139,17 @@ class EventController extends Controller
             abort(404, 'Not found.');
         }
 
+        $user = $request->user();
+
         return Inertia::render('Event/Reservation', [
             'event' => $event,
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user ? [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'avatar' => $user->avatar ? $user->avatar->getPath() : null,
+                ] : null,
             ],
             'organization' => [
                 'name' => $organization?->name,
@@ -149,10 +170,17 @@ class EventController extends Controller
             abort(404, 'Not Found.');
         }
 
+        $user = $request->user();
+
         return Inertia::render('Event/ReservationDetail', [
             'reservation' => $reservation,
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user ? [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'avatar' => $user->avatar ? $user->avatar->getPath() : null,
+                ] : null,
             ],
             'organization' => [
                 'name' => $organization?->name,
