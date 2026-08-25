@@ -11,7 +11,13 @@ export default function MyReservations() {
 
     // Format date
     const formatDate = (dateString) => {
+        if (!dateString) {
+            return '-'
+        }
         const date = new Date(dateString)
+        if (isNaN(date.getTime())) {
+            return '-'
+        }
         return new Intl.DateTimeFormat('id-ID', {
             year: 'numeric',
             month: 'long',
