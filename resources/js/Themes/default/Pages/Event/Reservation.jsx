@@ -1,16 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { usePage } from '@inertiajs/react'
 import AppLayout from '../../Layouts/AppLayout'
 
 export default function Reservation() {
     const { props } = usePage()
-    const { event } = props
+    const { event, auth } = props
     const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         quantity: 1,
     })
+
+    // Auto-fill form with authenticated user data
+    useEffect(() => {
+        if (auth?.user) {
+            setFormData(prev => ({
+                ...prev,
+                name: auth.user.name || '',
+                email: auth.user.email || '',
+            }))
+        }
+    }, [auth?.user])
 
     const getCoverImage = (event) => {
         if (event.cover?.media_url) {
