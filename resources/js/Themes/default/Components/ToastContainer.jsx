@@ -40,7 +40,7 @@ const ToastContainer = () => {
             className="z-50 pointer-events-none"
             style={{
                 position: 'absolute',
-                left: '50%',
+                left: '0%',
                 top: '50%',
                 transform: 'translate(-50%, -50%)',
                 width: '100%',

@@ -116,6 +116,7 @@ class NotificationService
             'type' => 'success',
             'title' => $title,
             'message' => $message,
+            'duration' => 1000000
         ]);
     }
 
