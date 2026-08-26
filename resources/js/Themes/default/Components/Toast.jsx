@@ -24,40 +24,40 @@ const Toast = ({ toast, onClose }) => {
 
     const typeConfig = {
         success: {
-            bgColor: 'bg-green-600',
-            borderColor: 'border-green-700',
-            textColor: 'text-white',
-            titleColor: 'text-white',
+            bgColor: 'bg-green-50',
+            borderColor: 'border-green-200',
+            textColor: 'text-green-700',
+            titleColor: 'text-green-900',
             icon: CheckCircleIcon,
-            iconColor: 'text-white',
-            closeButtonClass: 'hover:bg-green-700 text-white/80 hover:text-white',
+            iconColor: 'text-green-600',
+            closeButtonClass: 'hover:bg-green-100 text-green-600 hover:text-green-700',
         },
         error: {
-            bgColor: 'bg-red-600',
-            borderColor: 'border-red-700',
-            textColor: 'text-white',
-            titleColor: 'text-white',
+            bgColor: 'bg-red-50',
+            borderColor: 'border-red-200',
+            textColor: 'text-red-700',
+            titleColor: 'text-red-900',
             icon: XCircleIcon,
-            iconColor: 'text-white',
-            closeButtonClass: 'hover:bg-red-700 text-white/80 hover:text-white',
+            iconColor: 'text-red-600',
+            closeButtonClass: 'hover:bg-red-100 text-red-600 hover:text-red-700',
         },
         warning: {
-            bgColor: 'bg-amber-600',
-            borderColor: 'border-amber-700',
-            textColor: 'text-white',
-            titleColor: 'text-white',
+            bgColor: 'bg-amber-50',
+            borderColor: 'border-amber-200',
+            textColor: 'text-amber-700',
+            titleColor: 'text-amber-900',
             icon: ExclamationTriangleIcon,
-            iconColor: 'text-white',
-            closeButtonClass: 'hover:bg-amber-700 text-white/80 hover:text-white',
+            iconColor: 'text-amber-600',
+            closeButtonClass: 'hover:bg-amber-100 text-amber-600 hover:text-amber-700',
         },
         info: {
-            bgColor: 'bg-blue-600',
-            borderColor: 'border-blue-700',
-            textColor: 'text-white',
-            titleColor: 'text-white',
+            bgColor: 'bg-blue-50',
+            borderColor: 'border-blue-200',
+            textColor: 'text-blue-700',
+            titleColor: 'text-blue-900',
             icon: InformationCircleIcon,
-            iconColor: 'text-white',
-            closeButtonClass: 'hover:bg-blue-700 text-white/80 hover:text-white',
+            iconColor: 'text-blue-600',
+            closeButtonClass: 'hover:bg-blue-100 text-blue-600 hover:text-blue-700',
         },
     }
 
@@ -71,55 +71,57 @@ const Toast = ({ toast, onClose }) => {
 
     return (
         <div
-            className={`rounded-xl border-0 ${config.bgColor} ${config.borderColor} px-6 py-4 shadow-2xl animate-in fade-in zoom-in-95 duration-300`}
+            className={`w-full max-w-xs rounded-2xl border-2 ${config.bgColor} ${config.borderColor} px-8 py-8 shadow-2xl animate-in fade-in zoom-in-95 duration-300`}
             role="alert"
         >
-            <div className="flex items-start gap-4">
-                {/* Icon */}
-                <IconComponent className={`h-6 w-6 flex-shrink-0 mt-0.5 ${config.iconColor}`} />
+            {/* Icon - Centered at Top */}
+            <div className="flex justify-center mb-4">
+                <IconComponent className={`h-12 w-12 ${config.iconColor}`} />
+            </div>
 
-                {/* Content */}
-                <div className="flex-1 min-w-0">
-                    {toast.title && (
-                        <h3 className={`font-bold text-base ${config.titleColor}`}>
-                            {toast.title}
-                        </h3>
-                    )}
-                    {toast.message && (
-                        <p className={`text-sm ${config.textColor} ${toast.title ? 'mt-2' : ''}`}>
-                            {toast.message}
-                        </p>
-                    )}
+            {/* Title - Centered */}
+            {toast.title && (
+                <h3 className={`text-center font-bold text-lg ${config.titleColor} mb-2`}>
+                    {toast.title}
+                </h3>
+            )}
 
-                    {/* Actions */}
-                    {toast.actions && toast.actions.length > 0 && (
-                        <div className="mt-4 flex gap-2 flex-wrap">
-                            {toast.actions.map((action) => (
-                                <a
-                                    key={action.label}
-                                    href={action.url || '#'}
-                                    target={action.newTab ? '_blank' : '_self'}
-                                    rel={action.newTab ? 'noopener noreferrer' : ''}
-                                    className={`text-sm font-medium ${config.textColor} underline opacity-90 hover:opacity-100 transition`}
-                                >
-                                    {action.label}
-                                </a>
-                            ))}
-                        </div>
-                    )}
+            {/* Message - Centered */}
+            {toast.message && (
+                <p className={`text-center text-sm ${config.textColor} mb-6`}>
+                    {toast.message}
+                </p>
+            )}
+
+            {/* Actions - Centered below message */}
+            {toast.actions && toast.actions.length > 0 && (
+                <div className="flex flex-col gap-3 mb-6">
+                    {toast.actions.map((action) => (
+                        <a
+                            key={action.label}
+                            href={action.url || '#'}
+                            target={action.newTab ? '_blank' : '_self'}
+                            rel={action.newTab ? 'noopener noreferrer' : ''}
+                            className={`text-center text-sm font-medium ${config.textColor} underline opacity-90 hover:opacity-100 transition`}
+                        >
+                            {action.label}
+                        </a>
+                    ))}
                 </div>
+            )}
 
-                {/* Close Button */}
-                {toast.dismissible !== false && (
+            {/* Close Button - Centered at Bottom */}
+            {toast.dismissible !== false && (
+                <div className="flex justify-center">
                     <button
                         onClick={handleClose}
-                        className={`flex-shrink-0 rounded-lg p-1.5 transition-colors ${config.closeButtonClass}`}
+                        className={`px-6 py-2 rounded-lg font-medium text-sm transition-colors ${config.closeButtonClass} border border-current`}
                         aria-label="Close notification"
                     >
-                        <XMarkIcon className="h-5 w-5" />
+                        Close
                     </button>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     )
 }
