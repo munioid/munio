@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { usePage } from '@inertiajs/react'
 import Header from '../Components/Header'
+import ToastContainer from '../Components/ToastContainer'
 
 export default function AuthLayout({ children }) {
     const { props } = usePage()
@@ -27,12 +28,15 @@ export default function AuthLayout({ children }) {
                 }
             `}</style>
 
-            <div className="mx-auto w-full min-h-screen bg-white max-w-[390px] sm:max-w-[430px] md:max-w-[480px]">
+            <div className="mx-auto w-full min-h-screen bg-white max-w-[390px] sm:max-w-[430px] md:max-w-[480px] relative">
                 {/* HEADER */}
                 <Header />
 
                 {/* CONTENT */}
                 {children}
+
+                {/* TOAST NOTIFICATIONS - Inside mobile container */}
+                <ToastContainer />
             </div>
         </>
     )

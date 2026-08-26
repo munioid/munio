@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { usePage } from '@inertiajs/react'
 import Header from '../Components/Header'
 import Navigation from '../Components/Navigation'
+import ToastContainer from '../Components/ToastContainer'
 
 export default function AppLayout({ children }) {
     const { props } = usePage()
@@ -28,12 +29,15 @@ export default function AppLayout({ children }) {
                 }
             `}</style>
 
-            <div className="mx-auto w-full min-h-screen bg-white max-w-[390px] sm:max-w-[430px] md:max-w-[480px] pb-12">
+            <div className="mx-auto w-full min-h-screen bg-white max-w-[390px] sm:max-w-[430px] md:max-w-[480px] pb-12 relative">
                 {/* HEADER */}
                 <Header />
 
                 {/* CONTENT */}
                 {children}
+
+                {/* TOAST NOTIFICATIONS - Inside mobile container */}
+                <ToastContainer />
             </div>
 
             {/* NAVIGATION */}

@@ -57,10 +57,10 @@ class HandleInertiaRequests extends Middleware
             'theme' => $theme,
             'primaryColor' => $primaryColor,
             'flash' => [
-                'success' => session('success'),
-                'error' => session('error'),
-                'warning' => session('warning'),
-                'info' => session('info'),
+                'toast' => $request->session()->get('toast'),
+                'toasts' => $request->session()->get('toasts'),
+                'success' => $request->session()->get('success'),
+                'error' => $request->session()->get('error'),
             ],
             'ziggy' => function () {
                 return [

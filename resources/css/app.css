@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import '../../vendor/filament/filament/resources/css/theme.css';
+@import "tailwindcss";
+@import "../../vendor/filament/filament/resources/css/theme.css";
 @plugin "@tailwindcss/typography";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -8,8 +8,10 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
 }
 
 @theme inline {
@@ -27,12 +29,12 @@
 
     padding: 1.5rem;
 
-    animation: fi-overlay-fade .25s ease;
+    animation: fi-overlay-fade 0.25s ease;
 }
 
 .fi-no-notification {
-    position: relative;
-
+    /* position: relative; */
+    visibility: visible;
     width: min(360px, calc(100vw - 2rem));
 
     max-width: 360px;
@@ -65,7 +67,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: .5rem;
+    gap: 0.5rem;
 }
 
 .fi-no-notification-title {
@@ -90,14 +92,17 @@
 .fi-no-notification-actions {
     width: 100%;
     margin-top: 1.5rem;
+    border-radius: 24px;
+    padding: 0.2rem;
 
     display: flex;
     justify-content: center;
+    cursor: "pointer";
 }
 
 .fi-no-notification-actions .fi-btn {
     width: 100%;
-    border-radius: .75rem;
+    border-radius: 0.75rem;
 }
 
 .fi-color-primary {
@@ -118,7 +123,7 @@
 @keyframes fi-notification-fade {
     from {
         opacity: 0;
-        transform: scale(.9);
+        transform: scale(0.9);
     }
     to {
         opacity: 1;
@@ -128,7 +133,7 @@
 
 .fi-transition-enter-start {
     opacity: 0 !important;
-    transform: translateX(0) scale(.9) !important;
+    transform: translateX(0) scale(0.9) !important;
 }
 
 .fi-transition-enter-end {
@@ -143,5 +148,5 @@
 
 .fi-transition-leave-end {
     opacity: 0 !important;
-    transform: translateX(0) scale(.9) !important;
+    transform: translateX(0) scale(0.9) !important;
 }

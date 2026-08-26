@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Blog\Post;
 use App\Models\Event\Event;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $posts = Post::query()
             ->published()
@@ -17,7 +18,7 @@ class HomeController extends Controller
             ->orderBy('published_at', 'desc')
             ->take(6)
             ->get()
-            ->map(fn ($post) => [
+            ->map(fn($post) => [
                 'id' => $post->id,
                 'title' => $post->title,
                 'slug' => $post->slug,
@@ -38,7 +39,7 @@ class HomeController extends Controller
             ->orderBy('published_at', 'desc')
             ->take(6)
             ->get()
-            ->map(fn ($event) => [
+            ->map(fn($event) => [
                 'id' => $event->id,
                 'title' => $event->title,
                 'slug' => $event->slug,
@@ -54,7 +55,7 @@ class HomeController extends Controller
             'posts' => $posts,
             'events' => $events,
             'auth' => [
-                'user' => auth()->user(),
+                'user' => $request->user(),
             ],
         ]);
     }
