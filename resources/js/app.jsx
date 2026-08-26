@@ -1,6 +1,8 @@
 import './bootstrap'
 import { createInertiaApp } from '@inertiajs/react'
 import { createRoot } from 'react-dom/client'
+import { ToastProvider } from './Contexts/ToastContext'
+import Toast from './Components/Toast'
 
 createInertiaApp({
     resolve: (name) => {
@@ -24,6 +26,11 @@ createInertiaApp({
         throw new Error(`Page not found: ${name}`)
     },
     setup({ el, App, props }) {
-        createRoot(el).render(<App {...props} />)
+        createRoot(el).render(
+            <ToastProvider flashes={props.initialPage.props.flash || {}}>
+                <App {...props} />
+                <Toast />
+            </ToastProvider>
+        )
     },
 })

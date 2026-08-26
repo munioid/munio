@@ -17,13 +17,11 @@ class HandleInertiaRequests extends Middleware
     }
 
     /**
-     * The root template that is loaded on every request, resolved per theme.
+     * The root template that is loaded on every request.
      */
     public function rootView(Request $request): string
     {
-        $theme = $request->theme ?? 'default';
-
-        return "{$theme}.layouts.app";
+        return 'app';
     }
 
     /**
