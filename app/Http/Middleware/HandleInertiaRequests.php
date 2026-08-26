@@ -58,6 +58,12 @@ class HandleInertiaRequests extends Middleware
             ],
             'theme' => $theme,
             'primaryColor' => $primaryColor,
+            'flash' => [
+                'toast' => $request->session()->get('toast'),
+                'toasts' => $request->session()->get('toasts'),
+                'success' => $request->session()->get('success'),
+                'error' => $request->session()->get('error'),
+            ],
             'ziggy' => function () {
                 return [
                     ...(new Ziggy())->toArray(),

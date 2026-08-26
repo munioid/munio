@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { usePage } from '@inertiajs/react'
 import Header from '../Components/Header'
+import ToastContainer from '../Components/ToastContainer'
 
 export default function AuthLayout({ children }) {
     const { props } = usePage()
@@ -34,6 +35,9 @@ export default function AuthLayout({ children }) {
                 {/* CONTENT */}
                 {children}
             </div>
+
+            {/* TOAST NOTIFICATIONS */}
+            <ToastContainer />
         </>
     )
 }

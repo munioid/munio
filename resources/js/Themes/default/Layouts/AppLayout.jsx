@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { usePage } from '@inertiajs/react'
 import Header from '../Components/Header'
 import Navigation from '../Components/Navigation'
+import ToastContainer from '../Components/ToastContainer'
 
 export default function AppLayout({ children }) {
     const { props } = usePage()
@@ -38,6 +39,9 @@ export default function AppLayout({ children }) {
 
             {/* NAVIGATION */}
             <Navigation />
+
+            {/* TOAST NOTIFICATIONS */}
+            <ToastContainer />
         </>
     )
 }
