@@ -115,8 +115,7 @@ class NotificationService
         $this->flashToast([
             'type' => 'success',
             'title' => $title,
-            'message' => $message,
-            'duration' => 1000000
+            'message' => $message
         ]);
     }
 

@@ -37,15 +37,7 @@ const ToastContainer = () => {
 
     return (
         <div
-            className="z-50 pointer-events-none"
-            style={{
-                position: 'absolute',
-                left: '0%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '100%',
-                height: '100%',
-            }}
+            className="z-50 pointer-events-none fi-no"
             role="region"
             aria-live="polite"
             aria-atomic="true"

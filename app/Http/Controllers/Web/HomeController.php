@@ -5,16 +5,11 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Blog\Post;
 use App\Models\Event\Event;
-use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class HomeController extends Controller
 {
-    public function __construct(
-        private readonly NotificationService $notificationService,
-    ) {}
-
     public function index(Request $request)
     {
         $posts = Post::query()
@@ -55,10 +50,6 @@ class HomeController extends Controller
                     'path' => $event->cover->getPath(),
                 ] : null,
             ]);
-
-
-        // Flash success notification
-        $this->notificationService->flashSuccess('Success.');
 
         return Inertia::render('Home', [
             'posts' => $posts,
