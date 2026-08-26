@@ -59,32 +59,33 @@ const Toast = ({ toast, onClose }) => {
 
     return (
         <div
-            className="w-full mx-4 md:mx-0 md:w-full animate-in fade-in zoom-in-95 duration-300"
+            className="animate-in fade-in zoom-in-95 duration-300"
             style={{
-                maxWidth: '650px',
+                width: 'min(600px, calc(100vw - 40px))',
+                maxWidth: '600px',
             }}
             role="alert"
         >
             <div
-                className="bg-white rounded-[32px] px-9 py-16 shadow-lg"
+                className="bg-white rounded-[28px] px-10 py-12 shadow-lg flex flex-col items-center text-center"
                 style={{
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
                 }}
             >
                 {/* Icon - Centered at Top with Circle Background */}
-                <div className="flex justify-center mb-12">
+                {true && (
                     <div
-                        className="flex items-center justify-center"
+                        className="flex items-center justify-center flex-shrink-0"
                         style={{
-                            width: '104px',
-                            height: '104px',
+                            width: '100px',
+                            height: '100px',
                             borderRadius: '50%',
-                            border: `8px solid ${config.iconColor}`,
-                            backgroundColor: `${config.iconColor}15`, // 15% opacity
+                            border: `7px solid ${config.iconColor}`,
+                            backgroundColor: `${config.iconColor}15`,
+                            marginBottom: '48px',
                         }}
                     >
                         <IconComponent
-                            className="flex-shrink-0"
                             style={{
                                 width: '48px',
                                 height: '48px',
@@ -93,17 +94,17 @@ const Toast = ({ toast, onClose }) => {
                             }}
                         />
                     </div>
-                </div>
+                )}
 
                 {/* Title - Centered */}
                 {toast.title && (
                     <h3
-                        className="text-center text-black font-black mb-6"
+                        className="text-black font-bold"
                         style={{
-                            fontSize: '48px',
-                            lineHeight: '1.1',
-                            fontWeight: 900,
-                            letterSpacing: '-0.5px',
+                            fontSize: '40px',
+                            lineHeight: '1.2',
+                            fontWeight: 700,
+                            marginBottom: '24px',
                         }}
                     >
                         {toast.title}
@@ -113,12 +114,12 @@ const Toast = ({ toast, onClose }) => {
                 {/* Message - Centered */}
                 {toast.message && (
                     <p
-                        className="text-center mb-12"
                         style={{
-                            fontSize: '30px',
+                            fontSize: '22px',
                             fontWeight: 400,
                             lineHeight: '1.4',
                             color: '#6B6B76',
+                            marginBottom: '48px',
                         }}
                     >
                         {toast.message}
@@ -127,16 +128,16 @@ const Toast = ({ toast, onClose }) => {
 
                 {/* Actions - Centered below message */}
                 {toast.actions && toast.actions.length > 0 && (
-                    <div className="flex flex-col gap-3 mb-12">
+                    <div className="flex flex-col gap-2 mb-8 w-full">
                         {toast.actions.map((action) => (
                             <a
                                 key={action.label}
                                 href={action.url || '#'}
                                 target={action.newTab ? '_blank' : '_self'}
                                 rel={action.newTab ? 'noopener noreferrer' : ''}
-                                className="text-center font-semibold transition-opacity hover:opacity-75"
+                                className="font-semibold transition-opacity hover:opacity-75"
                                 style={{
-                                    fontSize: '18px',
+                                    fontSize: '16px',
                                     color: config.iconColor,
                                     textDecoration: 'none',
                                 }}
@@ -151,16 +152,16 @@ const Toast = ({ toast, onClose }) => {
                 {toast.dismissible !== false && (
                     <button
                         onClick={handleClose}
-                        className="w-full font-bold text-white transition-colors"
+                        className="font-bold text-white transition-colors w-full"
                         style={{
                             backgroundColor: config.buttonBg,
-                            height: '64px',
-                            borderRadius: '28px',
-                            fontSize: '28px',
+                            height: '60px',
+                            borderRadius: '24px',
+                            fontSize: '18px',
                             fontWeight: 600,
                             border: 'none',
                             cursor: 'pointer',
-                            marginTop: '75px',
+                            marginTop: '32px',
                         }}
                         onMouseEnter={(e) => (e.target.style.backgroundColor = config.buttonHover)}
                         onMouseLeave={(e) => (e.target.style.backgroundColor = config.buttonBg)}

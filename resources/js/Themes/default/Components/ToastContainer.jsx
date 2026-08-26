@@ -37,12 +37,18 @@ const ToastContainer = () => {
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
+            className="z-50 pointer-events-none"
+            style={{
+                position: 'fixed',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -50%)',
+            }}
             role="region"
             aria-live="polite"
             aria-atomic="true"
         >
-            <div className="pointer-events-auto w-full max-w-sm mx-4 space-y-3">
+            <div className="pointer-events-auto space-y-3">
                 {toasts.map((toast) => (
                     <Toast
                         key={toast.id}
