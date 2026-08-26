@@ -24,40 +24,40 @@ const Toast = ({ toast, onClose }) => {
 
     const typeConfig = {
         success: {
-            bgColor: 'bg-green-50',
-            borderColor: 'border-green-200',
-            textColor: 'text-green-800',
-            titleColor: 'text-green-900',
+            bgColor: 'bg-green-600',
+            borderColor: 'border-green-700',
+            textColor: 'text-white',
+            titleColor: 'text-white',
             icon: CheckCircleIcon,
-            iconColor: 'text-green-600',
-            closeButtonClass: 'hover:bg-green-100 text-green-600',
+            iconColor: 'text-white',
+            closeButtonClass: 'hover:bg-green-700 text-white/80 hover:text-white',
         },
         error: {
-            bgColor: 'bg-red-50',
-            borderColor: 'border-red-200',
-            textColor: 'text-red-700',
-            titleColor: 'text-red-900',
+            bgColor: 'bg-red-600',
+            borderColor: 'border-red-700',
+            textColor: 'text-white',
+            titleColor: 'text-white',
             icon: XCircleIcon,
-            iconColor: 'text-red-600',
-            closeButtonClass: 'hover:bg-red-100 text-red-600',
+            iconColor: 'text-white',
+            closeButtonClass: 'hover:bg-red-700 text-white/80 hover:text-white',
         },
         warning: {
-            bgColor: 'bg-amber-50',
-            borderColor: 'border-amber-200',
-            textColor: 'text-amber-700',
-            titleColor: 'text-amber-900',
+            bgColor: 'bg-amber-600',
+            borderColor: 'border-amber-700',
+            textColor: 'text-white',
+            titleColor: 'text-white',
             icon: ExclamationTriangleIcon,
-            iconColor: 'text-amber-600',
-            closeButtonClass: 'hover:bg-amber-100 text-amber-600',
+            iconColor: 'text-white',
+            closeButtonClass: 'hover:bg-amber-700 text-white/80 hover:text-white',
         },
         info: {
-            bgColor: 'bg-blue-50',
-            borderColor: 'border-blue-200',
-            textColor: 'text-blue-700',
-            titleColor: 'text-blue-900',
+            bgColor: 'bg-blue-600',
+            borderColor: 'border-blue-700',
+            textColor: 'text-white',
+            titleColor: 'text-white',
             icon: InformationCircleIcon,
-            iconColor: 'text-blue-600',
-            closeButtonClass: 'hover:bg-blue-100 text-blue-600',
+            iconColor: 'text-white',
+            closeButtonClass: 'hover:bg-blue-700 text-white/80 hover:text-white',
         },
     }
 
@@ -71,36 +71,36 @@ const Toast = ({ toast, onClose }) => {
 
     return (
         <div
-            className={`mb-3 rounded-lg border ${config.bgColor} ${config.borderColor} p-4 shadow-md animate-in fade-in slide-in-from-top-2 duration-300`}
+            className={`rounded-xl border-0 ${config.bgColor} ${config.borderColor} px-6 py-4 shadow-2xl animate-in fade-in zoom-in-95 duration-300`}
             role="alert"
         >
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-4">
                 {/* Icon */}
-                <IconComponent className={`h-5 w-5 flex-shrink-0 mt-0.5 ${config.iconColor}`} />
+                <IconComponent className={`h-6 w-6 flex-shrink-0 mt-0.5 ${config.iconColor}`} />
 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
                     {toast.title && (
-                        <h3 className={`font-semibold ${config.titleColor}`}>
+                        <h3 className={`font-bold text-base ${config.titleColor}`}>
                             {toast.title}
                         </h3>
                     )}
                     {toast.message && (
-                        <p className={`text-sm ${config.textColor} ${toast.title ? 'mt-1' : ''}`}>
+                        <p className={`text-sm ${config.textColor} ${toast.title ? 'mt-2' : ''}`}>
                             {toast.message}
                         </p>
                     )}
 
                     {/* Actions */}
                     {toast.actions && toast.actions.length > 0 && (
-                        <div className="mt-3 flex gap-2 flex-wrap">
+                        <div className="mt-4 flex gap-2 flex-wrap">
                             {toast.actions.map((action) => (
                                 <a
                                     key={action.label}
                                     href={action.url || '#'}
                                     target={action.newTab ? '_blank' : '_self'}
                                     rel={action.newTab ? 'noopener noreferrer' : ''}
-                                    className={`text-sm font-medium ${config.textColor} underline hover:opacity-75 transition`}
+                                    className={`text-sm font-medium ${config.textColor} underline opacity-90 hover:opacity-100 transition`}
                                 >
                                     {action.label}
                                 </a>
@@ -113,7 +113,7 @@ const Toast = ({ toast, onClose }) => {
                 {toast.dismissible !== false && (
                     <button
                         onClick={handleClose}
-                        className={`flex-shrink-0 rounded p-1.5 transition-colors ${config.closeButtonClass}`}
+                        className={`flex-shrink-0 rounded-lg p-1.5 transition-colors ${config.closeButtonClass}`}
                         aria-label="Close notification"
                     >
                         <XMarkIcon className="h-5 w-5" />
