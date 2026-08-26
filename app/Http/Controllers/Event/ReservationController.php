@@ -23,11 +23,14 @@ class ReservationController extends Controller
             $organization = Organization::first();
             Filament::setTenant($organization, true);
 
-            ReservationService::createReservation($data);
+            $reservation = ReservationService::createReservation($data);
 
             DB::commit();
 
-            return $this->respondSuccess('Reservation submitted.');
+            return $this->respondWithArray([
+                'code' => $reservation->code,
+                'id' => $reservation->id,
+            ]);
         } catch (Throwable $th) {
             DB::rollBack();
 

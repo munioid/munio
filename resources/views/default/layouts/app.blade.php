@@ -1,55 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="{{ $theme ?? 'default' }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title inertia>{{ config('app.name', 'Munio') }}</title>
+        <style>
+            :root {
+                --primary-color: {{ $primaryColor ?? '#1f2937' }};
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            ::-webkit-scrollbar {
+                display: none;
+            }
 
-    <style>
-        :root {
-            --primary-color: {{$organization?->colors['primary'] ?? '#ff5c54'}};
-        }
-
-        ::-webkit-scrollbar {
-            display: none;
-        }
-
-        body {
-            background: #f3f4f6;
-        }
-    </style>
-    @vite('resources/css/app.css')
-    @filamentStyles
-
-    <title>@yield('title') - {{$organization->name}}</title>
-    <link rel="icon" href="{{ $organization->favicon?->getPath() ?? asset('images/favicon.png') }}">
-</head>
-
-<body>
-
-    <div class="mx-auto w-full min-h-screen bg-white
-            max-w-[390px]
-            sm:max-w-[430px]
-            md:max-w-[480px] pb-12">
-
-        <!-- HEADER -->
-        <x-header :organization="$organization" />
-
-        <!-- CONTENT -->
-        @yield('content')
-
-        @livewireScripts
-        @filamentScripts
-        <div>
-            @livewire('notifications', [
-                'alignment' => 'right',
-                'verticalAlignment' => 'start',
-            ])
-        </div>
-    </div>
-
-    <x-navigation />
-
-</body>
-
+            body {
+                background: #f3f4f6;
+            }
+        </style>
+        @viteReactRefresh
+        @vite(['resources/css/app.css', 'resources/js/app.jsx'])
+        @inertiaHead
+    </head>
+    <body>
+        @inertia
+    </body>
 </html>

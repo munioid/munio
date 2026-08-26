@@ -3,40 +3,74 @@
 namespace App\Http\Controllers\Web\Authentication;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Authentication\ChangePasswordRequest;
+use App\Http\Requests\Authentication\UpdateProfile;
 use Filament\Facades\Filament;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
     public function profile(Request $request)
     {
-        $organization = Filament::getTenant();
-        $theme = $request->theme;
+        $user = $request->user();
 
-        return view('pages.authentication.profile', compact('theme', 'organization'));
+        return Inertia::render('Authentication/Profile', [
+            'user' => $user,
+        ]);
     }
 
     public function edit(Request $request)
     {
-        $organization = Filament::getTenant();
-        $theme = $request->theme;
+        $user = $request->user();
 
-        return view('pages.authentication.edit-profile', compact('theme', 'organization'));
+        return Inertia::render('Authentication/EditProfile', [
+            'user' => $user,
+        ]);
+    }
+
+    public function updateProfile(UpdateProfile $request)
+    {
+        $user = $request->user();
+        $data = $request->validated();
+
+        // Update profile
+        $user->update([
+            'name' => $data['name'],
+            'email' => $data['email'] ?? $user->email,
+        ]);
+
+        return back()->with('success', 'Profil berhasil diperbarui');
     }
 
     public function changePassword(Request $request)
     {
-        $organization = Filament::getTenant();
-        $theme = $request->theme;
+        return Inertia::render('Authentication/ChangePassword');
+    }
 
-        return view('pages.authentication.change-password', compact('theme', 'organization'));
+    public function updatePassword(ChangePasswordRequest $request)
+    {
+        $user = $request->user();
+        $validated = $request->validated();
+
+        $user->update([
+            'password' => $validated['password'],
+        ]);
+
+        return back()->with('success', 'Password berhasil diperbarui');
     }
 
     public function myReservations(Request $request)
     {
-        $organization = Filament::getTenant();
-        $theme = $request->theme;
+        $user = $request->user();
 
-        return view('pages.authentication.my-reservation', compact('theme', 'organization'));
+        $reservations = $user->reservations()
+            ->with('event')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return Inertia::render('Authentication/MyReservations', [
+            'reservations' => $reservations,
+        ]);
     }
 }
