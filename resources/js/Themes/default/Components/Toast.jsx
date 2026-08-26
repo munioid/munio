@@ -61,7 +61,7 @@ const Toast = ({ toast, onClose }) => {
         <div
             className="animate-in fade-in zoom-in-95 duration-300"
             style={{
-                width: 'min(600px, calc(100vw - 40px))',
+                width: 'calc(100% - 40px)',
                 maxWidth: '600px',
             }}
             role="alert"

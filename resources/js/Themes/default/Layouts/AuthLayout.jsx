@@ -28,16 +28,16 @@ export default function AuthLayout({ children }) {
                 }
             `}</style>
 
-            <div className="mx-auto w-full min-h-screen bg-white max-w-[390px] sm:max-w-[430px] md:max-w-[480px]">
+            <div className="mx-auto w-full min-h-screen bg-white max-w-[390px] sm:max-w-[430px] md:max-w-[480px] relative">
                 {/* HEADER */}
                 <Header />
 
                 {/* CONTENT */}
                 {children}
-            </div>
 
-            {/* TOAST NOTIFICATIONS */}
-            <ToastContainer />
+                {/* TOAST NOTIFICATIONS - Inside mobile container */}
+                <ToastContainer />
+            </div>
         </>
     )
 }

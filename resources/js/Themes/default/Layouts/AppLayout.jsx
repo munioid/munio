@@ -29,19 +29,19 @@ export default function AppLayout({ children }) {
                 }
             `}</style>
 
-            <div className="mx-auto w-full min-h-screen bg-white max-w-[390px] sm:max-w-[430px] md:max-w-[480px] pb-12">
+            <div className="mx-auto w-full min-h-screen bg-white max-w-[390px] sm:max-w-[430px] md:max-w-[480px] pb-12 relative">
                 {/* HEADER */}
                 <Header />
 
                 {/* CONTENT */}
                 {children}
+
+                {/* TOAST NOTIFICATIONS - Inside mobile container */}
+                <ToastContainer />
             </div>
 
             {/* NAVIGATION */}
             <Navigation />
-
-            {/* TOAST NOTIFICATIONS */}
-            <ToastContainer />
         </>
     )
 }
