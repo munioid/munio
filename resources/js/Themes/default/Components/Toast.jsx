@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { XMarkIcon, CheckCircleIcon, ExclamationTriangleIcon, InformationCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
+import { CheckCircleIcon, ExclamationTriangleIcon, InformationCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
 
 const Toast = ({ toast, onClose }) => {
     const [isVisible, setIsVisible] = useState(true)
@@ -24,40 +24,28 @@ const Toast = ({ toast, onClose }) => {
 
     const typeConfig = {
         success: {
-            bgColor: 'bg-green-50',
-            borderColor: 'border-green-200',
-            textColor: 'text-green-700',
-            titleColor: 'text-green-900',
             icon: CheckCircleIcon,
-            iconColor: 'text-green-600',
-            closeButtonClass: 'hover:bg-green-100 text-green-600 hover:text-green-700',
+            iconColor: '#10B981',
+            buttonBg: '#FF5C54',
+            buttonHover: '#E64A42',
         },
         error: {
-            bgColor: 'bg-red-50',
-            borderColor: 'border-red-200',
-            textColor: 'text-red-700',
-            titleColor: 'text-red-900',
             icon: XCircleIcon,
-            iconColor: 'text-red-600',
-            closeButtonClass: 'hover:bg-red-100 text-red-600 hover:text-red-700',
+            iconColor: '#EF4444',
+            buttonBg: '#EF4444',
+            buttonHover: '#DC2626',
         },
         warning: {
-            bgColor: 'bg-amber-50',
-            borderColor: 'border-amber-200',
-            textColor: 'text-amber-700',
-            titleColor: 'text-amber-900',
             icon: ExclamationTriangleIcon,
-            iconColor: 'text-amber-600',
-            closeButtonClass: 'hover:bg-amber-100 text-amber-600 hover:text-amber-700',
+            iconColor: '#F59E0B',
+            buttonBg: '#F59E0B',
+            buttonHover: '#D97706',
         },
         info: {
-            bgColor: 'bg-blue-50',
-            borderColor: 'border-blue-200',
-            textColor: 'text-blue-700',
-            titleColor: 'text-blue-900',
             icon: InformationCircleIcon,
-            iconColor: 'text-blue-600',
-            closeButtonClass: 'hover:bg-blue-100 text-blue-600 hover:text-blue-700',
+            iconColor: '#3B82F6',
+            buttonBg: '#3B82F6',
+            buttonHover: '#2563EB',
         },
     }
 
@@ -71,57 +59,117 @@ const Toast = ({ toast, onClose }) => {
 
     return (
         <div
-            className={`w-full max-w-xs rounded-2xl border-2 ${config.bgColor} ${config.borderColor} px-8 py-8 shadow-2xl animate-in fade-in zoom-in-95 duration-300`}
+            className="w-full mx-4 md:mx-0 md:w-full animate-in fade-in zoom-in-95 duration-300"
+            style={{
+                maxWidth: '650px',
+            }}
             role="alert"
         >
-            {/* Icon - Centered at Top */}
-            <div className="flex justify-center mb-4">
-                <IconComponent className={`h-12 w-12 ${config.iconColor}`} />
-            </div>
-
-            {/* Title - Centered */}
-            {toast.title && (
-                <h3 className={`text-center font-bold text-lg ${config.titleColor} mb-2`}>
-                    {toast.title}
-                </h3>
-            )}
-
-            {/* Message - Centered */}
-            {toast.message && (
-                <p className={`text-center text-sm ${config.textColor} mb-6`}>
-                    {toast.message}
-                </p>
-            )}
-
-            {/* Actions - Centered below message */}
-            {toast.actions && toast.actions.length > 0 && (
-                <div className="flex flex-col gap-3 mb-6">
-                    {toast.actions.map((action) => (
-                        <a
-                            key={action.label}
-                            href={action.url || '#'}
-                            target={action.newTab ? '_blank' : '_self'}
-                            rel={action.newTab ? 'noopener noreferrer' : ''}
-                            className={`text-center text-sm font-medium ${config.textColor} underline opacity-90 hover:opacity-100 transition`}
-                        >
-                            {action.label}
-                        </a>
-                    ))}
+            <div
+                className="bg-white rounded-[32px] px-9 py-16 shadow-lg"
+                style={{
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                }}
+            >
+                {/* Icon - Centered at Top with Circle Background */}
+                <div className="flex justify-center mb-12">
+                    <div
+                        className="flex items-center justify-center"
+                        style={{
+                            width: '104px',
+                            height: '104px',
+                            borderRadius: '50%',
+                            border: `8px solid ${config.iconColor}`,
+                            backgroundColor: `${config.iconColor}15`, // 15% opacity
+                        }}
+                    >
+                        <IconComponent
+                            className="flex-shrink-0"
+                            style={{
+                                width: '48px',
+                                height: '48px',
+                                color: config.iconColor,
+                                strokeWidth: 1.5,
+                            }}
+                        />
+                    </div>
                 </div>
-            )}
 
-            {/* Close Button - Centered at Bottom */}
-            {toast.dismissible !== false && (
-                <div className="flex justify-center">
+                {/* Title - Centered */}
+                {toast.title && (
+                    <h3
+                        className="text-center text-black font-black mb-6"
+                        style={{
+                            fontSize: '48px',
+                            lineHeight: '1.1',
+                            fontWeight: 900,
+                            letterSpacing: '-0.5px',
+                        }}
+                    >
+                        {toast.title}
+                    </h3>
+                )}
+
+                {/* Message - Centered */}
+                {toast.message && (
+                    <p
+                        className="text-center mb-12"
+                        style={{
+                            fontSize: '30px',
+                            fontWeight: 400,
+                            lineHeight: '1.4',
+                            color: '#6B6B76',
+                        }}
+                    >
+                        {toast.message}
+                    </p>
+                )}
+
+                {/* Actions - Centered below message */}
+                {toast.actions && toast.actions.length > 0 && (
+                    <div className="flex flex-col gap-3 mb-12">
+                        {toast.actions.map((action) => (
+                            <a
+                                key={action.label}
+                                href={action.url || '#'}
+                                target={action.newTab ? '_blank' : '_self'}
+                                rel={action.newTab ? 'noopener noreferrer' : ''}
+                                className="text-center font-semibold transition-opacity hover:opacity-75"
+                                style={{
+                                    fontSize: '18px',
+                                    color: config.iconColor,
+                                    textDecoration: 'none',
+                                }}
+                            >
+                                {action.label}
+                            </a>
+                        ))}
+                    </div>
+                )}
+
+                {/* Close Button - Full Width at Bottom */}
+                {toast.dismissible !== false && (
                     <button
                         onClick={handleClose}
-                        className={`px-6 py-2 rounded-lg font-medium text-sm transition-colors ${config.closeButtonClass} border border-current`}
+                        className="w-full font-bold text-white transition-colors"
+                        style={{
+                            backgroundColor: config.buttonBg,
+                            height: '64px',
+                            borderRadius: '28px',
+                            fontSize: '28px',
+                            fontWeight: 600,
+                            border: 'none',
+                            cursor: 'pointer',
+                            marginTop: '75px',
+                        }}
+                        onMouseEnter={(e) => (e.target.style.backgroundColor = config.buttonHover)}
+                        onMouseLeave={(e) => (e.target.style.backgroundColor = config.buttonBg)}
                         aria-label="Close notification"
                     >
-                        Close
+                        {toast.dismissText || 'Tutup'}
                     </button>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     )
 }
