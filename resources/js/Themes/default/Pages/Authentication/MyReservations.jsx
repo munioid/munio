@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link, usePage } from '@inertiajs/react'
+import React, { useState } from 'react'
+import { Link, usePage, router } from '@inertiajs/react'
 import { useRoute } from '../../Hooks/useRoute'
 import AuthLayout from '../../Layouts/AuthLayout'
 import { ArrowLeftIcon, CalendarDaysIcon, TicketIcon } from '@heroicons/react/24/outline'
@@ -9,9 +9,32 @@ export default function MyReservations() {
     const { reservations, primaryColor } = props
     const route = useRoute()
 
+    const [items, setItems] = useState(reservations.data || [])
+    const [nextPageUrl, setNextPageUrl] = useState(reservations.next_page_url)
+    const [loadingMore, setLoadingMore] = useState(false)
+
+    const loadMore = () => {
+        if (!nextPageUrl || loadingMore) return
+        setLoadingMore(true)
+        router.get(nextPageUrl, {}, {
+            only: ['reservations'],
+            preserveState: true,
+            preserveScroll: true,
+            preserveUrl: true,
+            onSuccess: (page) => {
+                const next = page.props.reservations
+                setItems((prev) => [...prev, ...(next.data || [])])
+                setNextPageUrl(next.next_page_url)
+            },
+            onFinish: () => setLoadingMore(false),
+        })
+    }
+
     // Format date
     const formatDate = (dateString) => {
+        if (!dateString) return '-'
         const date = new Date(dateString)
+        if (isNaN(date.getTime())) return '-'
         return new Intl.DateTimeFormat('id-ID', {
             year: 'numeric',
             month: 'long',
@@ -48,9 +71,9 @@ export default function MyReservations() {
 
                 {/* Reservations List */}
                 <div className="space-y-4 px-5 pb-8 pt-4">
-                    {reservations.data && reservations.data.length > 0 ? (
+                    {items.length > 0 ? (
                         <>
-                            {reservations.data.map((reservation) => {
+                            {items.map((reservation) => {
                                 const statusBadge = getStatusBadge(reservation.status)
                                 return (
                                     <Link
@@ -89,22 +112,17 @@ export default function MyReservations() {
                                 )
                             })}
 
-                            {/* Pagination */}
-                            {reservations.links && reservations.links.length > 0 && (
-                                <div className="mt-6 flex justify-center gap-2">
-                                    {reservations.links.map((link, index) => (
-                                        <Link
-                                            key={index}
-                                            href={link.url}
-                                            className={`px-3 py-2 rounded-lg text-sm font-medium transition ${
-                                                link.active
-                                                    ? 'text-white'
-                                                    : 'text-gray-600 hover:bg-gray-100'
-                                            }`}
-                                            style={link.active ? { backgroundColor: primaryColor } : {}}
-                                            dangerouslySetInnerHTML={{ __html: link.label }}
-                                        />
-                                    ))}
+                            {/* Load More */}
+                            {nextPageUrl && (
+                                <div className="px-5 py-4">
+                                    <button
+                                        type="button"
+                                        onClick={loadMore}
+                                        disabled={loadingMore}
+                                        className="w-full rounded-xl border border-primary py-3 text-primary font-medium hover:bg-primary hover:text-white transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {loadingMore ? 'Memuat...' : 'Muat Lebih Banyak'}
+                                    </button>
                                 </div>
                             )}
                         </>
