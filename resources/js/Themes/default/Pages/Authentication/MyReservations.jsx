@@ -31,7 +31,7 @@ export default function MyReservations() {
     }
 
     return (
-        <AuthLayout>
+        <AuthLayout title="My Reservations">
             <div className="min-h-screen bg-gray-50">
                 {/* Header */}
                 <div className="relative pb-8 pt-8 text-center" style={{ backgroundColor: primaryColor }}>

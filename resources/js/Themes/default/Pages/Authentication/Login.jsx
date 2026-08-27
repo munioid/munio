@@ -24,7 +24,7 @@ export default function Login() {
     // const googleOAuthUrl = route('oauth.google') || '#'
 
     return (
-        <AuthLayout>
+        <AuthLayout title="Login">
             <div className="w-full">
                 {/* Banner */}
                 <div className="w-full aspect-video overflow-hidden shadow-lg">

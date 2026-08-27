@@ -20,7 +20,7 @@ export default function Profile() {
     }
 
     return (
-        <AuthLayout>
+        <AuthLayout title="Profile">
             <div className="min-h-screen bg-gray-50">
                 {/* Profile Header */}
                 <div className="relative pb-16 pt-8 text-center" style={{ backgroundColor: primaryColor }}>

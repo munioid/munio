@@ -58,7 +58,7 @@ export default function ReservationDetail() {
     }
 
     return (
-        <AppLayout>
+        <AppLayout title="Reservation Detail">
             <div>
                 <div className="min-h-screen bg-gray-50 pb-10">
 

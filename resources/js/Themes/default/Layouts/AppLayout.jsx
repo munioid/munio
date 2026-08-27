@@ -3,8 +3,9 @@ import { usePage } from '@inertiajs/react'
 import Header from '../Components/Header'
 import Navigation from '../Components/Navigation'
 import ToastContainer from '../Components/ToastContainer'
+import PageHead from '../Components/PageHead'
 
-export default function AppLayout({ children }) {
+export default function AppLayout({ title, children }) {
     const { props } = usePage()
     const { primaryColor } = props
 
@@ -15,6 +16,8 @@ export default function AppLayout({ children }) {
 
     return (
         <>
+            <PageHead title={title} />
+
             <style>{`
                 :root {
                     --primary-color: ${primaryColor};

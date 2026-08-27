@@ -53,7 +53,7 @@ export default function EventsList() {
     }
 
     return (
-        <AppLayout>
+        <AppLayout title="Events">
             <div className="min-h-screen bg-gray-50 pb-4">
                 {/* Filter Section */}
                 <Filter

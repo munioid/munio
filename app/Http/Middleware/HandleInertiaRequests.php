@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Filament\Facades\Filament;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -31,8 +32,8 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        // Get organization from request if available (set by middleware)
-        $organization = $request->organization ?? null;
+        // Get organization tenant resolved by HasTenantMiddleware
+        $organization = Filament::getTenant();
         $theme = $request->theme ?? 'default';
         $primaryColor = $organization?->colors['primary'] ?? '#ff5c54';
 
@@ -54,6 +55,8 @@ class HandleInertiaRequests extends Middleware
                     'primary' => $primaryColor,
                 ],
             ],
+            'icon' => $organization?->icon?->getPath(),
+            'favicon' => $organization?->favicon?->getPath(),
             'theme' => $theme,
             'primaryColor' => $primaryColor,
             'flash' => [

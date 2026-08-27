@@ -23,6 +23,7 @@ class HasTenantMiddleware
         $subdomain = explode('.', $host)[0];
 
         $organization = Organization::query()
+            ->with(['icon', 'favicon'])
             ->where('code', $subdomain)
             ->first();
 

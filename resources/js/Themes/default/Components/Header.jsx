@@ -5,7 +5,7 @@ import { UserIcon } from '@heroicons/react/24/outline'
 
 export default function Header() {
     const { props } = usePage()
-    const { organization, auth } = props
+    const { organization, auth, icon } = props
     const route = useRoute()
 
     return (
@@ -13,9 +13,9 @@ export default function Header() {
             <div className="flex justify-between items-center px-5 pt-5 pb-5">
                 {/* Logo and Organization Name */}
                 <div className="flex items-center gap-3">
-                    {organization?.icon ? (
+                    {icon ? (
                         <img
-                            src={organization.icon}
+                            src={icon}
                             alt={organization.name}
                             className="h-12 rounded-xl object-cover"
                         />
@@ -25,7 +25,7 @@ export default function Header() {
                         </div>
                     )}
 
-                    {!organization?.icon && (
+                    {!icon && (
                         <div>
                             <h1 className="font-bold text-lg">
                                 {organization?.name}

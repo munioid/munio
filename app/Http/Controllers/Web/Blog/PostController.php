@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Blog\Category;
 use App\Models\Blog\Post;
 use App\Models\Blog\Tag;
-use Filament\Facades\Filament;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,8 +13,6 @@ class PostController extends Controller
 {
     public function index(Request $request)
     {
-        $organization = Filament::getTenant();
-
         // Get filter parameters
         $categoryId = $request->query('category');
         $tagId = $request->query('tag');
@@ -112,7 +109,6 @@ class PostController extends Controller
 
     public function detail(string $slug)
     {
-        $organization = Filament::getTenant();
         $post = Post::query()
             ->whereSlug($slug)
             ->with(['category', 'tags', 'cover'])

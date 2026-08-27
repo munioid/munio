@@ -29,7 +29,7 @@ export default function EditProfile() {
     }
 
     return (
-        <AuthLayout>
+        <AuthLayout title="Edit Profile">
             <div className="min-h-screen bg-gray-50">
                 {/* Header */}
                 <div className="relative pb-16 pt-8 text-center" style={{ backgroundColor: primaryColor }}>

@@ -31,7 +31,7 @@ export default function PostDetail() {
     }
 
     return (
-        <AppLayout>
+        <AppLayout title={post.title}>
             <div className="min-h-screen bg-gray-50 pb-7">
                 {/* Cover Image */}
                 <img

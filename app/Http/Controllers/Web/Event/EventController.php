@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Event\Category;
 use App\Models\Event\Event;
 use App\Models\Event\Reservation;
-use Filament\Facades\Filament;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,7 +13,6 @@ class EventController extends Controller
 {
     public function index(Request $request)
     {
-        $organization = Filament::getTenant();
         $categorySlug = $request->query('category');
         $search = $request->query('search');
 
@@ -84,7 +82,6 @@ class EventController extends Controller
 
     public function detail(string $slug, Request $request)
     {
-        $organization = Filament::getTenant();
         $event = Event::query()
             ->whereSlug($slug)
             ->with(['category', 'cover'])
@@ -101,7 +98,6 @@ class EventController extends Controller
 
     public function reservation(string $slug, Request $request)
     {
-        $organization = Filament::getTenant();
         $event = Event::query()
             ->whereSlug($slug)
             ->with(['category', 'cover'])
@@ -118,7 +114,6 @@ class EventController extends Controller
 
     public function reservationDetail(string $code, Request $request)
     {
-        $organization = Filament::getTenant();
         $reservation = Reservation::query()
             ->where('code', $code)
             ->with(['event', 'event.category', 'event.cover'])
