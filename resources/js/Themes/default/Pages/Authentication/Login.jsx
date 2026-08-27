@@ -18,10 +18,10 @@ export default function Login() {
     }
 
     // Banner image URL - fallback to a default if not provided by organization
-    const bannerUrl = organization?.login_banner || 'https://via.placeholder.com/1080x608/4F46E5/FFFFFF?text=Login'
+    const bannerUrl = organization?.login_banner || 'https://picsum.photos/500/300?1'
 
     // Google OAuth URL - placeholder, should point to actual Google OAuth endpoint
-    const googleOAuthUrl = route('oauth.google') || '#'
+    // const googleOAuthUrl = route('oauth.google') || '#'
 
     return (
         <AuthLayout>
@@ -38,7 +38,7 @@ export default function Login() {
                 {/* Card Container - overlapping banner */}
                 <div className="rounded-t-3xl bg-white -mt-6 relative z-10 px-5 pt-6 pb-8">
                     {/* Header */}
-                    <div className="mb-6">
+                    <div className="mb-6 text-center">
                         <h2 className="text-2xl font-bold text-gray-900">
                             Selamat Datang
                         </h2>
@@ -101,7 +101,7 @@ export default function Login() {
                         </div>
 
                         {/* Forgot Password Link */}
-                        <div className="text-right">
+                        {/* <div className="text-right">
                             <a
                                 href={route('password.request')}
                                 className="text-sm"
@@ -109,7 +109,7 @@ export default function Login() {
                             >
                                 Lupa Password?
                             </a>
-                        </div>
+                        </div> */}
 
                         {/* Submit Button */}
                         <button
@@ -134,7 +134,7 @@ export default function Login() {
 
                     {/* Google Login Button */}
                     <a
-                        href={googleOAuthUrl}
+                        href="#"
                         className="flex items-center justify-center gap-3 w-full py-3 px-4 border border-gray-300 bg-white font-medium rounded-xl hover:bg-gray-50 transition"
                     >
                         <svg
