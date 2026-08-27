@@ -54,7 +54,7 @@ export default function PostsList() {
     }
 
     return (
-        <AppLayout>
+        <AppLayout title="Blog">
             <div className="min-h-screen bg-gray-50 pb-4">
                 {/* Filter Section */}
                 <Filter

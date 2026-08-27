@@ -94,7 +94,7 @@ export default function Reservation() {
     }
 
     return (
-        <AppLayout>
+        <AppLayout title={event.title ? `Reservation - ${event.title}` : 'Reservation'}>
             <div>
                 {/* Form */}
                 <div className="min-h-screen bg-gray-50 pb-28">

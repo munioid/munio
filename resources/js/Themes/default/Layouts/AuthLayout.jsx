@@ -2,8 +2,9 @@ import React, { useEffect } from 'react'
 import { usePage } from '@inertiajs/react'
 import Header from '../Components/Header'
 import ToastContainer from '../Components/ToastContainer'
+import PageHead from '../Components/PageHead'
 
-export default function AuthLayout({ children }) {
+export default function AuthLayout({ title, children }) {
     const { props } = usePage()
     const { primaryColor } = props
 
@@ -14,6 +15,8 @@ export default function AuthLayout({ children }) {
 
     return (
         <>
+            <PageHead title={title} />
+
             <style>{`
                 :root {
                     --primary-color: ${primaryColor};

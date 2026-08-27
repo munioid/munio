@@ -27,7 +27,7 @@ export default function EventDetail() {
     }
 
     return (
-        <AppLayout>
+        <AppLayout title={event.title}>
             <div className="min-h-screen bg-gray-50 pb-33">
                 {/* Cover */}
                 <div className="relative">

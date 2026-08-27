@@ -34,7 +34,7 @@ export default function ChangePassword() {
     }
 
     return (
-        <AuthLayout>
+        <AuthLayout title="Change Password">
             <div className="min-h-screen bg-gray-50">
                 {/* Header */}
                 <div className="relative pb-16 pt-8 text-center" style={{ backgroundColor: primaryColor }}>

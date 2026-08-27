@@ -9,7 +9,7 @@ export default function Home() {
     const { primaryColor, posts = [], events = [] } = props
 
     return (
-        <AppLayout>
+        <AppLayout title="Home">
             <div>
                 <PostSlider posts={posts} primaryColor={primaryColor} />
                 <EventSlider events={events} primaryColor={primaryColor} />
