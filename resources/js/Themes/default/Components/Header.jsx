@@ -25,11 +25,13 @@ export default function Header() {
                         </div>
                     )}
 
-                    <div>
-                        <h1 className="font-bold text-lg">
-                            {organization?.name}
-                        </h1>
-                    </div>
+                    {!organization?.icon && (
+                        <div>
+                            <h1 className="font-bold text-lg">
+                                {organization?.name}
+                            </h1>
+                        </div>
+                    )}
                 </div>
 
                 {/* User Profile / Login */}
