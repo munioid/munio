@@ -34,7 +34,7 @@ class HandleInertiaRequests extends Middleware
         // Get organization from request if available (set by middleware)
         $organization = $request->organization ?? null;
         $theme = $request->theme ?? 'default';
-        $primaryColor = $organization?->colors['primary'] ?? '#1f2937';
+        $primaryColor = $organization?->colors['primary'] ?? '#ff5c54';
 
         // Share view data for Blade root template
         view()->share([

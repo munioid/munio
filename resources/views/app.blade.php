@@ -7,7 +7,7 @@
         <title inertia>{{ config('app.name', 'Munio') }}</title>
         <style>
             :root {
-                --primary-color: {{ $primaryColor ?? '#1f2937' }};
+                --primary-color: {{ $primaryColor ?? '#ff5c54' }};
             }
 
             ::-webkit-scrollbar {
