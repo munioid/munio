@@ -8,6 +8,7 @@ use App\Http\Controllers\Blog\TagController;
 use App\Http\Controllers\Event\CategoryController as EventCategoryController;
 use App\Http\Controllers\Event\EventController;
 use App\Http\Controllers\Event\ReservationController;
+use App\Http\Controllers\Store\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -49,5 +50,17 @@ Route::middleware('customAuth')->group(function () {
         // Events
         Route::get('/', [EventController::class, 'index']);
         Route::get('{id}', [EventController::class, 'detail']);
+    });
+
+    // Store
+    Route::prefix('products')->group(function () {
+        // List, search, filter products
+        Route::get('/', [ProductController::class, 'index']);
+
+        // Related products for a specific product (more specific)
+        Route::get('{id}/related-products', [ProductController::class, 'relatedProducts']);
+
+        // Product detail (less specific)
+        Route::get('{id}', [ProductController::class, 'detail']);
     });
 });
